@@ -1,0 +1,538 @@
+(version 1)
+(deny default)
+(allow file-clone
+	(require-all
+		(extension-class "com.apple.app-sandbox.read")
+		(require-any
+			(subpath "/System/Cryptexes")
+			(subpath "/private/preboot/Cryptexes"))))
+(allow file-issue-extension)
+(allow file-link
+	(subpath "/usr/lib")
+	(subpath "/System/Library")
+	(require-all
+		(require-not (subpath "/Developer/Library"))
+		(require-any
+			(subpath "/System/Cryptexes")
+			(subpath "/private/preboot/Cryptexes"))))
+(allow file-mount
+	(require-any (literal "/private/var/Managed Preferences/mobile/com.apple.coremedia.plist")
+(literal "/private/var/Managed Preferences/mobile/com.apple.coreaudio.plist")
+(literal "/private/var/Managed Preferences/mobile/.GlobalPreferences_m.plist")
+(literal "/private/var/Managed Preferences/mobile/kCFPreferencesAnyApplication.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/kCFPreferencesAnyApplication.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/com.apple.coremedia.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/com.apple.coreaudio.plist"))
+	(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache/Library/Caches/com.apple.MobileGestalt.plist")
+	(literal "/private/var/Managed Preferences/mobile/.GlobalPreferences.plist")
+	(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/.GlobalPreferences_m.plist")
+	(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/.GlobalPreferences.plist")
+	(require-all
+		(debug-mode)
+		(subpath "/AppleInternal/Library/Messages/BlastDoorTestData")
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.blastdoor.read'")))
+	(require-all
+		(require-any (subpath "/private/var/tmp/com.apple.TelephonyUtilities/SharePlayActivityImages")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.TelephonyUtilities/SharePlayActivityImages")
+(subpath-prefix "${HOME}/Media/PhotoData/UBF/scopes/syndication/originals")
+(subpath-prefix "${HOME}/Library/Photos/Libraries/Syndication.photoslibrary/scopes/syndication/originals"))
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.blastdoor.read'")))
+	(require-all
+		(subpath "/private/var/tmp/com.apple.messages")
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.blastdoor.read'")))
+	(require-all
+		(require-any (subpath "/private/var/tmp/com.apple.identityservicesd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.identityservicesd"))
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.blastdoor.read'")))
+	(require-all
+		(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp/com[UNSUPPORTED]apple[UNSUPPORTED]MobileSMS/?")
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.blastdoor.read'")))
+	(require-all
+		(require-not (literal "/private/var"))
+		(require-all (require-not (subpath "/AppleInternal/Library/VideoCodecs"))
+(require-not (subpath "/usr/standalone/firmware"))
+(require-not (subpath "/private/xarts"))
+(require-not (subpath "/private/var/wireless/baseband_data")))
+		(require-not (subpath "/private/var/hardware"))
+		(require-not (subpath "/private/var/MobileSoftwareUpdate"))
+		(require-not (literal "/dev"))
+		(require-any
+			(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
+			(literal "/System")
+			(literal "/private/etc/hosts")
+			(subpath "/private/preboot/Cryptexes")
+			(literal "/dev/random")
+			(literal "/")
+			(literal "/private/etc/fstab")
+			(literal "/private/preboot")
+			(literal "/dev/null")
+			(literal "/private")
+			(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
+			(literal "/dev/urandom")
+			(literal "/private/etc/passwd")
+			(literal "/private/etc/services")
+			(require-any (literal "/private/etc/group")
+(literal "/private/etc/protocols"))
+			(subpath "/System/Cryptexes")
+			(literal "/dev/zero")
+			(require-all
+				(file-mode #o0004)
+				(require-any
+					(subpath "/System")
+					(subpath "/usr/lib")
+					(subpath "/usr/share")
+					(subpath "/private/var/db/dyld")
+					(subpath "/private/var/db/timezone")))))
+	(require-all
+		(require-any (subpath "/private/var/tmp/com.apple.imtransferagent")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.imtransferagent"))
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.blastdoor.read'")))
+	(require-all
+		(literal "/private/var/")
+		(subpath-prefix "${FRONT_USER_HOME}")
+		(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$")
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.blastdoor.read'")))
+	(require-all
+		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages")
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.blastdoor.read'")))
+	(require-all
+		(subpath-prefix "${HOME}/Library/SMS")
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.blastdoor.read'"))))
+(allow file-read*
+	(require-any (literal-prefix "${FRONT_USER_HOME}")
+(literal-prefix "${FRONT_USER_HOME}/Library/Preferences"))
+	(require-all
+		(require-not (subpath "/Library/Preferences"))
+		(require-not (literal "/private/var/run/syslog"))
+		(require-any
+			(literal "/private/etc/localtime")
+			(require-any (literal "/var")
+(literal "/etc")
+(literal "/tmp"))
+			(subpath "/private/var/db/timezone"))))
+(allow file-revoke)
+(allow file-test-existence
+	(require-all
+		(literal "/private/var/cores/")
+		(regex #"^/private/var/cores/.+[.]core$")
+		(process-attribute is-apple-signed-executable)))
+(allow file-write-acl
+	(require-all
+		(require-not (literal "/dev/dtracehelper"))
+		(require-any
+			(literal "/dev/null")
+			(literal "/dev/zero"))))
+(allow hid-control
+	(require-all
+		(iokit-property "platform-name")
+		(iokit-user-client-class "IOPlatformExpertDevice"))
+	(require-all
+		(iokit-user-client-class "IOPlatformDevice")
+		(require-any
+			(require-any (iokit-property "device-perf-memory-class")
+(iokit-property "compatible-device-fallback")
+(iokit-property "product-id")
+(iokit-property "product-description")
+(iokit-property "graphics-featureset-class")
+(iokit-property "graphics-featureset-fallbacks")
+(iokit-property "artwork-display-gamut")
+(iokit-property "artwork-dynamic-displaymode")
+(iokit-property "artwork-device-idiom")
+(iokit-property "artwork-device-subtype"))
+			(iokit-property "iommu-present")
+			(iokit-property "artwork-scale-factor")
+			(iokit-property "soc-generation")))
+	(require-all
+		(iokit-property "IOSurfaceAcceleratorCapabilitiesDict")
+		(iokit-user-client-class "AppleM2ScalerCSCDriver"))
+	(require-all
+		(iokit-user-client-class "AppleAVD")
+		(require-any
+			(iokit-property "AVCSupported")
+			(iokit-property "HEVCCanDecodeTileToCanvas"))))
+(allow iokit-issue-extension
+	(iokit-user-client-class "IOSurfaceRootUserClient"))
+(allow iokit-open*
+	(iokit-user-client-class "AGXFamilyAccelerator")
+	(iokit-user-client-class "IOSurfaceRoot"))
+(allow ipc-posix-sem-wait
+	(ipc-posix-name "apple.shm.notification_center"))
+(allow lsopen
+	(state-flag "b''"))
+(allow mach-bootstrap)
+(allow mach-host-special-port-set)
+(allow mach-issue-extension
+	(global-name "com.apple.logd")
+	(global-name "com.apple.system.notification_center")
+	(require-all
+		(require-not (xpc-service-name-regex #".+"))
+		(require-not (global-name "com.apple.analyticsd"))
+		(require-not (global-name "com.apple.audio.AudioComponentRegistrar"))
+		(require-not (global-name "com.apple.audio.toolbox.reporting.service"))
+		(require-not (global-name "com.apple.CARenderServer"))
+		(require-not (global-name "com.apple.coremedia.mediaparserd.utilities"))
+		(require-not (global-name "com.apple.mobileassetd.v2"))
+		(require-not (global-name "com.apple.mobilegestalt.xpc"))
+		(require-not (global-name "com.apple.powerlog.plxpclogger.xpc"))
+		(global-name "com.apple.system.logger")))
+(allow network-inbound
+	(literal "/private/var/run/syslog"))
+(allow opendirectory-user-modify)
+(allow process-legacy-codesigning-blob-get)
+(allow process-legacy-codesigning-cdhash-get)
+(allow process-legacy-codesigning-identity-get)
+(allow socket-option-set
+	(c1 35b5 b61d b591)
+	(require-all
+		(require-not (syscall-number SYS_necp_open))
+		(require-not (syscall-number SYS_necp_client_action))
+		(require-any
+			(syscall-number SYS_statfs)
+			(syscall-number SYS_kevent)
+			(syscall-number SYS_fstat)
+			(syscall-number SYS_psynch_rw_upgrade)
+			(syscall-number SYS___pthread_markcancel)
+			(syscall-number SYS_fstatfs)
+			(syscall-number SYS_guarded_close_np)
+			(syscall-number SYS_lstat)
+			(syscall-number SYS_kevent64)
+			(syscall-number SYS_psynch_rw_yieldwrlock)
+			(syscall-number SYS_sigaction)
+			(syscall-number SYS___sigwait)
+			(syscall-number SYS_fstatfs64)
+			(syscall-number SYS_preadv)
+			(syscall-number SYS_sigpending)
+			(syscall-number SYS_fstatat)
+			(syscall-number SYS_pread_nocancel)
+			(syscall-number SYS_proc_rlimit_control)
+			(syscall-number SYS_getrlimit)
+			(syscall-number SYS_psynch_rw_unlock2)
+			(syscall-number SYS_stat64_extended)
+			(syscall-number SYS_getfsstat)
+			(syscall-number SYS_csrctl)
+			(syscall-number SYS_sigreturn)
+			(syscall-number SYS_psynch_rw_wrlock)
+			(syscall-number SYS_sendto)
+			(syscall-number SYS_fstat64)
+			(syscall-number SYS_sigsuspend)
+			(syscall-number SYS_mkdir_extended)
+			(syscall-number SYS_psynch_rw_unlock)
+			(syscall-number SYS_sendmsg_nocancel)
+			(syscall-number SYS_mremap_encrypted)
+			(syscall-number SYS_readv)
+			(syscall-number SYS_fstat_extended)
+			(syscall-number SYS_psynch_rw_longrdlock)
+			(syscall-number SYS_sigaltstack)
+			(syscall-number SYS_preadv_nocancel)
+			(syscall-number SYS_setrlimit)
+			(syscall-number SYS_psynch_rw_rdlock)
+			(syscall-number SYS_stat64)
+			(syscall-number SYS_read)
+			(syscall-number SYS_stat)
+			(syscall-number SYS_stat_extended)
+			(syscall-number SYS_fstat64_extended)
+			(syscall-number SYS_sendto_nocancel)
+			(syscall-number SYS_lstat_extended)
+			(syscall-number SYS_sendmsg)
+			(syscall-number SYS_kevent_id)
+			(syscall-number SYS___sigwait_nocancel)
+			(syscall-number SYS___pthread_canceled)
+			(syscall-number SYS_readv_nocancel)
+			(syscall-number SYS_mkdirat)
+			(syscall-number SYS_read_nocancel)
+			(syscall-number SYS_lstat64_extended)
+			(syscall-number SYS_kevent_qos)
+			(syscall-number SYS_psynch_rw_downgrade)
+			(require-all
+				(syscall-number SYS_sigprocmask)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_sigsuspend_nocancel)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS___pthread_chdir)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_psynch_cvwait)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_ulock_wait)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_psynch_cvbroad)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_setattrlistat)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_psynch_cvsignal)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_abort_with_payload)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_bsdthread_ctl)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS___channel_open)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_pathconf)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_psynch_mutexdrop)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_mkdir)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_getgid)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_process_policy)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_ulock_wait2)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_fsetattrlist)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_faccessat)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS___pthread_sigmask)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_statfs64)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS___semwait_signal_nocancel)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_bsdthread_terminate)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_getrusage)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_rmdir)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_pread)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_ulock_wake)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_getattrlistbulk)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_psynch_cvclrprepost)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_umask)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS___pthread_kill)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_os_fault_with_payload)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_bsdthread_create)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_psynch_mutexwait)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_getxattr)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS___pthread_fchdir)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_readlink)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_change_fdguard_np)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_listxattr)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS___disable_threadsignal)
+				(require-any
+					(state-flag "b''")
+					(syscall-number SYS_getfsstat64)))
+			(require-all
+				(syscall-number SYS_getegid)
+				(state-flag "b''"))
+			(require-all
+				(syscall-number SYS_getpid)
+				(state-flag "b''"))
+			(require-all
+				(syscall-number SYS_workq_open)
+				(state-flag "b''"))
+			(require-all
+				(syscall-number SYS_gettid)
+				(state-flag "b''"))
+			(require-all
+				(syscall-number SYS_fsgetpath)
+				(state-flag "b''"))
+			(require-all
+				(syscall-number SYS_shared_region_check_np)
+				(state-flag "b''"))
+			(require-all
+				(require-not (state-flag "b''"))
+				(require-any
+					(syscall-number SYS_access)
+					(syscall-number SYS_socket)
+					(syscall-number SYS_connect)
+					(syscall-number SYS_bsdthread_register)
+					(syscall-number SYS_getentropy)
+					(syscall-number SYS_getuid)
+					(syscall-number SYS_mmap)
+					(syscall-number SYS_lstat64)
+					(syscall-number SYS_thread_selfid)
+					(syscall-number SYS_kdebug_trace64)
+					(syscall-number SYS_getattrlist)
+					(syscall-number SYS_issetugid)
+					(syscall-number SYS_getdirentries64)
+					(syscall-number SYS_geteuid)
+					(syscall-number SYS_fstatat64)
+					(syscall-number SYS_munmap)
+					(syscall-number SYS_lseek)
+					(syscall-number SYS_mprotect)
+					(syscall-number SYS_openat)
+					(syscall-number SYS_fstatat)
+					(syscall-number SYS_open)
+					(syscall-number 38)
+					(syscall-number SYS_dup)
+					(syscall-number SYS_map_with_linking_np)
+					(syscall-number SYS_madvise)
+					(syscall-number SYS_kdebug_typefilter)
+					(syscall-number SYS_kdebug_trace_string)
+					(syscall-number SYS_workq_kernreturn)
+					(syscall-number SYS_gettimeofday)
+					(require-all
+						(syscall-number SYS_memorystatus_control)
+						(debug-mode)))))))
+(allow syscall*
+	(cb 35c2 b58f b58a)
+	(machtrap-number MSC__kernelrpc_mach_port_extract_member_trap)
+	(machtrap-number MSC_pid_for_task)
+	(machtrap-number MSC_thread_self_trap)
+	(machtrap-number MSC_mach_voucher_extract_attr_recipe_trap)
+	(machtrap-number MSC__kernelrpc_mach_port_get_attributes_trap))
+(allow syscall-unix
+	(cc 35c5 b588 b587))
+(allow syscall-mig)
+(allow system-automount
+	(fcntl-command F_SPECULATIVE_READ)
+	(fcntl-command F_GETPROTECTIONCLASS)
+	(fcntl-command F_GETPATH)
+	(fcntl-command F_SETFD)
+	(fcntl-command F_CHECK_LV)
+	(fcntl-command F_GETFD)
+	(fcntl-command F_ADDFILESIGS_RETURN)
+	(fcntl-command F_NOCACHE))
+(allow system-mac*)
+(allow system-nfssvc
+	(privilege-id "PRIV_GLOBAL_PROC_INFO"))

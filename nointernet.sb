@@ -1,0 +1,8 @@
+(version 1)
+(allow default)
+(deny file-write-mode)
+(deny mach-task-special-port-set
+	(local ip "*:*"))
+(deny network-inbound
+	(require-not (control-name "com.apple.flow-divert")))
+(deny managed-preference-read)

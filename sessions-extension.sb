@@ -1,0 +1,85 @@
+(version 1)
+(deny default)
+(allow file-issue-extension)
+(allow ipc-sysv-shm)
+(allow mach-bootstrap)
+(allow mach-host-special-port-set)
+(allow mach-issue-extension
+	(global-name "com.apple.CARenderServer")
+	(require-all
+		(local-name-regex #".+")
+		(extension "b'com.apple.security.exception.mach-lookup.local-name'"))
+	(require-all
+		(extension "b'com.apple.security.exception.mach-lookup.global-name'")
+		(global-name-regex #".+"))
+	(require-all
+		(xpc-service-name-regex #".+")
+		(require-any
+			(global-name "com.apple.managedconfiguration.profiled.public")
+			(require-all
+				(global-name "com.apple.coreduetd.people")
+				(require-any
+					(entitlement-is-bool-true 408)
+					(require-all
+						(process-attribute is-apple-signed-executable)
+						(require-any
+							(global-name "com.apple.datamigrator")
+							(global-name "com.apple.Honeybee.event-notify")
+							(global-name "com.apple.mobile.usermanagerd.xpc")
+							(global-name "com.apple.SharedWebCredentials")))))
+			(require-all
+				(global-name "com.apple.system.notification_center")
+				(require-any
+					(global-name "com.apple.system.logger")
+					(global-name "com.apple.mobilegestalt.xpc")
+					(require-any (global-name "com.apple.cfprefsd.daemon")
+(global-name "com.apple.cfprefsd.daemon.system"))
+					(global-name "com.apple.cfprefsd.agent")
+					(global-name "com.apple.containermanagerd")
+					(global-name "com.apple.containermanagerd.system")
+					(local-name "com.apple.cfprefsd.agent")
+					(require-any (global-name "com.apple.gputools.service")
+(global-name "com.apple.hangtracerd")
+(global-name "com.apple.hangtracermonitor"))
+					(global-name "com.apple.diagnosticd")
+					(require-any (global-name "com.apple.appsupport.cplogd")
+(global-name "com.apple.lsd")
+(global-name "com.apple.lsd.icons")
+(global-name "com.apple.coreservices.lsuseractivitymanager.xpc"))
+					(global-name "com.apple.duetknowledged.activity")
+					(global-name "com.apple.runningboard")
+					(global-name "com.apple.system.libinfo.muser")
+					(global-name "com.apple.aggregated")
+					(global-name "com.apple.lsd.open")
+					(global-name "com.apple.analyticsd")
+					(global-name "com.apple.ctkd.token-client")
+					(global-name "com.apple.CoreAuthentication.daemon")
+					(global-name "com.apple.lsd.mapdb")
+					(global-name "com.apple.distributed_notifications@1v3")
+					(require-all
+						(process-attribute is-apple-signed-executable)
+						(require-any
+							(global-name "com.apple.datamigrator")
+							(global-name "com.apple.Honeybee.event-notify")
+							(global-name "com.apple.mobile.usermanagerd.xpc")
+							(global-name "com.apple.SharedWebCredentials")))
+					(require-all
+						(global-name "com.apple.osanalytics.osanalyticshelper")
+						(process-attribute is-apple-signed-executable))
+					(require-all
+						(global-name "com.apple.logd.events")
+						(entitlement-is-bool-true 4111))
+					(require-all
+						(global-name "com.apple.logd")
+						(entitlement-is-bool-true 4111)))))))
+(allow mach-task-name)
+(allow mach-task-read)
+(allow mach-task-special-port*)
+(allow mach-task-special-port-get)
+(allow opendirectory-user-modify)
+(allow socket-option-set)
+(allow syscall*)
+(allow syscall-unix)
+(allow system-mac-label)
+(allow system-mac-syscall)
+(allow system-nfssvc)
