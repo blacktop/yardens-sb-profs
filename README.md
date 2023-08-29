@@ -10,6 +10,8 @@ This was the output from running the following using [cellebrite-labs/sandblaste
 ❯ ipsw kernel sbopts 21A5319a__iPhone15,2/kernelcache.release.iPhone15,2 > 21A5319a__iPhone15,2/sbopts
 ```
 ```bash
+❯ git clone https://github.com/cellebrite-labs/sandblaster.git
+❯ cd  sandblaster/reverse-sandbox
 ❯ mkdir OUT
 ❯ python3 reverse_sandbox.py -r 17 21A5319a__iPhone15,2/sandbox_collection.bin -o 21A5319a__iPhone15,2/sbopts -d OUT
 ```
