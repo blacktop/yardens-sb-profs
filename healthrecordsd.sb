@@ -204,7 +204,7 @@
 (require-not (subpath "/System/Library/Caches/com.apple.kernelcaches")))
 		(require-not (literal "/usr/standalone/firmware/apticket.der"))
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
@@ -228,9 +228,13 @@
 				(require-any (subpath "/private/var/tmp/com.apple.healthrecordsd")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.healthrecordsd")))
 			(require-all
-				(entitlement-is-bool-true 124)
+				(extension-class "com.apple.mediaserverd.read-write")
+				(require-any (subpath "/private/var/tmp/com.apple.healthrecordsd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.healthrecordsd")))
+			(require-all
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(require-any
-					(entitlement-is-bool-true 129)
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(require-all
 						(extension "b'com.apple.sandbox.system-container'")
 						(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
@@ -255,10 +259,6 @@
 										(extension-class "com.apple.mediaserverd.read")
 										(regex #"^/private/var/containers/Data/System/[^/]+/" #"^/private/var/containers/Data/System/[^/]+$"))))))))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read-write")
-				(require-any (subpath "/private/var/tmp/com.apple.healthrecordsd")
-(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.healthrecordsd")))
-			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any (subpath "/private/var/tmp/com.apple.healthrecordsd")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.healthrecordsd")))
@@ -272,19 +272,19 @@
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
-						(entitlement-is-present 190)
+						(entitlement-is-present "b'com.apple.security.system-groups'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(require-any
 							(require-all
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 								(require-any
+									(extension-class "com.apple.nsurlsessiond.readonly")
+									(extension-class "com.apple.aned.read-only")
+									(extension-class "com.apple.mediaserverd.read")
 									(extension-class "com.apple.app-sandbox.read-write")
 									(extension-class "com.apple.app-sandbox.read")
 									(extension-class "com.apple.sharing.airdrop.readonly")
-									(extension-class "com.apple.mediaserverd.read-write")
-									(extension-class "com.apple.nsurlsessiond.readonly")
-									(extension-class "com.apple.aned.read-only")
-									(extension-class "com.apple.mediaserverd.read")))
+									(extension-class "com.apple.mediaserverd.read-write")))
 							(require-all
 								(extension-class "com.apple.mediaserverd.read")
 								(literal "/private/var/containers/Shared/SystemGroup/")
@@ -294,19 +294,19 @@
 								(literal "/private/var/containers/Shared/SystemGroup/")
 								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
 					(require-all
-						(entitlement-is-present 233)
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(require-any
 							(require-all
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 								(require-any
+									(extension-class "com.apple.nsurlsessiond.readonly")
+									(extension-class "com.apple.aned.read-only")
+									(extension-class "com.apple.mediaserverd.read")
 									(extension-class "com.apple.app-sandbox.read-write")
 									(extension-class "com.apple.app-sandbox.read")
 									(extension-class "com.apple.sharing.airdrop.readonly")
-									(extension-class "com.apple.mediaserverd.read-write")
-									(extension-class "com.apple.nsurlsessiond.readonly")
-									(extension-class "com.apple.aned.read-only")
-									(extension-class "com.apple.mediaserverd.read")))
+									(extension-class "com.apple.mediaserverd.read-write")))
 							(require-all
 								(extension-class "com.apple.mediaserverd.read")
 								(literal "/private/var/containers/Shared/SystemGroup/")
@@ -343,6 +343,18 @@
 (require-not (subpath "/System/Library/Caches/com.apple.kernelcaches")))
 		(require-not (literal "/usr/standalone/firmware/apticket.der"))
 		(require-any
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
+			(literal "/private/var/preferences/com.apple.networkd.plist")
+			(literal "/private/var/Managed Preferences/mobile/com.apple.SystemConfiguration.plist")
+			(literal "/private/var/preferences/com.apple.security.plist")
+			(subpath "/usr/lib")
+			(subpath "/private/var/db/timezone")
+			(subpath "/Library/RegionFeatures")
+			(require-any (subpath "/private/var/tmp/com.apple.healthrecordsd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.healthrecordsd"))
+			(require-any (literal-prefix "${HOME}/Library/Health")
+(subpath-prefix "${HOME}/Library/Health/DownloadedAttachments"))
+			(literal "/private/var/db/com.apple.networkextension.tracker-info")
 			(literal "/dev/null")
 			(literal "/dev/aes_0")
 			(subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.icloud.findmydevice.managed/Library")
@@ -355,31 +367,19 @@
 			(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache/Library/Caches/com.apple.MobileGestalt.plist")
 			(literal "/dev/zero")
 			(literal "/dev/random")
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(literal "/private/var/preferences/com.apple.NetworkStatistics.plist")
 			(subpath "/usr/share")
 			(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin")
 			(subpath "/System/Library")
-			(literal "/private/var/preferences/com.apple.networkd.plist")
-			(literal "/private/var/Managed Preferences/mobile/com.apple.SystemConfiguration.plist")
-			(literal "/private/var/preferences/com.apple.security.plist")
-			(subpath "/usr/lib")
-			(subpath "/private/var/db/timezone")
-			(subpath "/Library/RegionFeatures")
-			(literal "/private/var/db/com.apple.networkextension.tracker-info")
-			(require-any (subpath "/private/var/tmp/com.apple.healthrecordsd")
-(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.healthrecordsd"))
-			(require-any (literal-prefix "${HOME}/Library/Health")
-(subpath-prefix "${HOME}/Library/Health/DownloadedAttachments"))
-			(entitlement-is-bool-true 129)
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(literal "/private/var/preferences/com.apple.networkextension.uuidcache.plist"))
 			(require-all
 				(literal "/private/var/preferences/com.apple.networkextension.plist")
-				(entitlement-is-present 1555))
+				(entitlement-is-present "b'com.apple.private.networkextension.configuration'"))
 			(require-all
-				(entitlement-is-bool-true 408)
+				(entitlement-is-bool-true "b'com.apple.coreduetd.people'")
 				(require-any
 					(require-any (literal-prefix "${HOME}/Library/CoreDuet/People")
 (literal-prefix "${HOME}/Library/CoreDuet/People/interactionC.db")
@@ -390,7 +390,7 @@
 				(uid 0)
 				(literal "/private/etc/master.passwd"))
 			(require-all
-				(entitlement-is-bool-true 124)
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(extension "b'com.apple.sandbox.system-container'")
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 				(require-any
@@ -401,33 +401,33 @@
 			(require-all
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 				(extension "b'com.apple.sandbox.system-group'")
-				(entitlement-is-present 190)
-				(entitlement-is-present 233))
-			(require-all
-				(entitlement-is-bool-true 511)
-				(extension "b'com.apple.logd.read-only'")
-				(require-any
-					(require-any (subpath "/private/var/userdata/diagnostics")
-(subpath "/private/var/db/timesync"))
-					(require-any (subpath "/private/var/db/diagnostics")
-(subpath "/private/var/db/uuidtext"))))
+				(entitlement-is-present "b'com.apple.security.system-groups'")
+				(entitlement-is-present "b'com.apple.security.system-group-containers'"))
 			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
-						(entitlement-is-present 190)
+						(entitlement-is-present "b'com.apple.security.system-groups'")
 						(require-any
 							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 							(require-all
 								(literal "/private/var/containers/Shared/SystemGroup/")
 								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
 					(require-all
-						(entitlement-is-present 233)
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(require-any
 							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 							(require-all
 								(literal "/private/var/containers/Shared/SystemGroup/")
 								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))
+			(require-all
+				(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
+				(extension "b'com.apple.logd.read-only'")
+				(require-any
+					(require-any (subpath "/private/var/userdata/diagnostics")
+(subpath "/private/var/db/timesync"))
+					(require-any (subpath "/private/var/db/diagnostics")
+(subpath "/private/var/db/uuidtext"))))
 			(require-all
 				(vnode-type BLOCK-DEVICE)
 				(vnode-type CHARACTER-DEVICE)
@@ -481,10 +481,10 @@
 					(require-all
 						(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
 						(require-any
-							(entitlement-is-bool-true 290)
-							(entitlement-is-bool-true 297)))
+							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")
+							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")))
 					(require-all
-						(entitlement-is-present 305)
+						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
 						(extension "b'com.apple.sandbox.oopjit'")))))))
 (allow file-mount-update
@@ -495,7 +495,7 @@
 	(vnode-type SYMLINK)
 	(require-any (subpath "/private/var/tmp/com.apple.healthrecordsd")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.healthrecordsd"))
-	(entitlement-is-bool-true 129)
+	(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 	(literal-prefix "${HOME}")
 	(literal-prefix "${HOME}/Library/Caches/powerlog.launchd")
 	(literal-prefix "${HOME}/Library/Preferences")
@@ -510,16 +510,16 @@
 	(extension "b'com.apple.sharing.airdrop.readonly'")
 	(require-all
 		(extension "b'com.apple.sandbox.system-container'")
-		(entitlement-is-bool-true 124)
+		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
 	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
-				(entitlement-is-present 190)
+				(entitlement-is-present "b'com.apple.security.system-groups'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 			(require-all
-				(entitlement-is-present 233)
+				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
 	(require-all
 		(vnode-type DIRECTORY)
@@ -535,29 +535,29 @@
 	(extension "b'com.apple.app-sandbox.read-write'")
 	(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 	(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-	(entitlement-is-bool-true 129)
+	(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 	(require-all
-		(entitlement-is-bool-true 124)
+		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(extension "b'com.apple.sandbox.system-container'")
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))))
 	(require-all
+		(vnode-type BLOCK-DEVICE)
+		(vnode-type CHARACTER-DEVICE))
+	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
-				(entitlement-is-present 190)
+				(entitlement-is-present "b'com.apple.security.system-groups'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 			(require-all
-				(entitlement-is-present 233)
+				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
-				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
-	(require-all
-		(vnode-type BLOCK-DEVICE)
-		(vnode-type CHARACTER-DEVICE)))
+				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
 (allow file-write*
 	(require-not (literal-prefix "${HOME}/Library/Logs/CrashReporter/CFNetwork_")))
 (allow file-write-acl
@@ -566,11 +566,11 @@
 		(require-not (literal "/dev/urandom"))
 		(require-not (literal "/dev/random"))
 		(require-any
-			(literal "/dev/zero")
 			(literal "/dev/null")
-			(literal "/dev/dtracehelper"))))
+			(literal "/dev/dtracehelper")
+			(literal "/dev/zero"))))
 (allow file-write-setugid
-	(entitlement-is-present 305)
+	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
@@ -578,21 +578,21 @@
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(extension "b'com.apple.sandbox.system-container'")
-				(entitlement-is-bool-true 124)
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(literal "/private/var/containers/Data/System/")
 				(regex #"^/private/var/containers/Data/System/[^/]+/" #"^/private/var/containers/Data/System/[^/]+$"))
 			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
-						(entitlement-is-present 190)
+						(entitlement-is-present "b'com.apple.security.system-groups'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))
 					(require-all
-						(entitlement-is-present 233)
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
 (allow file-write-unlink)
@@ -690,9 +690,9 @@
 		(global-name "com.apple.ak.auth.xpc")
 		(require-any
 			(process-attribute is-apple-signed-executable)
-			(entitlement-is-bool-true 2672)
-			(entitlement-is-bool-true 2676)
-			(entitlement-is-bool-true 2681)))
+			(entitlement-is-bool-true "b'com.apple.authkit.client'")
+			(entitlement-is-bool-true "b'com.apple.authkit.client.internal'")
+			(entitlement-is-bool-true "b'com.apple.authkit.client.private'")))
 	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
@@ -701,31 +701,31 @@
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
+					(global-name "com.apple.SharedWebCredentials")
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
-					(global-name "com.apple.mobile.usermanagerd.xpc")
-					(global-name "com.apple.SharedWebCredentials")))))
+					(global-name "com.apple.mobile.usermanagerd.xpc")))))
 	(require-all
 		(global-name "com.apple.ak.anisette.xpc")
 		(require-any
 			(process-attribute is-apple-signed-executable)
-			(entitlement-is-bool-true 2672)
-			(entitlement-is-bool-true 2676)
-			(entitlement-is-bool-true 2681)))
+			(entitlement-is-bool-true "b'com.apple.authkit.client'")
+			(entitlement-is-bool-true "b'com.apple.authkit.client.internal'")
+			(entitlement-is-bool-true "b'com.apple.authkit.client.private'")))
 	(require-all
 		(global-name "com.apple.networkd_privileged")
 		(require-any
-			(entitlement-is-bool-true 2691)
-			(entitlement-is-bool-true 2696)
-			(entitlement-is-bool-true 2702)
-			(entitlement-is-bool-true 2707)
-			(entitlement-is-bool-true 2711)))
+			(entitlement-is-bool-true "b'com.apple.networkd.modify_settings'")
+			(entitlement-is-bool-true "b'com.apple.networkd.disable_opportunistic'")
+			(entitlement-is-bool-true "b'com.apple.networkd.advisory_socket'")
+			(entitlement-is-bool-true "b'com.apple.networkd_privileged'")
+			(entitlement-is-bool-true "b'com.apple.networkd.persistent_interface'")))
 	(require-all
 		(global-name "com.apple.coreduetd.people")
-		(entitlement-is-bool-true 408))
+		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
 		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true 761))
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
@@ -770,3 +770,4 @@
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
 (allow user-preference-read
 	(preference-domain "com.apple.healthrecordsd"))
+(allow user-preference-write)

@@ -204,17 +204,17 @@
 (require-not (subpath "/System/Library/Caches/com.apple.kernelcaches")))
 		(require-not (literal "/usr/standalone/firmware/apticket.der"))
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
+					(subpath "/System/Library")
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(subpath "/Library/RegionFeatures")
-					(subpath "/System/Library")
-					(subpath "/System/Library")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(subpath "/System/Library")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
@@ -226,9 +226,9 @@
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")))
 			(require-all
-				(entitlement-is-bool-true 124)
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(require-any
-					(entitlement-is-bool-true 129)
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(require-all
 						(extension "b'com.apple.sandbox.system-container'")
 						(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
@@ -259,25 +259,34 @@
 					(require-all
 						(extension-class "com.apple.app-sandbox.read")
 						(require-any
-							(subpath "/System/Cryptexes")
-							(subpath "/private/preboot/Cryptexes")))))
+							(subpath "/private/preboot/Cryptexes")
+							(subpath "/System/Cryptexes")))))
+			(require-all
+				(extension-class "com.apple.app-sandbox.read")
+				(require-any
+					(extension "b'com.apple.fileprovider.read-write'")
+					(require-all
+						(extension-class "com.apple.app-sandbox.read")
+						(require-any
+							(subpath "/private/preboot/Cryptexes")
+							(subpath "/System/Cryptexes")))))
 			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
-						(entitlement-is-present 190)
+						(entitlement-is-present "b'com.apple.security.system-groups'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(require-any
 							(require-all
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 								(require-any
+									(extension-class "com.apple.nsurlsessiond.readonly")
+									(extension-class "com.apple.aned.read-only")
+									(extension-class "com.apple.mediaserverd.read")
 									(extension-class "com.apple.app-sandbox.read-write")
 									(extension-class "com.apple.app-sandbox.read")
 									(extension-class "com.apple.sharing.airdrop.readonly")
-									(extension-class "com.apple.mediaserverd.read-write")
-									(extension-class "com.apple.nsurlsessiond.readonly")
-									(extension-class "com.apple.aned.read-only")
-									(extension-class "com.apple.mediaserverd.read")))
+									(extension-class "com.apple.mediaserverd.read-write")))
 							(require-all
 								(extension-class "com.apple.mediaserverd.read")
 								(literal "/private/var/containers/Shared/SystemGroup/")
@@ -287,19 +296,19 @@
 								(literal "/private/var/containers/Shared/SystemGroup/")
 								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
 					(require-all
-						(entitlement-is-present 233)
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(require-any
 							(require-all
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 								(require-any
+									(extension-class "com.apple.nsurlsessiond.readonly")
+									(extension-class "com.apple.aned.read-only")
+									(extension-class "com.apple.mediaserverd.read")
 									(extension-class "com.apple.app-sandbox.read-write")
 									(extension-class "com.apple.app-sandbox.read")
 									(extension-class "com.apple.sharing.airdrop.readonly")
-									(extension-class "com.apple.mediaserverd.read-write")
-									(extension-class "com.apple.nsurlsessiond.readonly")
-									(extension-class "com.apple.aned.read-only")
-									(extension-class "com.apple.mediaserverd.read")))
+									(extension-class "com.apple.mediaserverd.read-write")))
 							(require-all
 								(extension-class "com.apple.mediaserverd.read")
 								(literal "/private/var/containers/Shared/SystemGroup/")
@@ -307,16 +316,7 @@
 							(require-all
 								(extension-class "com.apple.app-sandbox.read")
 								(literal "/private/var/containers/Shared/SystemGroup/")
-								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))
-			(require-all
-				(extension-class "com.apple.app-sandbox.read")
-				(require-any
-					(extension "b'com.apple.fileprovider.read-write'")
-					(require-all
-						(extension-class "com.apple.app-sandbox.read")
-						(require-any
-							(subpath "/System/Cryptexes")
-							(subpath "/private/preboot/Cryptexes"))))))))
+								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))))
 (allow file-ioctl)
 (allow file-issue-extension)
 (allow file-revoke)
@@ -453,7 +453,7 @@
 		(extension "b'com.apple.security.exception.mach-lookup.local-name'"))
 	(require-all
 		(global-name "com.apple.coreduetd.people")
-		(entitlement-is-bool-true 408))
+		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
@@ -462,13 +462,13 @@
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
+					(global-name "com.apple.SharedWebCredentials")
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
-					(global-name "com.apple.mobile.usermanagerd.xpc")
-					(global-name "com.apple.SharedWebCredentials")))))
+					(global-name "com.apple.mobile.usermanagerd.xpc")))))
 	(require-all
 		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true 761))
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
@@ -521,7 +521,8 @@
 			(preference-domain "com.apple.security")
 			(require-all
 				(preference-domain "com.apple.itunesstored")
-				(entitlement-is-bool-true 2843)))))
+				(entitlement-is-bool-true "b'com.apple.itunesstored.private'")))))
 (allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+(allow user-preference-write)

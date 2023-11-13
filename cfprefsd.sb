@@ -31,12 +31,7 @@
 (require-not (subpath "/System/Library/Caches/com.apple.kernelcaches")))
 		(require-not (literal "/usr/standalone/firmware/apticket.der"))
 		(require-any
-			(subpath "/usr/lib")
-			(subpath "/private/var/db/timezone")
-			(subpath "/Library/RegionFeatures")
-			(subpath "/usr/share")
-			(subpath "/System/Library")
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(literal "/dev/null")
 			(literal "/dev/aes_0")
 			(subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.icloud.findmydevice.managed/Library")
@@ -49,9 +44,14 @@
 			(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache/Library/Caches/com.apple.MobileGestalt.plist")
 			(literal "/dev/zero")
 			(literal "/dev/random")
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
+			(subpath "/usr/lib")
+			(subpath "/private/var/db/timezone")
+			(subpath "/Library/RegionFeatures")
+			(subpath "/usr/share")
+			(subpath "/System/Library")
 			(require-all
-				(entitlement-is-bool-true 408)
+				(entitlement-is-bool-true "b'com.apple.coreduetd.people'")
 				(require-any
 					(require-any (literal-prefix "${HOME}/Library/CoreDuet/People")
 (literal-prefix "${HOME}/Library/CoreDuet/People/interactionC.db")
@@ -62,7 +62,7 @@
 				(uid 0)
 				(literal "/private/etc/master.passwd"))
 			(require-all
-				(entitlement-is-bool-true 124)
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(extension "b'com.apple.sandbox.system-container'")
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 				(require-any
@@ -73,10 +73,10 @@
 			(require-all
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 				(extension "b'com.apple.sandbox.system-group'")
-				(entitlement-is-present 190)
-				(entitlement-is-present 233))
+				(entitlement-is-present "b'com.apple.security.system-groups'")
+				(entitlement-is-present "b'com.apple.security.system-group-containers'"))
 			(require-all
-				(entitlement-is-bool-true 511)
+				(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
 				(extension "b'com.apple.logd.read-only'")
 				(require-any
 					(require-any (subpath "/private/var/userdata/diagnostics")
@@ -87,14 +87,14 @@
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
-						(entitlement-is-present 190)
+						(entitlement-is-present "b'com.apple.security.system-groups'")
 						(require-any
 							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 							(require-all
 								(literal "/private/var/containers/Shared/SystemGroup/")
 								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
 					(require-all
-						(entitlement-is-present 233)
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(require-any
 							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 							(require-all
@@ -121,23 +121,23 @@
 	(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 	(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 	(extension "b'com.apple.sharing.airdrop.readonly'")
-	(entitlement-is-bool-true 129)
+	(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 	(require-all
 		(extension "b'com.apple.sandbox.system-container'")
-		(entitlement-is-bool-true 124)
+		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
+	(require-all
+		(vnode-type DIRECTORY)
+		(process-attribute is-apple-signed-executable))
 	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
-				(entitlement-is-present 190)
+				(entitlement-is-present "b'com.apple.security.system-groups'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 			(require-all
-				(entitlement-is-present 233)
+				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
-	(require-all
-		(vnode-type DIRECTORY)
-		(process-attribute is-apple-signed-executable))
 	(require-all
 		(process-attribute is-apple-signed-executable)
 		(require-any
@@ -150,40 +150,40 @@
 	(extension "b'com.apple.app-sandbox.read-write'")
 	(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 	(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-	(entitlement-is-bool-true 129)
+	(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 	(require-all
-		(entitlement-is-bool-true 124)
+		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(extension "b'com.apple.sandbox.system-container'")
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))))
 	(require-all
+		(vnode-type BLOCK-DEVICE)
+		(vnode-type CHARACTER-DEVICE))
+	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
-				(entitlement-is-present 190)
+				(entitlement-is-present "b'com.apple.security.system-groups'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 			(require-all
-				(entitlement-is-present 233)
+				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
-				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
-	(require-all
-		(vnode-type BLOCK-DEVICE)
-		(vnode-type CHARACTER-DEVICE)))
+				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
 (allow file-write-acl
 	(literal "/dev/aes_0")
 	(require-all
 		(require-not (literal "/dev/urandom"))
 		(require-not (literal "/dev/random"))
 		(require-any
+			(literal "/dev/zero")
 			(literal "/dev/null")
-			(literal "/dev/dtracehelper")
-			(literal "/dev/zero"))))
+			(literal "/dev/dtracehelper"))))
 (allow file-write-setugid
-	(entitlement-is-present 305)
+	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
@@ -191,21 +191,21 @@
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(extension "b'com.apple.sandbox.system-container'")
-				(entitlement-is-bool-true 124)
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(literal "/private/var/containers/Data/System/")
 				(regex #"^/private/var/containers/Data/System/[^/]+/" #"^/private/var/containers/Data/System/[^/]+$"))
 			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
-						(entitlement-is-present 190)
+						(entitlement-is-present "b'com.apple.security.system-groups'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))
 					(require-all
-						(entitlement-is-present 233)
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
 (allow file-write-unlink)
@@ -227,7 +227,7 @@
 	(ipc-posix-name)
 	(require-all
 		(ipc-posix-name "apple.shm.notification_center")
-		(require-not (entitlement-is-bool-true 761))))
+		(require-not (entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))))
 (allow ipc-posix-shm-write*
 	(ipc-posix-name))
 (allow ipc-sysv-shm)
@@ -282,7 +282,7 @@
 		(extension "b'com.apple.security.exception.mach-lookup.local-name'"))
 	(require-all
 		(global-name "com.apple.coreduetd.people")
-		(entitlement-is-bool-true 408))
+		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
@@ -291,13 +291,13 @@
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
+					(global-name "com.apple.SharedWebCredentials")
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
-					(global-name "com.apple.mobile.usermanagerd.xpc")
-					(global-name "com.apple.SharedWebCredentials")))))
+					(global-name "com.apple.mobile.usermanagerd.xpc")))))
 	(require-all
 		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true 761))
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
@@ -312,11 +312,11 @@
 (allow socket-ioctl)
 (allow socket-option*)
 (allow socket-option-set
-	(c1 3850 af5f af5e)
+	(c1 3894 b013 b012)
 	(syscall-number SYS_map_with_linking_np)
 	(require-all
 		(syscall-number SYS_flock)
-		(entitlement-is-bool-true 408))
+		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
 		(syscall-number SYS_memorystatus_control)
 		(debug-mode)))
@@ -327,3 +327,4 @@
 (allow system-mac-label)
 (allow system-mac-syscall)
 (allow system-nfssvc)
+(allow user-preference-write)

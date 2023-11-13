@@ -26,11 +26,11 @@
 	(ipc-posix-name "Apple MIDI "))
 (allow ipc-posix-sem-wait
 	(ipc-posix-name "/com.apple.AppSSO.version")
-	(ipc-posix-name)
 	(ipc-posix-name "apple.cfprefs.")
+	(ipc-posix-name)
 	(require-all
 		(ipc-posix-name "apple.shm.notification_center")
-		(require-not (entitlement-is-bool-true 761))))
+		(require-not (entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))))
 (allow ipc-posix-shm-write*
 	(ipc-posix-name))
 (allow ipc-sysv-shm)
@@ -112,16 +112,9 @@
 		(global-name "com.apple.ak.auth.xpc")
 		(require-any
 			(process-attribute is-apple-signed-executable)
-			(entitlement-is-bool-true 2672)
-			(entitlement-is-bool-true 2676)
-			(entitlement-is-bool-true 2681)))
-	(require-all
-		(global-name "com.apple.ak.anisette.xpc")
-		(require-any
-			(process-attribute is-apple-signed-executable)
-			(entitlement-is-bool-true 2672)
-			(entitlement-is-bool-true 2676)
-			(entitlement-is-bool-true 2681)))
+			(entitlement-is-bool-true "b'com.apple.authkit.client'")
+			(entitlement-is-bool-true "b'com.apple.authkit.client.internal'")
+			(entitlement-is-bool-true "b'com.apple.authkit.client.private'")))
 	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
@@ -130,24 +123,31 @@
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
+					(global-name "com.apple.SharedWebCredentials")
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
-					(global-name "com.apple.mobile.usermanagerd.xpc")
-					(global-name "com.apple.SharedWebCredentials")))))
+					(global-name "com.apple.mobile.usermanagerd.xpc")))))
+	(require-all
+		(global-name "com.apple.ak.anisette.xpc")
+		(require-any
+			(process-attribute is-apple-signed-executable)
+			(entitlement-is-bool-true "b'com.apple.authkit.client'")
+			(entitlement-is-bool-true "b'com.apple.authkit.client.internal'")
+			(entitlement-is-bool-true "b'com.apple.authkit.client.private'")))
 	(require-all
 		(global-name "com.apple.networkd_privileged")
 		(require-any
-			(entitlement-is-bool-true 2691)
-			(entitlement-is-bool-true 2696)
-			(entitlement-is-bool-true 2702)
-			(entitlement-is-bool-true 2707)
-			(entitlement-is-bool-true 2711)))
+			(entitlement-is-bool-true "b'com.apple.networkd.modify_settings'")
+			(entitlement-is-bool-true "b'com.apple.networkd.disable_opportunistic'")
+			(entitlement-is-bool-true "b'com.apple.networkd.advisory_socket'")
+			(entitlement-is-bool-true "b'com.apple.networkd_privileged'")
+			(entitlement-is-bool-true "b'com.apple.networkd.persistent_interface'")))
 	(require-all
 		(global-name "com.apple.coreduetd.people")
-		(entitlement-is-bool-true 408))
+		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
 		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true 761))
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
@@ -194,3 +194,4 @@
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
 (allow user-preference-read
 	(preference-domain "com.apple.MIDI"))
+(allow user-preference-write)

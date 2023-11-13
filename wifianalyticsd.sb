@@ -45,6 +45,7 @@
 			(require-all
 				(require-not (literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin"))
 				(require-any
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(literal "/dev/null")
 					(literal "/dev/aes_0")
 					(subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.icloud.findmydevice.managed/Library")
@@ -57,11 +58,10 @@
 					(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache/Library/Caches/com.apple.MobileGestalt.plist")
 					(literal "/dev/zero")
 					(literal "/dev/random")
-					(entitlement-is-bool-true 129)
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(literal-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter")
 					(subpath "/private/var/containers/Data/System/com.apple.geod")
 					(subpath-prefix "${FRONT_USER_HOME}/Library/Caches/GeoServices")
-					(entitlement-is-bool-true 129)
 					(require-all
 						(literal "/private/var/")
 						(subpath-prefix "${FRONT_USER_HOME}")
@@ -70,7 +70,7 @@
 							(regex #"^/private/var/mobile/Library/Logs/CrashReporter/WiFiFWTrap" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/WiFiFWTrap" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]WiFiFWTrap" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]WiFiFWTrap" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiFWTrap" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiFWTrap" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiFWTrap")
 							(regex #"^/private/var/mobile/Library/Logs/CrashReporter/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]WiFiConnectionQuality-" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-")))
 					(require-all
-						(entitlement-is-bool-true 408)
+						(entitlement-is-bool-true "b'com.apple.coreduetd.people'")
 						(require-any
 							(require-any (literal-prefix "${HOME}/Library/CoreDuet/People")
 (literal-prefix "${HOME}/Library/CoreDuet/People/interactionC.db")
@@ -81,7 +81,7 @@
 						(uid 0)
 						(literal "/private/etc/master.passwd"))
 					(require-all
-						(entitlement-is-bool-true 124)
+						(entitlement-is-bool-true "b'com.apple.security.system-container'")
 						(extension "b'com.apple.sandbox.system-container'")
 						(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 						(require-any
@@ -92,10 +92,10 @@
 					(require-all
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(extension "b'com.apple.sandbox.system-group'")
-						(entitlement-is-present 190)
-						(entitlement-is-present 233))
+						(entitlement-is-present "b'com.apple.security.system-groups'")
+						(entitlement-is-present "b'com.apple.security.system-group-containers'"))
 					(require-all
-						(entitlement-is-bool-true 511)
+						(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
 						(extension "b'com.apple.logd.read-only'")
 						(require-any
 							(require-any (subpath "/private/var/userdata/diagnostics")
@@ -106,14 +106,14 @@
 						(extension "b'com.apple.sandbox.system-group'")
 						(require-any
 							(require-all
-								(entitlement-is-present 190)
+								(entitlement-is-present "b'com.apple.security.system-groups'")
 								(require-any
 									(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 									(require-all
 										(literal "/private/var/containers/Shared/SystemGroup/")
 										(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
 							(require-all
-								(entitlement-is-present 233)
+								(entitlement-is-present "b'com.apple.security.system-group-containers'")
 								(require-any
 									(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 									(require-all
@@ -172,10 +172,10 @@
 							(require-all
 								(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
 								(require-any
-									(entitlement-is-bool-true 290)
-									(entitlement-is-bool-true 297)))
+									(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")
+									(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")))
 							(require-all
-								(entitlement-is-present 305)
+								(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 								(subpath "/private/var/OOPJit")
 								(extension "b'com.apple.sandbox.oopjit'")))))))))
 (allow file-mount-update
@@ -197,10 +197,10 @@
 	(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 	(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 	(extension "b'com.apple.sharing.airdrop.readonly'")
-	(entitlement-is-bool-true 129)
+	(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 	(vnode-type DIRECTORY)
 	(require-all
-		(entitlement-is-bool-true 124)
+		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/")
 		(extension "b'com.apple.sandbox.system-container'"))
 	(require-all
@@ -252,6 +252,7 @@
 					(require-all
 						(literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin")
 						(require-any
+							(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 							(literal "/dev/null")
 							(literal "/dev/aes_0")
 							(subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.icloud.findmydevice.managed/Library")
@@ -264,11 +265,10 @@
 							(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache/Library/Caches/com.apple.MobileGestalt.plist")
 							(literal "/dev/zero")
 							(literal "/dev/random")
-							(entitlement-is-bool-true 129)
+							(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 							(literal-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter")
 							(subpath "/private/var/containers/Data/System/com.apple.geod")
 							(subpath-prefix "${FRONT_USER_HOME}/Library/Caches/GeoServices")
-							(entitlement-is-bool-true 129)
 							(require-all
 								(literal "/private/var/")
 								(subpath-prefix "${FRONT_USER_HOME}")
@@ -277,7 +277,7 @@
 									(regex #"^/private/var/mobile/Library/Logs/CrashReporter/WiFiFWTrap" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/WiFiFWTrap" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]WiFiFWTrap" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]WiFiFWTrap" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiFWTrap" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiFWTrap" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiFWTrap")
 									(regex #"^/private/var/mobile/Library/Logs/CrashReporter/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]WiFiConnectionQuality-" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-")))
 							(require-all
-								(entitlement-is-bool-true 408)
+								(entitlement-is-bool-true "b'com.apple.coreduetd.people'")
 								(require-any
 									(require-any (literal-prefix "${HOME}/Library/CoreDuet/People")
 (literal-prefix "${HOME}/Library/CoreDuet/People/interactionC.db")
@@ -288,7 +288,7 @@
 								(uid 0)
 								(literal "/private/etc/master.passwd"))
 							(require-all
-								(entitlement-is-bool-true 124)
+								(entitlement-is-bool-true "b'com.apple.security.system-container'")
 								(extension "b'com.apple.sandbox.system-container'")
 								(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 								(require-any
@@ -299,27 +299,27 @@
 							(require-all
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 								(extension "b'com.apple.sandbox.system-group'")
-								(entitlement-is-present 190)
-								(entitlement-is-present 233))
+								(entitlement-is-present "b'com.apple.security.system-groups'")
+								(entitlement-is-present "b'com.apple.security.system-group-containers'"))
 							(require-all
 								(extension "b'com.apple.sandbox.system-group'")
 								(require-any
 									(require-all
-										(entitlement-is-present 190)
+										(entitlement-is-present "b'com.apple.security.system-groups'")
 										(require-any
 											(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 											(require-all
 												(literal "/private/var/containers/Shared/SystemGroup/")
 												(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
 									(require-all
-										(entitlement-is-present 233)
+										(entitlement-is-present "b'com.apple.security.system-group-containers'")
 										(require-any
 											(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 											(require-all
 												(literal "/private/var/containers/Shared/SystemGroup/")
 												(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))
 							(require-all
-								(entitlement-is-bool-true 511)
+								(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
 								(extension "b'com.apple.logd.read-only'")
 								(require-any
 									(require-any (subpath "/private/var/userdata/diagnostics")
@@ -379,18 +379,18 @@
 									(require-all
 										(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
 										(require-any
-											(entitlement-is-bool-true 290)
-											(entitlement-is-bool-true 297)))
+											(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")
+											(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")))
 									(require-all
-										(entitlement-is-present 305)
+										(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 										(subpath "/private/var/OOPJit")
 										(extension "b'com.apple.sandbox.oopjit'"))))))))))
 	(require-all
 		(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
-			(entitlement-is-present 190)
-			(entitlement-is-present 233))))
+			(entitlement-is-present "b'com.apple.security.system-groups'")
+			(entitlement-is-present "b'com.apple.security.system-group-containers'"))))
 (allow file-read-data
 	(subpath-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter"))
 (allow file-revoke)
@@ -408,7 +408,7 @@
 	(require-all
 		(require-not (literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin"))
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(literal "/private/var/")
 				(require-any
@@ -419,9 +419,9 @@
 						(regex #"^/private/var/mobile/Library/Logs/CrashReporter/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]WiFiConnectionQuality-" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-")
 						(subpath-prefix "${FRONT_USER_HOME}"))))
 			(require-all
-				(entitlement-is-bool-true 124)
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(require-any
-					(entitlement-is-bool-true 129)
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(require-all
 						(extension "b'com.apple.sandbox.system-container'")
 						(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
@@ -433,11 +433,11 @@
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
-						(entitlement-is-present 190)
+						(entitlement-is-present "b'com.apple.security.system-groups'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 					(require-all
-						(entitlement-is-present 233)
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))
 (allow file-write*
@@ -462,7 +462,7 @@
 			(require-all
 				(literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin")
 				(require-any
-					(entitlement-is-bool-true 129)
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(require-all
 						(literal "/private/var/")
 						(require-any
@@ -473,9 +473,9 @@
 								(regex #"^/private/var/mobile/Library/Logs/CrashReporter/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]WiFiConnectionQuality-" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-")
 								(subpath-prefix "${FRONT_USER_HOME}"))))
 					(require-all
-						(entitlement-is-bool-true 124)
+						(entitlement-is-bool-true "b'com.apple.security.system-container'")
 						(require-any
-							(entitlement-is-bool-true 129)
+							(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 							(require-all
 								(extension "b'com.apple.sandbox.system-container'")
 								(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
@@ -484,11 +484,11 @@
 						(extension "b'com.apple.sandbox.system-group'")
 						(require-any
 							(require-all
-								(entitlement-is-present 190)
+								(entitlement-is-present "b'com.apple.security.system-groups'")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 							(require-all
-								(entitlement-is-present 233)
+								(entitlement-is-present "b'com.apple.security.system-group-containers'")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
 					(require-all
@@ -504,7 +504,7 @@
 			(literal "/dev/dtracehelper")
 			(literal "/dev/zero"))))
 (allow file-write-setugid
-	(entitlement-is-present 305)
+	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(require-any
@@ -521,7 +521,7 @@
 			(require-all
 				(literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin")
 				(require-any
-					(entitlement-is-bool-true 129)
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(require-all
 						(literal "/private/var/")
 						(require-any
@@ -532,9 +532,9 @@
 								(regex #"^/private/var/mobile/Library/Logs/CrashReporter/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]WiFiConnectionQuality-" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-")
 								(subpath-prefix "${FRONT_USER_HOME}"))))
 					(require-all
-						(entitlement-is-bool-true 124)
+						(entitlement-is-bool-true "b'com.apple.security.system-container'")
 						(require-any
-							(entitlement-is-bool-true 129)
+							(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 							(require-all
 								(extension "b'com.apple.sandbox.system-container'")
 								(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
@@ -546,20 +546,20 @@
 						(extension "b'com.apple.sandbox.system-group'")
 						(require-any
 							(require-all
-								(entitlement-is-present 190)
+								(entitlement-is-present "b'com.apple.security.system-groups'")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 							(require-all
-								(entitlement-is-present 233)
+								(entitlement-is-present "b'com.apple.security.system-group-containers'")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))))
 (allow file-write-times
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
-				(entitlement-is-bool-true 124)
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(literal "/private/var/containers/Data/System/")
 				(extension "b'com.apple.sandbox.system-container'")
 				(regex #"^/private/var/containers/Data/System/[^/]+/" #"^/private/var/containers/Data/System/[^/]+$"))
@@ -579,15 +579,15 @@
 						(extension "b'com.apple.sandbox.system-group'")
 						(require-any
 							(require-all
-								(entitlement-is-present 190)
+								(entitlement-is-present "b'com.apple.security.system-groups'")
 								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))
 							(require-all
-								(entitlement-is-present 233)
+								(entitlement-is-present "b'com.apple.security.system-group-containers'")
 								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
 					(require-all
 						(literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin")
 						(require-any
-							(entitlement-is-bool-true 129)
+							(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 							(require-all
 								(literal "/private/var/")
 								(require-any
@@ -598,27 +598,27 @@
 										(regex #"^/private/var/mobile/Library/Logs/CrashReporter/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]WiFiConnectionQuality-" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]WiFiConnectionQuality-" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])WiFiConnectionQuality-")
 										(subpath-prefix "${FRONT_USER_HOME}"))))
 							(require-all
-								(entitlement-is-bool-true 124)
+								(entitlement-is-bool-true "b'com.apple.security.system-container'")
 								(require-any
-									(entitlement-is-bool-true 129)
+									(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 									(require-all
 										(extension "b'com.apple.sandbox.system-container'")
 										(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 										(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))))
 							(require-all
-								(vnode-type BLOCK-DEVICE)
-								(vnode-type CHARACTER-DEVICE))
-							(require-all
 								(extension "b'com.apple.sandbox.system-group'")
 								(require-any
 									(require-all
-										(entitlement-is-present 190)
+										(entitlement-is-present "b'com.apple.security.system-groups'")
 										(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 										(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 									(require-all
-										(entitlement-is-present 233)
+										(entitlement-is-present "b'com.apple.security.system-group-containers'")
 										(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
-										(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))))))
+										(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
+							(require-all
+								(vnode-type BLOCK-DEVICE)
+								(vnode-type CHARACTER-DEVICE)))))))))
 (allow file-write-unlink)
 (allow file-write-xattr)
 (allow fs-quota*)
@@ -693,7 +693,7 @@
 		(extension "b'com.apple.security.exception.mach-lookup.local-name'"))
 	(require-all
 		(global-name "com.apple.coreduetd.people")
-		(entitlement-is-bool-true 408))
+		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
@@ -702,13 +702,13 @@
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
+					(global-name "com.apple.SharedWebCredentials")
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
-					(global-name "com.apple.mobile.usermanagerd.xpc")
-					(global-name "com.apple.SharedWebCredentials")))))
+					(global-name "com.apple.mobile.usermanagerd.xpc")))))
 	(require-all
 		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true 761))
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
@@ -757,3 +757,4 @@
 	(preference-domain "com.apple.wifi.app")
 	(require-any (preference-domain "com.apple.wifi.analytics")
 (preference-domain "com.apple.wifianalyticsd")))
+(allow user-preference-write)

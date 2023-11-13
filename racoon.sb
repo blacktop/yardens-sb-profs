@@ -157,3 +157,4 @@
 (allow system-mac-syscall)
 (allow system-nfssvc)
 (allow system-sched)
+(allow user-preference-write)

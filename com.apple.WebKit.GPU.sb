@@ -31,6 +31,18 @@
 		(require-any (literal "/private/var/root/Library/Caches/")
 (literal-prefix "${FRONT_USER_HOME}/Library/Caches/")))
 	(require-all
+		(extension-class "com.apple.app-sandbox.read-write")
+		(extension "b'com.apple.app-sandbox.read-write'"))
+	(require-all
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension "b'com.apple.app-sandbox.read-write'"))
+	(require-all
+		(extension-class "com.apple.app-sandbox.read")
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.app-sandbox.read-write'")
+			(extension "b'com.apple.sharing.airdrop.readonly'")))
+	(require-all
 		(extension "b'com.apple.sandbox.executable'")
 		(require-not (literal))
 		(extension-class "com.apple.app-sandbox.read"))
@@ -42,15 +54,15 @@
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
-					(subpath "/private/preboot/Cryptexes/OS/System/Library")
 					(subpath "/System/Cryptexes/OS/System/Library")
 					(subpath "/System/Library")
 					(extension "b'com.apple.app-sandbox.read'")
+					(subpath "/private/preboot/Cryptexes/OS/System/Library")
 					(require-all
 						(extension "b'com.apple.assets.read'")
 						(require-any
-							(subpath-prefix "${HOME}/Library/Assets")
-							(subpath "/private/var/MobileAsset")))))
+							(subpath "/private/var/MobileAsset")
+							(subpath-prefix "${HOME}/Library/Assets")))))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
@@ -69,18 +81,6 @@
 				(require-any
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.fileprovider.read-write'")))))
-	(require-all
-		(extension-class "com.apple.app-sandbox.read-write")
-		(extension "b'com.apple.app-sandbox.read-write'"))
-	(require-all
-		(extension-class "com.apple.mediaserverd.read-write")
-		(extension "b'com.apple.app-sandbox.read-write'"))
-	(require-all
-		(extension-class "com.apple.app-sandbox.read")
-		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.app-sandbox.read-write'")
-			(extension "b'com.apple.sharing.airdrop.readonly'")))
 	(require-all
 		(extension-class "com.apple.mediaserverd.read")
 		(require-any
@@ -192,10 +192,9 @@
 	(require-not (xattr "com.apple.security.private.")))
 (allow hid-control
 	(iokit-property "IOSurfaceAcceleratorCapabilitiesDict")
-	(require-any (iokit-property "device-perf-memory-class")
+	(require-any (iokit-property "product-description")
+(iokit-property "device-perf-memory-class")
 (iokit-property "compatible-device-fallback")
-(iokit-property "product-id")
-(iokit-property "product-description")
 (iokit-property "graphics-featureset-class")
 (iokit-property "graphics-featureset-fallbacks")
 (iokit-property "artwork-display-gamut")
@@ -238,7 +237,7 @@
 (iokit-property "DisplayPipeStrideRequirements")
 (iokit-property "DisplayPipePlaneBaseAlignment"))
 	(iokit-property "AVCSupported")
-	(iokit-property "iommu-present")
+	(iokit-property "product-id")
 	(iokit-property "IOPlatformUUID")
 	(require-any (iokit-property "canvas-width")
 (iokit-property "canvas-height"))
@@ -258,6 +257,7 @@
 	(iokit-property "device-colors")
 	(iokit-property "IOClassNameOverride")
 	(iokit-property "Protocol Characteristics")
+	(iokit-property "iommu-present")
 	(iokit-property "AppleJPEGSupportsRSTLogging")
 	(require-all
 		(iokit-user-client-class "IOPlatformExpertDevice")
@@ -289,11 +289,11 @@
 	(require-all
 		(require-not (global-name "com.apple.webkit.camera"))
 		(require-any
-			(global-name "com.apple.coremedia.compressionsession")
-			(global-name "com.apple.coremedia.decompressionsession")
 			(global-name "com.apple.audio.AudioQueueServer")
 			(global-name "com.apple.coremedia.videoqueue")
 			(global-name "com.apple.systemstatus.activityattribution")
+			(global-name "com.apple.coremedia.compressionsession")
+			(global-name "com.apple.coremedia.decompressionsession")
 			(require-all
 				(global-name "com.apple.audio.PhaseXPCServer")
 				(extension "b'com.apple.webkit.microphone'"))
@@ -376,11 +376,11 @@
 					(require-all
 						(require-not (xpc-service-name-regex #".+"))
 						(require-any
-							(global-name "com.apple.runningboard")
 							(global-name "com.apple.system.notification_center")
 							(global-name "com.apple.tccd")
 							(global-name "com.apple.logd.events")
 							(global-name "com.apple.logd")
+							(global-name "com.apple.runningboard")
 							(require-all
 								(global-name "com.apple.mobilegestalt.xpc")
 								(extension "b'com.apple.webkit.extension.mach'")))))))))
@@ -395,44 +395,38 @@
 	(target others))
 (allow process-info-listpids)
 (allow socket-option-set
-	(c1 3a1f ab8d ab8c)
+	(c1 3a63 ac39 ac38)
 	(syscall-number SYS_faccessat))
 (allow syscall*
-	(cb 3a29 ab8a f729))
+	(cb 3a6d ac36 f7ec))
 (allow syscall-unix
-	(cc 3a2c ab88 f729))
+	(cc 3a70 ac34 f7ec))
 (allow syscall-mig
 	(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
-(sysctl-name "hw.product")
 (sysctl-name "hw.physicalcpu_max"))
 	(sysctl-name "kern.bootsessionuuid")
 	(sysctl-name "hw.pagesize_compat")
-	(require-any (sysctl-name "hw.ncpu")
-(sysctl-name "hw.activecpu")
-(sysctl-name "hw.machine")
+	(require-any (sysctl-name "hw.machine")
 (sysctl-name "hw.memsize")
-(sysctl-name "kern.secure_kernel")
 (sysctl-name "kern.osproductversion")
 (sysctl-name "kern.osvariant_status"))
-	(require-any (sysctl-name "hw.l2cachesize")
-(sysctl-name "hw.cachelinesize"))
+	(sysctl-name "hw.product")
 	(sysctl-name "vm.malloc_ranges")
 	(sysctl-name "kern.bootargs")
-	(sysctl-name "kern.osversion")
+	(require-any (sysctl-name "hw.activecpu")
+(sysctl-name "kern.secure_kernel"))
+	(sysctl-name "hw.cachelinesize")
 	(sysctl-name "vm.footprint_suspend")
+	(sysctl-name "hw.l2cachesize")
+	(sysctl-name "kern.osversion")
+	(sysctl-name "hw.ncpu")
 	(require-all
 		(require-not (sysctl-name "sysctl.proc_native"))
 		(sysctl-name "hw.tbfrequency_compat")))
 (allow system*)
 (allow system-automount
-	(fcntl-command F_GETPROTECTIONCLASS)
-	(fcntl-command F_GETPATH)
-	(fcntl-command F_CHECK_LV)
-	(fcntl-command F_SETNOSIGPIPE)
-	(fcntl-command F_SETFD)
-	(fcntl-command F_ADDFILESIGS_RETURN)
-	(fcntl-command F_SETFL))
+	(ce 3a7a ac23 f7ec))
 (allow system-mac*
 	(require-all
 		(mac-syscall-number 5)
@@ -473,3 +467,4 @@
 (allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+(allow user-preference-write)

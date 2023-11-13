@@ -70,3 +70,4 @@
 			(preference-domain "com.apple.security"))))
 (allow user-preference-read
 	(preference-domain "com.apple.FontServices.FontProviderLoader"))
+(allow user-preference-write)

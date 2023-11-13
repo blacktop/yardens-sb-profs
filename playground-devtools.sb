@@ -19,7 +19,7 @@
 (allow iokit-issue-extension
 	(require-all
 		(iokit-user-client-class "AppleMobileFileIntegrityUserClient")
-		(entitlement-is-bool-true 19662)))
+		(entitlement-is-bool-true "b'com.apple.private.amfi.can-load-cdhash'")))
 (allow iokit-open*)
 (allow ipc-sysv-shm)
 (allow lsopen)
@@ -71,10 +71,10 @@
 		(extension "b'com.apple.security.exception.mach-lookup.local-name'"))
 	(require-all
 		(global-name "com.apple.coreduetd.people")
-		(entitlement-is-bool-true 408))
+		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
 		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true 761))
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
@@ -83,10 +83,10 @@
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
+					(global-name "com.apple.SharedWebCredentials")
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
-					(global-name "com.apple.mobile.usermanagerd.xpc")
-					(global-name "com.apple.SharedWebCredentials")))))
+					(global-name "com.apple.mobile.usermanagerd.xpc")))))
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
@@ -106,3 +106,4 @@
 (allow system-mac-label)
 (allow system-mac-syscall)
 (allow system-nfssvc)
+(allow user-preference-write)

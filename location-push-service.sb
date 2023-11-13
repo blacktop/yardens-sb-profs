@@ -203,9 +203,9 @@
 (require-not (subpath "/System/Library/Caches/com.apple.kernelcaches")))
 		(require-not (literal "/usr/standalone/firmware/apticket.der"))
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
-				(entitlement-is-bool-true 3790)
+				(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
 				(require-any
 					(require-all
 						(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
@@ -236,7 +236,7 @@
 							(extension-class "com.apple.mediaserverd.read")))
 					(require-all
 						(literal "/private/var/")
-						(subpath-prefix "${HOME}")
+						(subpath-prefix "${FRONT_USER_HOME}")
 						(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 			(require-all
 				(extension "b'com.apple.librarian.ubiquity-container'")
@@ -270,7 +270,7 @@
 							(extension-class "com.apple.mediaserverd.read")))
 					(require-all
 						(literal "/private/var/")
-						(subpath-prefix "${HOME}")
+						(subpath-prefix "${FRONT_USER_HOME}")
 						(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
@@ -321,15 +321,12 @@
 				(extension-class "com.apple.app-sandbox.read")
 				(extension "b'com.apple.app-sandbox.read-write'"))
 			(require-all
-				(extension-class "com.apple.sharing.airdrop.readonly")
-				(extension "b'com.apple.app-sandbox.read-write'"))
-			(require-all
 				(extension "b'com.apple.sandbox.application-group'")
 				(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/.com.apple."))
 				(require-any
 					(require-all
 						(literal "/private/var/")
-						(subpath-prefix "${HOME}")
+						(subpath-prefix "${FRONT_USER_HOME}")
 						(require-not (regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]")))
 					(require-all
 						(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/")
@@ -346,20 +343,20 @@
 							(extension-class "com.apple.spotlight-indexable")))
 					(require-all
 						(literal "/private/var/")
-						(subpath-prefix "${HOME}")
+						(subpath-prefix "${FRONT_USER_HOME}")
 						(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/"))
 					(require-all
 						(extension-class "com.apple.mediaserverd.read")
 						(literal "/private/var/")
 						(require-any
 							(require-all
-								(subpath-prefix "${HOME}")
+								(subpath-prefix "${FRONT_USER_HOME}")
 								(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+$"))
 							(require-all
 								(literal "/private/var/PersonaVolumes/")
 								(regex #"^/private/var/PersonaVolumes/[^/]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/PersonaVolumes/[^/]+/Containers/Shared/AppGroup/[^/]+$"))
 							(require-all
-								(subpath-prefix "${HOME}")
+								(subpath-prefix "${FRONT_USER_HOME}")
 								(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+$"))
 							(require-all
 								(literal "/private/var/PersonaVolumes/")
@@ -369,7 +366,7 @@
 						(extension-class "com.apple.app-sandbox.read")
 						(require-any
 							(require-all
-								(subpath-prefix "${HOME}")
+								(subpath-prefix "${FRONT_USER_HOME}")
 								(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+$"))
 							(require-all
 								(literal "/private/var/PersonaVolumes/")
@@ -1099,6 +1096,9 @@
 								(subpath-prefix "${FRONT_USER_HOME}")
 								(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Documents/Inbox/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Documents/Inbox$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/Documents/Inbox/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/Documents/Inbox$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/Documents/Inbox/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/Documents/Inbox$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/Documents/Inbox/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/Documents/Inbox$")))))))
 			(require-all
+				(extension-class "com.apple.sharing.airdrop.readonly")
+				(extension "b'com.apple.app-sandbox.read-write'"))
+			(require-all
 				(process-attribute is-apple-signed-executable)
 				(extension-class "com.apple.webkit.map-executable"))
 			(require-all
@@ -1111,9 +1111,9 @@
 				(extension-class "com.apple.wcd.readonly")
 				(extension "b'com.apple.sandbox.executable'"))
 			(require-all
-				(entitlement-is-bool-true 124)
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(require-any
-					(entitlement-is-bool-true 129)
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(require-all
 						(extension "b'com.apple.sandbox.system-container'")
 						(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
@@ -1138,31 +1138,37 @@
 										(extension-class "com.apple.mediaserverd.read")
 										(regex #"^/private/var/containers/Data/System/[^/]+/" #"^/private/var/containers/Data/System/[^/]+$"))))))))
 			(require-all
-				(extension-class "com.apple.aned.read-only")
-				(extension "b'com.apple.sandbox.executable'"))
-			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(extension "b'com.apple.fileprovider.read-write'"))
+			(require-all
+				(extension-class "com.apple.aned.read-only")
+				(extension "b'com.apple.sandbox.executable'"))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(extension "b'com.apple.sandbox.executable'"))
 			(require-all
+				(extension-class "com.apple.nsurlsessiond.readonly")
+				(extension "b'com.apple.sandbox.executable'"))
+			(require-all
+				(extension-class "com.apple.app-sandbox.read")
+				(extension "b'com.apple.fileprovider.read-write'"))
+			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
-						(entitlement-is-present 190)
+						(entitlement-is-present "b'com.apple.security.system-groups'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(require-any
 							(require-all
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 								(require-any
+									(extension-class "com.apple.nsurlsessiond.readonly")
+									(extension-class "com.apple.aned.read-only")
+									(extension-class "com.apple.mediaserverd.read")
 									(extension-class "com.apple.app-sandbox.read-write")
 									(extension-class "com.apple.app-sandbox.read")
 									(extension-class "com.apple.sharing.airdrop.readonly")
-									(extension-class "com.apple.mediaserverd.read-write")
-									(extension-class "com.apple.nsurlsessiond.readonly")
-									(extension-class "com.apple.aned.read-only")
-									(extension-class "com.apple.mediaserverd.read")))
+									(extension-class "com.apple.mediaserverd.read-write")))
 							(require-all
 								(extension-class "com.apple.mediaserverd.read")
 								(literal "/private/var/containers/Shared/SystemGroup/")
@@ -1172,19 +1178,19 @@
 								(literal "/private/var/containers/Shared/SystemGroup/")
 								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
 					(require-all
-						(entitlement-is-present 233)
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(require-any
 							(require-all
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 								(require-any
+									(extension-class "com.apple.nsurlsessiond.readonly")
+									(extension-class "com.apple.aned.read-only")
+									(extension-class "com.apple.mediaserverd.read")
 									(extension-class "com.apple.app-sandbox.read-write")
 									(extension-class "com.apple.app-sandbox.read")
 									(extension-class "com.apple.sharing.airdrop.readonly")
-									(extension-class "com.apple.mediaserverd.read-write")
-									(extension-class "com.apple.nsurlsessiond.readonly")
-									(extension-class "com.apple.aned.read-only")
-									(extension-class "com.apple.mediaserverd.read")))
+									(extension-class "com.apple.mediaserverd.read-write")))
 							(require-all
 								(extension-class "com.apple.mediaserverd.read")
 								(literal "/private/var/containers/Shared/SystemGroup/")
@@ -1192,13 +1198,7 @@
 							(require-all
 								(extension-class "com.apple.app-sandbox.read")
 								(literal "/private/var/containers/Shared/SystemGroup/")
-								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))
-			(require-all
-				(extension-class "com.apple.app-sandbox.read")
-				(extension "b'com.apple.fileprovider.read-write'"))
-			(require-all
-				(extension-class "com.apple.nsurlsessiond.readonly")
-				(extension "b'com.apple.sandbox.executable'")))))
+								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))))
 (allow file-ioctl)
 (allow file-issue-extension)
 (allow file-mount
@@ -1247,11 +1247,11 @@
 			(require-all
 				(require-not (literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin"))
 				(require-any
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(literal "/dev/null")
 					(literal "/dev/aes_0")
 					(subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.icloud.findmydevice.managed/Library")
 					(literal "/dev/urandom")
-					(entitlement-is-bool-true 129)
 					(require-any (subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/PublicInfo")
 (subpath-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/PublicInfo")
 (subpath-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/PublicInfo"))
@@ -1260,7 +1260,7 @@
 					(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache/Library/Caches/com.apple.MobileGestalt.plist")
 					(literal "/dev/zero")
 					(literal "/dev/random")
-					(entitlement-is-bool-true 129)
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(subpath-prefix "${FRONT_USER_HOME}/Library/Caches/GeoServices")
 					(subpath "/private/var/containers/Data/System/com.apple.geod")
 					(literal "/private/var/preferences/com.apple.networkd.plist")
@@ -1295,14 +1295,14 @@
 								(subpath-prefix "${FRONT_USER_HOME}")
 								(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Application Support/iCloudDrive/[^/]+/session/r/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Application Support/iCloudDrive/[^/]+/session/r$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/Library/Application Support/iCloudDrive/[^/]+/session/r/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/Library/Application Support/iCloudDrive/[^/]+/session/r$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/Library/Application Support/iCloudDrive/[^/]+/session/r/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/Library/Application Support/iCloudDrive/[^/]+/session/r$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/Library/Application Support/iCloudDrive/[^/]+/session/r/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/Library/Application Support/iCloudDrive/[^/]+/session/r$"))))
 					(require-all
-						(entitlement-is-bool-true 3790)
+						(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
 						(require-any
 							(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
 							(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/File Provider Storage/?")
 							(subpath-prefix "${HOME}/Library/Mobile Documents")
 							(require-all
 								(literal "/private/var/")
-								(subpath-prefix "${HOME}")
+								(subpath-prefix "${FRONT_USER_HOME}")
 								(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 					(require-all
 						(extension "b'com.apple.librarian.ubiquity-container'")
@@ -1312,7 +1312,7 @@
 							(subpath-prefix "${HOME}/Library/Mobile Documents")
 							(require-all
 								(literal "/private/var/")
-								(subpath-prefix "${HOME}")
+								(subpath-prefix "${FRONT_USER_HOME}")
 								(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 					(require-all
 						(extension "b'com.apple.sandbox.application-group'")
@@ -1321,7 +1321,7 @@
 							(require-all
 								(literal "/private/var/")
 								(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]")
-								(require-not (subpath-prefix "${HOME}")))))
+								(require-not (subpath-prefix "${FRONT_USER_HOME}")))))
 					(require-all
 						(extension "b'com.apple.sandbox.container'")
 						(require-any
@@ -1335,11 +1335,11 @@
 									(require-all
 										(subpath-prefix "${FRONT_USER_HOME}")
 										(require-any
+											(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp$" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library$" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Documents/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Documents$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)$")
 											(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+$")
 											(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/StoreKit/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/StoreKit$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/StoreKit/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/StoreKit$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/StoreKit/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/StoreKit$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/StoreKit/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/StoreKit$")
 											(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/System/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/System$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/System/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/System$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/System/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/System$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/System/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/System$")
-											(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/iTunesArtwork$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/iTunesArtwork$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/iTunesArtwork$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/iTunesArtwork$")
-											(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp$" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library$" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Documents/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Documents$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/((tmp|Library)|Documents)$")))
+											(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/iTunesArtwork$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/iTunesArtwork$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/iTunesArtwork$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/iTunesArtwork$")))
 									(require-all
 										(literal "/private/var/PersonaVolumes/")
 										(regex #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/tmp$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library/" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Documents/" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Documents$"))))))
@@ -1351,7 +1351,7 @@
 								(literal "/private/var/")
 								(require-any
 									(require-all
-										(subpath-prefix "${HOME}")
+										(subpath-prefix "${FRONT_USER_HOME}")
 										(require-any
 											(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/")
 											(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+$")))
@@ -1363,9 +1363,9 @@
 						(process-attribute is-apple-signed-executable))
 					(require-all
 						(literal "/private/var/preferences/com.apple.networkextension.plist")
-						(entitlement-is-present 1555))
+						(entitlement-is-present "b'com.apple.private.networkextension.configuration'"))
 					(require-all
-						(entitlement-is-bool-true 408)
+						(entitlement-is-bool-true "b'com.apple.coreduetd.people'")
 						(require-any
 							(require-any (literal-prefix "${HOME}/Library/CoreDuet/People")
 (literal-prefix "${HOME}/Library/CoreDuet/People/interactionC.db")
@@ -1376,7 +1376,7 @@
 						(uid 0)
 						(literal "/private/etc/master.passwd"))
 					(require-all
-						(entitlement-is-bool-true 124)
+						(entitlement-is-bool-true "b'com.apple.security.system-container'")
 						(extension "b'com.apple.sandbox.system-container'")
 						(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 						(require-any
@@ -1387,33 +1387,16 @@
 					(require-all
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(extension "b'com.apple.sandbox.system-group'")
-						(entitlement-is-present 190)
-						(entitlement-is-present 233))
+						(entitlement-is-present "b'com.apple.security.system-groups'")
+						(entitlement-is-present "b'com.apple.security.system-group-containers'"))
 					(require-all
-						(entitlement-is-bool-true 511)
+						(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
 						(extension "b'com.apple.logd.read-only'")
 						(require-any
 							(require-any (subpath "/private/var/userdata/diagnostics")
 (subpath "/private/var/db/timesync"))
 							(require-any (subpath "/private/var/db/diagnostics")
 (subpath "/private/var/db/uuidtext"))))
-					(require-all
-						(extension "b'com.apple.sandbox.system-group'")
-						(require-any
-							(require-all
-								(entitlement-is-present 190)
-								(require-any
-									(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
-									(require-all
-										(literal "/private/var/containers/Shared/SystemGroup/")
-										(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
-							(require-all
-								(entitlement-is-present 233)
-								(require-any
-									(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
-									(require-all
-										(literal "/private/var/containers/Shared/SystemGroup/")
-										(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))
 					(require-all
 						(vnode-type BLOCK-DEVICE)
 						(vnode-type CHARACTER-DEVICE)
@@ -1467,12 +1450,29 @@
 							(require-all
 								(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
 								(require-any
-									(entitlement-is-bool-true 290)
-									(entitlement-is-bool-true 297)))
+									(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")
+									(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")))
 							(require-all
-								(entitlement-is-present 305)
+								(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 								(subpath "/private/var/OOPJit")
-								(extension "b'com.apple.sandbox.oopjit'")))))))))
+								(extension "b'com.apple.sandbox.oopjit'"))))
+					(require-all
+						(extension "b'com.apple.sandbox.system-group'")
+						(require-any
+							(require-all
+								(entitlement-is-present "b'com.apple.security.system-groups'")
+								(require-any
+									(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
+									(require-all
+										(literal "/private/var/containers/Shared/SystemGroup/")
+										(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
+							(require-all
+								(entitlement-is-present "b'com.apple.security.system-group-containers'")
+								(require-any
+									(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
+									(require-all
+										(literal "/private/var/containers/Shared/SystemGroup/")
+										(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))))))
 (allow file-mount-update
 	(require-all
 		(literal)
@@ -1543,7 +1543,7 @@
 	(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 	(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 	(extension "b'com.apple.sharing.airdrop.readonly'")
-	(entitlement-is-bool-true 129)
+	(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 	(vnode-type DIRECTORY)
 	(require-all
 		(vnode-type DIRECTORY)
@@ -1568,25 +1568,25 @@
 		(regex #"^/private/var/mobile/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/euser[0-9]+/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/[-0-9A-F]+/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/Users/[^/]+/Library/DeviceRegistry/[-0-9A-Z]+$")
 		(process-attribute is-apple-signed-executable))
 	(require-all
-		(entitlement-is-bool-true 3790)
+		(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
 		(require-any
 			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
 			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/File Provider Storage/?")
 			(subpath-prefix "${HOME}/Library/Mobile Documents")
 			(require-all
 				(literal "/private/var/")
-				(subpath-prefix "${HOME}")
+				(subpath-prefix "${FRONT_USER_HOME}")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 	(require-all
-		(entitlement-is-bool-true 124)
+		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/")
 		(extension "b'com.apple.sandbox.system-container'"))
 	(require-all
 		(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
-			(entitlement-is-present 190)
-			(entitlement-is-present 233)))
+			(entitlement-is-present "b'com.apple.security.system-groups'")
+			(entitlement-is-present "b'com.apple.security.system-group-containers'")))
 	(require-all
 		(extension "b'com.apple.librarian.ubiquity-container'")
 		(require-any
@@ -1595,7 +1595,7 @@
 			(subpath-prefix "${HOME}/Library/Mobile Documents")
 			(require-all
 				(literal "/private/var/")
-				(subpath-prefix "${HOME}")
+				(subpath-prefix "${FRONT_USER_HOME}")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 	(require-all
 		(extension "b'com.apple.sandbox.container'")
@@ -1659,7 +1659,7 @@
 			(require-all
 				(literal "/private/var/")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/")
-				(subpath-prefix "${HOME}"))))
+				(subpath-prefix "${FRONT_USER_HOME}"))))
 	(require-all
 		(process-attribute is-apple-signed-executable)
 		(require-any
@@ -1724,14 +1724,14 @@
 	(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 	(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 	(require-all
-		(entitlement-is-bool-true 3790)
+		(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
 		(require-any
 			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
 			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/File Provider Storage/?")
 			(subpath-prefix "${HOME}/Library/Mobile Documents")
 			(require-all
 				(literal "/private/var/")
-				(subpath-prefix "${HOME}")
+				(subpath-prefix "${FRONT_USER_HOME}")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 	(require-all
 		(extension "b'com.apple.librarian.ubiquity-container'")
@@ -1741,16 +1741,16 @@
 			(subpath-prefix "${HOME}/Library/Mobile Documents")
 			(require-all
 				(literal "/private/var/")
-				(subpath-prefix "${HOME}")
+				(subpath-prefix "${FRONT_USER_HOME}")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 	(require-all
 		(extension "b'com.apple.sandbox.container'")
 		(require-any
+			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesMetadata.plist")
 			(literal)
 			(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesMetadata.plist")
 			(require-all
 				(literal "/private/var/")
 				(require-any
@@ -1782,7 +1782,7 @@
 					(subpath "/System")
 					(literal "/private/var/Managed Preferences/mobile/com.apple.webcontentfilter.plist")
 					(require-all
-						(subpath-prefix "${HOME}")
+						(subpath-prefix "${FRONT_USER_HOME}")
 						(require-any
 							(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/")
 							(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+$")))
@@ -1844,7 +1844,7 @@
 		(require-not (literal-prefix "${HOME}/Library/Caches/DateFormats.plist"))
 		(require-not (literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin"))
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(vnode-type REGULAR-FILE)
 				(extension "b'com.apple.revisiond.staging'")
@@ -1864,14 +1864,14 @@
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]/[UNSUPPORTED]DocumentRevisions-V100/staging/?")
 (subpath-prefix "${FRONT_USER_HOME}/.DocumentRevisions-V100/staging")))
 			(require-all
-				(entitlement-is-bool-true 3790)
+				(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
 				(require-any
 					(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
 					(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/File Provider Storage/?")
 					(subpath-prefix "${HOME}/Library/Mobile Documents")
 					(require-all
 						(literal "/private/var/")
-						(subpath-prefix "${HOME}")
+						(subpath-prefix "${FRONT_USER_HOME}")
 						(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 			(require-all
 				(extension "b'com.apple.librarian.ubiquity-container'")
@@ -1881,7 +1881,7 @@
 					(subpath-prefix "${HOME}/Library/Mobile Documents")
 					(require-all
 						(literal "/private/var/")
-						(subpath-prefix "${HOME}")
+						(subpath-prefix "${FRONT_USER_HOME}")
 						(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 			(require-all
 				(extension "b'com.apple.sandbox.application-group'")
@@ -1890,11 +1890,11 @@
 					(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/")
 					(require-all
 						(literal "/private/var/")
-						(subpath-prefix "${HOME}")
+						(subpath-prefix "${FRONT_USER_HOME}")
 						(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/[.]com[.]apple[.]"))
 					(require-all
 						(literal "/private/var/")
-						(subpath-prefix "${HOME}")
+						(subpath-prefix "${FRONT_USER_HOME}")
 						(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/"))))
 			(require-all
 				(extension "b'com.apple.sandbox.container'")
@@ -1921,9 +1921,9 @@
 								(literal "/private/var/PersonaVolumes/")
 								(regex #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/tmp$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library/" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Documents/" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Documents$"))))))
 			(require-all
-				(entitlement-is-bool-true 124)
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(require-any
-					(entitlement-is-bool-true 129)
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(require-all
 						(extension "b'com.apple.sandbox.system-container'")
 						(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
@@ -1935,11 +1935,11 @@
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
-						(entitlement-is-present 190)
+						(entitlement-is-present "b'com.apple.security.system-groups'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 					(require-all
-						(entitlement-is-present 233)
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))
 (allow file-write*
@@ -1981,11 +1981,11 @@
 				(extension "b'com.apple.sandbox.application-group'")
 				(require-any
 					(require-all
-						(subpath-prefix "${HOME}")
-						(require-not (regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library$" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library/Preferences$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/Library(/Preferences)?$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/Library(/Preferences)?$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/Library(/Preferences)?$")))
-					(require-all
 						(literal "/private/var/PersonaVolumes/")
-						(require-not (regex #"^/private/var/PersonaVolumes/[^/]+/Containers/Shared/AppGroup/[^/]+/Library$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Shared/AppGroup/[^/]+/Library/Preferences$"))))))))
+						(require-not (regex #"^/private/var/PersonaVolumes/[^/]+/Containers/Shared/AppGroup/[^/]+/Library$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Shared/AppGroup/[^/]+/Library/Preferences$")))
+					(require-all
+						(subpath-prefix "${FRONT_USER_HOME}")
+						(require-not (regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library$" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library/Preferences$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/Library(/Preferences)?$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/Library(/Preferences)?$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/Library(/Preferences)?$"))))))))
 (allow file-write-acl
 	(literal "/dev/aes_0")
 	(require-all
@@ -2000,11 +2000,11 @@
 		(require-not (literal "/dev/urandom"))
 		(require-not (literal "/dev/random"))
 		(require-any
+			(literal "/dev/null")
 			(literal "/dev/dtracehelper")
-			(literal "/dev/zero")
-			(literal "/dev/null"))))
+			(literal "/dev/zero"))))
 (allow file-write-setugid
-	(entitlement-is-present 305)
+	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(extension "b'com.apple.sandbox.container'")
 		(require-any
@@ -2031,38 +2031,45 @@
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
-			(entitlement-is-bool-true 129)
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(extension "b'com.apple.sandbox.system-container'")
-				(entitlement-is-bool-true 124)
+				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(literal "/private/var/containers/Data/System/")
 				(regex #"^/private/var/containers/Data/System/[^/]+/" #"^/private/var/containers/Data/System/[^/]+$"))
 			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
-						(entitlement-is-present 190)
+						(entitlement-is-present "b'com.apple.security.system-groups'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))
 					(require-all
-						(entitlement-is-present 233)
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
 (allow hid-control
+	(iokit-property "IORegistryEntryPropertyKeys")
 	(require-all
-		(iokit-property "product-id")
-		(iokit-user-client-class "IOPlatformDevice"))
-	(require-all
-		(iokit-user-client-class "IOPlatformExpertDevice")
+		(iokit-user-client-class "IOPlatformDevice")
 		(require-any
-			(require-any (iokit-property "model")
+			(iokit-property "product-id")
+			(require-any (iokit-property "disable-globe-map")
+(iokit-property "multiuser-sessions"))))
+	(require-all
+		(require-any (iokit-property "model")
 (iokit-property "model-number"))
-			(require-any (iokit-property "platform-name")
+		(iokit-user-client-class "IOPlatformExpertDevice"))
+	(require-all
+		(require-any (iokit-property "platform-name")
 (iokit-property "regulatory-model-number"))
-			(iokit-property "region-info"))))
+		(iokit-user-client-class "IOPlatformExpertDevice"))
+	(require-all
+		(iokit-property "region-info")
+		(iokit-user-client-class "IOPlatformExpertDevice")))
 (allow iokit-open*
 	(iokit-user-client-class "IOPMrootDomain")
-	(entitlement-is-bool-true 736))
+	(entitlement-is-bool-true "b'com.apple.security.exception.iokit-user-client-class'"))
 (allow ipc-sysv-shm)
 (allow mach-bootstrap)
 (allow mach-host-special-port-set)
@@ -2255,17 +2262,17 @@
 					(global-name "com.apple.duetknowledged.activity")
 					(require-all
 						(global-name "com.apple.coreduetd.people")
-						(entitlement-is-bool-true 408))
+						(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 					(require-all
 						(process-attribute is-apple-signed-executable)
 						(require-any
+							(global-name "com.apple.SharedWebCredentials")
 							(global-name "com.apple.datamigrator")
 							(global-name "com.apple.Honeybee.event-notify")
-							(global-name "com.apple.mobile.usermanagerd.xpc")
-							(global-name "com.apple.SharedWebCredentials")))
+							(global-name "com.apple.mobile.usermanagerd.xpc")))
 					(require-all
 						(global-name "com.apple.system.notification_center")
-						(entitlement-is-bool-true 761))
+						(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 					(require-all
 						(global-name "com.apple.osanalytics.osanalyticshelper")
 						(process-attribute is-apple-signed-executable))))
@@ -2273,24 +2280,24 @@
 				(global-name "com.apple.ak.auth.xpc")
 				(require-any
 					(process-attribute is-apple-signed-executable)
-					(entitlement-is-bool-true 2672)
-					(entitlement-is-bool-true 2676)
-					(entitlement-is-bool-true 2681)))
+					(entitlement-is-bool-true "b'com.apple.authkit.client'")
+					(entitlement-is-bool-true "b'com.apple.authkit.client.internal'")
+					(entitlement-is-bool-true "b'com.apple.authkit.client.private'")))
 			(require-all
 				(global-name "com.apple.ak.anisette.xpc")
 				(require-any
 					(process-attribute is-apple-signed-executable)
-					(entitlement-is-bool-true 2672)
-					(entitlement-is-bool-true 2676)
-					(entitlement-is-bool-true 2681)))
+					(entitlement-is-bool-true "b'com.apple.authkit.client'")
+					(entitlement-is-bool-true "b'com.apple.authkit.client.internal'")
+					(entitlement-is-bool-true "b'com.apple.authkit.client.private'")))
 			(require-all
 				(global-name "com.apple.networkd_privileged")
 				(require-any
-					(entitlement-is-bool-true 2707)
-					(entitlement-is-bool-true 2702)
-					(entitlement-is-bool-true 2696)
-					(entitlement-is-bool-true 2691)
-					(entitlement-is-bool-true 2711))))))
+					(entitlement-is-bool-true "b'com.apple.networkd.advisory_socket'")
+					(entitlement-is-bool-true "b'com.apple.networkd.disable_opportunistic'")
+					(entitlement-is-bool-true "b'com.apple.networkd.modify_settings'")
+					(entitlement-is-bool-true "b'com.apple.networkd.persistent_interface'")
+					(entitlement-is-bool-true "b'com.apple.networkd_privileged'"))))))
 (allow mach-task-name)
 (allow mach-task-read)
 (allow mach-task-special-port*)
@@ -2319,26 +2326,26 @@
 			(require-all
 				(literal "/private/var/")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/")
-				(subpath-prefix "${HOME}"))))
+				(subpath-prefix "${FRONT_USER_HOME}"))))
 	(require-all
-		(entitlement-is-bool-true 3790)
+		(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
 		(require-any
-			(subpath-prefix "${HOME}/Library/Mobile Documents")
 			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
 			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/File Provider Storage/?")
+			(subpath-prefix "${HOME}/Library/Mobile Documents")
 			(require-all
 				(literal "/private/var/")
-				(subpath-prefix "${HOME}")
+				(subpath-prefix "${FRONT_USER_HOME}")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 	(require-all
 		(extension "b'com.apple.librarian.ubiquity-container'")
 		(require-any
-			(subpath-prefix "${HOME}/Library/Mobile Documents")
 			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
 			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/File Provider Storage/?")
+			(subpath-prefix "${HOME}/Library/Mobile Documents")
 			(require-all
 				(literal "/private/var/")
-				(subpath-prefix "${HOME}")
+				(subpath-prefix "${FRONT_USER_HOME}")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$")))))
 (allow network-inbound
 	(control-name "com.apple.flow-divert")
@@ -2364,26 +2371,26 @@
 			(require-all
 				(literal "/private/var/")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/")
-				(subpath-prefix "${HOME}"))))
+				(subpath-prefix "${FRONT_USER_HOME}"))))
 	(require-all
-		(entitlement-is-bool-true 3790)
+		(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
 		(require-any
+			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
 			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/File Provider Storage/?")
 			(subpath-prefix "${HOME}/Library/Mobile Documents")
-			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
 			(require-all
 				(literal "/private/var/")
-				(subpath-prefix "${HOME}")
+				(subpath-prefix "${FRONT_USER_HOME}")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 	(require-all
 		(extension "b'com.apple.librarian.ubiquity-container'")
 		(require-any
+			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
 			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/File Provider Storage/?")
 			(subpath-prefix "${HOME}/Library/Mobile Documents")
-			(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Mobile Documents/?")
 			(require-all
 				(literal "/private/var/")
-				(subpath-prefix "${HOME}")
+				(subpath-prefix "${FRONT_USER_HOME}")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))))
 	(require-all
 		(require-not (remote tcp "localhost:873"))
@@ -2439,7 +2446,8 @@
 			(preference-domain "com.apple.security")
 			(require-all
 				(preference-domain "com.apple.itunesstored")
-				(entitlement-is-bool-true 2843)))))
+				(entitlement-is-bool-true "b'com.apple.itunesstored.private'")))))
 (allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+(allow user-preference-write)

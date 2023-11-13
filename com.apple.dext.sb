@@ -2,11 +2,11 @@
 (deny default)
 (allow file-issue-extension)
 (allow file-link
+	(extension "b'com.apple.sandbox.executable'")
 	(require-any (subpath "/System/DriverKit/usr/lib")
 (subpath "/System/DriverKit/System/Library/dyld")
 (subpath "/System/DriverKit/System/Library/Frameworks")
 (subpath "/System/DriverKit/System/Library/PrivateFrameworks"))
-	(extension "b'com.apple.sandbox.executable'")
 	(subpath "/System/Cryptexes")
 	(subpath "/private/preboot/Cryptexes")
 	(require-all
@@ -132,7 +132,7 @@
 (allow mach-task-special-port-get)
 (allow opendirectory-user-modify)
 (allow socket-option-set
-	(c1 4054 a24e a24a)
+	(c1 409e a30f a30a)
 	(require-all
 		(debug-mode)
 		(require-any
@@ -143,9 +143,11 @@
 		(syscall-number SYS_memorystatus_control)
 		(debug-mode)))
 (allow syscall*
-	(cb 405e a248 f729))
+	(cb 40a8 a308 f7ec))
 (allow syscall-unix)
 (allow syscall-mig)
+(allow system-automount
+	(ce 3605 a306 f7ec))
 (allow system-mac*
 	(require-all
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")
@@ -159,3 +161,4 @@
 (allow system-mac-label)
 (allow system-mac-syscall)
 (allow system-nfssvc)
+(allow user-preference-write)
