@@ -1,7 +1,7 @@
 (version 1)
 (deny default)
-(allow file-lock)
-(allow iokit-get-properties
+(allow file-issue-extension)
+(allow hid-control
 	(require-all
 		(iokit-user-client-class "IOPlatformDevice")
 		(require-any
@@ -18,20 +18,16 @@
 			(iokit-property "artwork-scale-factor")
 			(iokit-property "soc-generation")
 			(iokit-property "is-muse"))))
-(allow lsopen)
-(allow mach-derive-port)
-(allow mach-kernel-endpoint)
-(allow mach-lookup
+(allow ipc-sysv-shm)
+(allow mach-bootstrap)
+(allow mach-host-special-port-set)
+(allow mach-issue-extension
 	(global-name "com.apple.sessionservices")
 	(global-name "com.apple.CARenderServer")
 	(global-name "com.apple.fontservicesd")
 	(global-name "com.apple.frontboard.systemappservices")
-	(require-all
-		(local-name-regex #".+")
-		(extension "b'com.apple.security.exception.mach-lookup.local-name'"))
-	(require-all
-		(extension "b'com.apple.security.exception.mach-lookup.global-name'")
-		(global-name-regex #".+"))
+	(extension "b'com.apple.security.exception.mach-lookup.global-name'")
+	(extension "b'com.apple.security.exception.mach-lookup.local-name'")
 	(require-all
 		(xpc-service-name-regex #".+")
 		(require-any
@@ -92,20 +88,20 @@
 					(require-all
 						(global-name "com.apple.logd")
 						(entitlement-is-bool-true "b'get-task-allow'")))))))
+(allow mach-task-name)
+(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow mach-task-special-port-set)
-(allow necp-client-open)
-(allow process-codesigning)
+(allow opendirectory-user-modify)
+(allow socket-option-set)
+(allow syscall*)
 (allow syscall-unix)
-(allow syscall-mach)
-(allow syscall-mig)
-(allow system-fcntl
-	(ce 72f6 2afd f803))
+(allow system-automount
+	(ce 733f 2a05 f53e))
+(allow system-mac-syscall)
 (allow system-memorystatus-control)
-(allow system-necp-client-action)
-(allow system-privilege)
-(allow user-preference-read
+(allow system-package-check)
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.UIKit")
 	(extension "b'com.apple.security.exception.shared-preference.read-write'")
@@ -118,7 +114,7 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow managed-preference-read
+(allow user-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'")
 	(preference-domain "com.apple.UIKit")
@@ -132,4 +128,4 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow default-message-filter)
+(allow storage-class-map)

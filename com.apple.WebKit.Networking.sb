@@ -1,6 +1,6 @@
 (version 1)
 (deny default)
-(allow darwin-notification-post
+(allow device-camera
 	(require-any (notification-name "com.apple.CFNetwork")
 (notification-name "com.apple.WebKit.Cache.dump")
 (notification-name "com.apple.analyticsd.running")
@@ -26,11 +26,11 @@
 (notification-name "AppleTimePreferencesChangedNotification")
 (notification-name "AppleTextBehaviorPreferencesChangedNotification")
 (notification-name "AppleTemperatureUnitPreferencesChangedNotification")))
-(allow file-clone
+(allow file*
 	(require-any (subpath "/private/var/mobile/Containers/Data")
 (subpath "/private/var/mobile/Library/Caches")
 (subpath "/private/var/mobile/Library/WebClips")))
-(allow file-issue-extension
+(allow file-clone
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
 	(require-all
 		(extension-class "com.apple.nsurlstorage.extension-cache")
@@ -54,9 +54,9 @@
 	(require-all
 		(extension-class "com.apple.nsurlsessiond.readonly")
 		(extension "b'com.apple.sandbox.executable'")))
-(allow file-link)
-(allow file-lock)
-(allow file-map-executable
+(allow file-ioctl)
+(allow file-issue-extension)
+(allow file-link
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
 	(require-any (subpath "/System/Cryptexes/OS/usr/lib")
 (subpath "/System/Cryptexes/OS/System/Library/PrivateFrameworks")
@@ -69,7 +69,7 @@
 	(require-all
 		(extension "b'com.apple.sandbox.executable'")
 		(literal)))
-(allow file-read*
+(allow file-mount
 	(subpath "/private/preboot/Cryptexes/OS/System/Library")
 	(subpath "/private/var/preferences/Logging")
 	(literal "/dev/urandom")
@@ -123,12 +123,12 @@
 			(literal "/private/etc/passwd")
 			(literal "/private/etc/services")
 			(literal "/private/etc/hosts"))))
-(allow file-read-data
+(allow file-mount-update
 	(literal "/usr/local/lib/log")
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-read-metadata
+(allow file-read*
 	(require-all
 		(require-not (literal-prefix "${HOME}/Library/Caches/powerlog.launchd"))
 		(require-any
@@ -136,27 +136,27 @@
 			(literal-prefix "${HOME}")
 			(literal-prefix "${HOME}/Library/Preferences")
 			(require-not (literal "/private/var/run/syslog")))))
-(allow file-test-existence)
-(allow file-write*
+(allow file-revoke)
+(allow file-test-existence
 	(extension "b'com.apple.app-sandbox.read-write'"))
-(allow file-write-create
+(allow file-write*
 	(require-all
 		(require-not (vnode-type SYMLINK))
 		(require-not (literal-prefix "${HOME}/Library/Logs/CrashReporter/CFNetwork_"))))
-(allow file-write-data
+(allow file-write-acl
 	(literal "/dev/dtracehelper"))
-(allow iokit-open-user-client
+(allow iokit-issue-extension
 	(iokit-user-client-class "AppleKeyStoreUserClient"))
-(allow iokit-open-service
+(allow iokit-open*
 	(iokit-user-client-class "AppleKeyStore"))
-(allow ipc-posix-sem-open
+(allow ipc-posix-sem*
 	(ipc-posix-name "containermanagerd.fb_check"))
-(allow ipc-posix-shm-read-data
+(allow ipc-posix-sem-wait
 	(require-not (ipc-posix-name "/com.apple.AppSSO.version")))
+(allow lsopen)
 (allow mach-bootstrap)
-(allow mach-derive-port)
-(allow mach-kernel-endpoint)
-(allow mach-lookup
+(allow mach-host-special-port-set)
+(allow mach-issue-extension
 	(global-name "com.apple.webprivacyd")
 	(global-name "com.apple.tccd")
 	(global-name "com.apple.WebPrivacy.Service")
@@ -173,10 +173,10 @@
 				(require-not (global-name "com.apple.ctkd.token-client"))
 				(require-not (global-name "com.apple.distributed_notifications@1v3"))
 				(require-any
-					(global-name "com.apple.logd.events")
-					(global-name "com.apple.logd")
 					(global-name "com.apple.runningboard")
-					(global-name "com.apple.system.notification_center")))))
+					(global-name "com.apple.system.notification_center")
+					(global-name "com.apple.logd.events")
+					(global-name "com.apple.logd")))))
 	(require-all
 		(require-not (global-name "com.apple.mobilegestalt.xpc"))
 		(require-any
@@ -200,10 +200,10 @@
 						(require-not (global-name "com.apple.ctkd.token-client"))
 						(require-not (global-name "com.apple.distributed_notifications@1v3"))
 						(require-any
-							(global-name "com.apple.logd.events")
-							(global-name "com.apple.logd")
 							(global-name "com.apple.runningboard")
-							(global-name "com.apple.system.notification_center")))))
+							(global-name "com.apple.system.notification_center")
+							(global-name "com.apple.logd.events")
+							(global-name "com.apple.logd")))))
 			(require-all
 				(global-name "com.apple.analyticsd")
 				(require-not (xpc-service-name-regex #".+"))
@@ -213,10 +213,10 @@
 						(require-not (global-name "com.apple.ctkd.token-client"))
 						(require-not (global-name "com.apple.distributed_notifications@1v3"))
 						(require-any
-							(global-name "com.apple.logd.events")
-							(global-name "com.apple.logd")
 							(global-name "com.apple.runningboard")
-							(global-name "com.apple.system.notification_center")))))
+							(global-name "com.apple.system.notification_center")
+							(global-name "com.apple.logd.events")
+							(global-name "com.apple.logd")))))
 			(require-all
 				(global-name "com.apple.aggregated")
 				(require-not (xpc-service-name-regex #".+"))
@@ -226,10 +226,10 @@
 						(require-not (global-name "com.apple.ctkd.token-client"))
 						(require-not (global-name "com.apple.distributed_notifications@1v3"))
 						(require-any
-							(global-name "com.apple.logd.events")
-							(global-name "com.apple.logd")
 							(global-name "com.apple.runningboard")
-							(global-name "com.apple.system.notification_center")))))
+							(global-name "com.apple.system.notification_center")
+							(global-name "com.apple.logd.events")
+							(global-name "com.apple.logd")))))
 			(require-all
 				(require-not (global-name "com.apple.FileCoordination"))
 				(require-not (global-name "com.apple.dmd.policy"))
@@ -240,12 +240,12 @@
 						(require-not (global-name "com.apple.securityd"))
 						(require-not (global-name "com.apple.ocspd"))
 						(require-any
-							(global-name "com.apple.accountsd.accountmanager")
 							(global-name "com.apple.GSSCred")
 							(global-name "com.apple.nehelper")
 							(global-name "com.apple.networkserviceproxy.fetch-token")
 							(global-name "com.apple.appstored.xpc.request")
 							(global-name "com.apple.appstored.xpc")
+							(global-name "com.apple.accountsd.accountmanager")
 							(require-all
 								(require-not (global-name "com.apple.cookied"))
 								(require-any
@@ -284,33 +284,33 @@
 																(require-not (global-name "com.apple.SystemConfiguration.PPPController"))
 																(require-not (global-name "com.apple.SystemConfiguration.SCNetworkReachability"))
 																(require-any
-																	(require-not (global-name "com.apple.PowerManagement.control"))
 																	(global-name "com.apple.nesessionmanager")
-																	(global-name "com.apple.dnssd.service"))))))))))))))))))
+																	(global-name "com.apple.dnssd.service")
+																	(require-not (global-name "com.apple.PowerManagement.control")))))))))))))))))))
+(allow mach-task-name)
+(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow mach-task-special-port-set)
-(allow necp-client-open)
-(allow network*
+(allow mach-task-special-port-set
 	(local tcp "*:*")
 	(local udp "*:*")
 	(remote tcp "*:*")
 	(remote udp "*:*"))
-(allow network-outbound
+(allow network-inbound
 	(control-name "com.apple.flow-divert")
 	(require-all
 		(require-not (remote tcp "localhost:62078"))
 		(require-any
-			(control-name "com.apple.netsrc")
-			(remote tcp "*:*")
 			(remote udp "*:*")
-			(literal "/private/var/run/mDNSResponder"))))
-(allow process-codesigning)
-(allow process-info-codesignature
+			(literal "/private/var/run/mDNSResponder")
+			(control-name "com.apple.netsrc")
+			(remote tcp "*:*"))))
+(allow opendirectory-user-modify)
+(allow process-fork
 	(entitlement-is-bool-true "b'com.apple.security.exception.process-info'"))
-(allow process-info-pidinfo)
-(allow socket-ioctl)
-(allow socket-option-get
+(allow process-info-listpids)
+(allow pseudo-tty)
+(allow socket-ioctl
 	(require-not (socket-option-level SOL_SOCKET))
 	(socket-option-name SO_NREAD)
 	(socket-option-name SO_SNDBUF)
@@ -325,7 +325,7 @@
 	(require-all
 		(socket-option-level IPPROTO_HOPOPTS)
 		(socket-option-name 25)))
-(allow socket-option-set
+(allow socket-option*
 	(require-not (socket-option-level IPPROTO_HOPOPTS))
 	(socket-option-name 20)
 	(socket-option-name 7)
@@ -333,10 +333,6 @@
 	(require-all
 		(socket-option-level SOL_SOCKET)
 		(require-any
-			(socket-option-name SO_RCVBUF)
-			(socket-option-name SO_DELEGATED)
-			(socket-option-name SO_REUSEPORT)
-			(socket-option-name SO_NECP_ATTRIBUTES)
 			(socket-option-name SO_NECP_LISTENUUID)
 			(socket-option-name SO_TIMESTAMP)
 			(socket-option-name 0)
@@ -344,7 +340,11 @@
 			(socket-option-name SO_MARK_KNOWN_TRACKER)
 			(socket-option-name SO_REUSEADDR)
 			(socket-option-name SO_NOSIGPIPE)
-			(socket-option-name SO_MARK_KNOWN_TRACKER_NON_APP_INITIATED)))
+			(socket-option-name SO_MARK_KNOWN_TRACKER_NON_APP_INITIATED)
+			(socket-option-name SO_RCVBUF)
+			(socket-option-name SO_DELEGATED)
+			(socket-option-name SO_REUSEPORT)
+			(socket-option-name SO_NECP_ATTRIBUTES)))
 	(require-all
 		(socket-option-level IPPROTO_IPV6)
 		(require-any
@@ -355,49 +355,53 @@
 	(require-all
 		(socket-option-level IPPROTO_TCP)
 		(socket-option-name 513)))
+(allow socket-option-set
+	(c1 3b54 a898 a980)
+	(syscall-number 38))
+(allow syscall*
+	(cb 3b5e a896 f53e))
 (allow syscall-unix
-	(c1 3b0f ab6b f803))
+	(cc 3b61 a894 f53e))
 (allow syscall-mach
-	(cb 3b19 ab69 f803))
-(allow syscall-mig
-	(cc 3b1c ab67 f803))
-(allow sysctl*
 	(extension "b'com.apple.security.exception.sysctl.read-write'"))
-(allow sysctl-read
+(allow syscall-mig
 	(require-any (sysctl-name "kern.version")
+(sysctl-name "kern.ostype")
 (sysctl-name "kern.osrelease"))
 	(sysctl-name "kern.proc.pid.")
-	(sysctl-name "hw.pagesize_compat")
+	(require-any (sysctl-name "hw.activecpu")
+(sysctl-name "hw.pagesize_compat"))
 	(sysctl-name "kern.maxfilesperproc")
 	(sysctl-name "vm.malloc_ranges")
 	(sysctl-name "kern.bootargs")
-	(require-any (sysctl-name "hw.activecpu")
-(sysctl-name "kern.secure_kernel"))
+	(sysctl-name "kern.secure_kernel")
 	(extension "b'com.apple.security.exception.sysctl.read-only'")
-	(require-any (sysctl-name "kern.ostype")
-(sysctl-name "kern.hostname"))
+	(sysctl-name "kern.hostname")
 	(sysctl-name "vm.footprint_suspend")
 	(sysctl-name "kern.osversion")
 	(sysctl-name "hw.ncpu")
 	(sysctl-name "net.routetable.")
-	(require-any (sysctl-name "hw.machine")
-(sysctl-name "hw.memsize")
-(sysctl-name "kern.osproductversion")
-(sysctl-name "kern.osvariant_status"))
+	(require-any (sysctl-name "kern.osvariant_status")
+(sysctl-name "kern.osproductversion"))
+	(require-any (sysctl-name "hw.memsize")
+(sysctl-name "hw.machine"))
 	(extension "b'com.apple.security.exception.sysctl.read-write'")
 	(require-all
 		(entitlement-is-bool-true "b'com.apple.security.exception.process-info'")
 		(require-any (sysctl-name "kern.proc.")
 (sysctl-name "kern.procargs2."))))
-(allow system-audit)
-(allow system-fcntl
-	(ce 3b22 ab53 f803))
-(allow system-mac-syscall
+(allow system*)
+(allow system-automount
+	(ce 3b67 a87f f53e))
+(allow system-mac-label
 	(require-all
 		(mac-syscall-number 1)
 		(mac-policy-name-regex "b'Fvnguard\x0f\x00\x0f'"))
 	(require-all
 		(mac-syscall-number 90)
+		(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'"))
+	(require-all
+		(mac-syscall-number 102)
 		(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'"))
 	(require-all
 		(mac-syscall-number 7)
@@ -414,23 +418,23 @@
 	(require-all
 		(mac-syscall-number 67)
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")))
+(allow system-mac-syscall)
 (allow system-memorystatus-control)
-(allow system-necp-client-action)
-(allow system-privilege
+(allow system-package-check
 	(require-all
 		(privilege-id "PRIV_NET_PRIVILEGED_SOCKET_DELEGATE")
 		(entitlement-is-bool-true "b'com.apple.private.network.socket-delegate'")))
-(allow system-socket
+(allow system-set-time
 	(socket-domain 39)
 	(require-all
 		(require-not (socket-domain AF_ROUTE))
 		(socket-domain AF_SYSTEM)
 		(socket-protocol 2)))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "com.apple.CFNetwork")
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.shared-preference.read-only'"))
-(allow managed-preference-read
+(allow user-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow default-message-filter)
+(allow storage-class-map)

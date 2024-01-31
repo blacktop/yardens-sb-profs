@@ -1,8 +1,9 @@
 (version 1)
 (allow default)
-(deny file-write-setugid)
-(deny network*
+(deny file-write-mode)
+(deny mach-task-special-port-set
 	(local ip "*:*"))
-(deny network-outbound
+(deny network-inbound
 	(require-not (control-name "com.apple.flow-divert")))
-(deny storage-class-map)
+(deny system-fsctl)
+(deny user-preference-write)

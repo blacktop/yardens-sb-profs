@@ -1,7 +1,7 @@
 (version 1)
 (deny default)
-(allow file-lock)
-(allow file-map-executable
+(allow file-issue-extension)
+(allow file-link
 	(require-any (subpath "/System/DriverKit/usr/lib")
 (subpath "/System/DriverKit/System/Library/dyld")
 (subpath "/System/DriverKit/System/Library/Frameworks")
@@ -12,7 +12,7 @@
 	(require-all
 		(subpath "/usr/appleinternal/lib/sanitizers")
 		(debug-mode)))
-(allow file-read*
+(allow file-mount
 	(literal "/dev/null")
 	(literal "/private")
 	(require-any (literal "/usr/lib/dyld")
@@ -44,10 +44,9 @@
 		(vnode-type REGULAR-FILE)
 		(require-any (literal "/private/var/cores/")
 (literal "/private/var/dextcores/"))))
-(allow file-read-metadata
-	(require-any (literal "/var")
-(literal "/etc")
-(literal "/tmp"))
+(allow file-read*
+	(require-any (literal "/etc")
+(literal "/var"))
 	(literal "/private/var")
 	(require-any (literal "/usr/standalone/firmware")
 (literal "/private/var/hardware")
@@ -57,21 +56,20 @@
 (literal "/System/Library/Caches/com.apple.factorydata"))
 	(literal "/private/etc/localtime")
 	(literal "/private/var/dextcores")
-	(literal "/private/xarts")
-	(literal "/dev"))
-(allow file-test-existence
+	(literal "/tmp")
+	(literal "/dev")
+	(literal "/private/xarts"))
+(allow file-revoke
 	(literal "/dev/null")
-	(require-any (literal "/var")
-(literal "/etc")
-(literal "/tmp"))
+	(require-any (literal "/etc")
+(literal "/var"))
 	(literal "/private")
 	(require-any (literal "/usr/lib/dyld")
 (subpath "/System/DriverKit")
 (literal "/System/Library"))
 	(literal "/dev/urandom")
 	(literal "/private/var")
-	(require-any (subpath "/private/var/cores")
-(subpath "/private/var/dextcores"))
+	(literal "/private/preboot")
 	(require-any (literal "/usr/standalone/firmware")
 (literal "/private/var/hardware")
 (literal "/private/var/MobileSoftwareUpdate")
@@ -79,18 +77,20 @@
 (literal "/System/Library/Pearl/ReferenceFrames")
 (literal "/System/Library/Caches/com.apple.factorydata"))
 	(subpath "/private/var/db/timezone")
-	(literal "/")
 	(literal "/private/etc/localtime")
+	(require-any (subpath "/private/var/cores")
+(subpath "/private/var/dextcores"))
 	(subpath "/System/Library/Frameworks")
-	(literal "/dev/console")
+	(literal "/")
 	(subpath "/System/Cryptexes")
 	(literal "/dev/zero")
 	(literal "/dev")
 	(literal "/System")
 	(literal "/private/xarts")
-	(literal "/dev/random")
+	(literal "/dev/console")
 	(subpath "/private/preboot/Cryptexes")
-	(literal "/private/preboot")
+	(literal "/tmp")
+	(literal "/dev/random")
 	(extension "b'com.apple.sandbox.executable'")
 	(require-all
 		(debug-mode)
@@ -99,7 +99,7 @@
 			(require-all
 				(subpath-prefix "${PROCESS_TEMP_DIR}")
 				(process-attribute is-platform-binary)))))
-(allow file-write*
+(allow file-test-existence
 	(literal "/dev/null")
 	(literal "/dev/zero")
 	(literal "/dev/console")
@@ -111,44 +111,42 @@
 		(vnode-type REGULAR-FILE)
 		(require-any (literal "/private/var/cores/")
 (literal "/private/var/dextcores/"))))
-(allow file-write-create
+(allow file-write*
 	(require-all
 		(vnode-type DIRECTORY)
 		(require-any
 			(literal "/private/var/cores")
 			(literal "/private/var/dextcores"))))
-(allow file-write-data
+(allow file-write-acl
 	(literal "/dev/dtracehelper"))
-(allow iokit-open-user-client
+(allow iokit-issue-extension
 	(iokit-user-client-class "IOUserServer"))
-(allow iokit-open-service
+(allow iokit-open*
 	(iokit-user-client-class "IOPlatformExpert")
 	(iokit-user-client-class "IOPlatformExpertDevice"))
-(allow mach-derive-port)
-(allow mach-kernel-endpoint)
+(allow mach-bootstrap)
+(allow mach-host-special-port-set)
+(allow mach-task-name)
+(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow mach-task-special-port-set)
-(allow necp-client-open)
-(allow process-codesigning)
-(allow syscall-unix
-	(c1 40b5 a31c a317)
+(allow opendirectory-user-modify)
+(allow socket-option-set
+	(c1 40f5 a038 a033)
 	(require-all
 		(debug-mode)
 		(require-any
-			(syscall-number SYS_sigaction)
+			(syscall-number SYS_setrlimit)
 			(syscall-number SYS_sigaltstack)
-			(syscall-number SYS_setrlimit)))
-	(require-all
-		(syscall-number SYS_memorystatus_control)
-		(debug-mode)))
-(allow syscall-mach
-	(cb 40bf a315 f803))
+			(syscall-number SYS_sigaction)
+			(syscall-number SYS_memorystatus_control))))
+(allow syscall*
+	(cb 40ff a031 f53e))
+(allow syscall-unix)
 (allow syscall-mig)
-(allow sysctl-read)
-(allow system-fcntl
-	(ce 3615 a313 f803))
-(allow system-mac-syscall
+(allow system-automount
+	(ce 366c a02f f53e))
+(allow system-mac-label
 	(require-all
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")
 		(require-not (mac-syscall-number 4))
@@ -158,7 +156,7 @@
 	(require-all
 		(mac-syscall-number 90)
 		(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'")))
+(allow system-mac-syscall)
 (allow system-memorystatus-control)
-(allow system-necp-client-action)
-(allow system-privilege)
-(allow default-message-filter)
+(allow system-package-check)
+(allow storage-class-map)
