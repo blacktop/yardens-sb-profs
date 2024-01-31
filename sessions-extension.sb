@@ -1,14 +1,10 @@
 (version 1)
 (deny default)
-(allow file-issue-extension)
-(allow hid-control
+(allow file-lock)
+(allow iokit-get-properties
 	(require-all
 		(iokit-user-client-class "IOPlatformDevice")
 		(require-any
-			(iokit-property "product-id")
-			(iokit-property "artwork-scale-factor")
-			(iokit-property "soc-generation")
-			(iokit-property "is-muse")
 			(require-any (iokit-property "product-description")
 (iokit-property "device-perf-memory-class")
 (iokit-property "compatible-device-fallback")
@@ -17,11 +13,15 @@
 (iokit-property "artwork-display-gamut")
 (iokit-property "artwork-dynamic-displaymode")
 (iokit-property "artwork-device-idiom")
-(iokit-property "artwork-device-subtype")))))
-(allow ipc-sysv-shm)
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(iokit-property "artwork-device-subtype"))
+			(iokit-property "product-id")
+			(iokit-property "artwork-scale-factor")
+			(iokit-property "soc-generation")
+			(iokit-property "is-muse"))))
+(allow lsopen)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.sessionservices")
 	(global-name "com.apple.CARenderServer")
 	(global-name "com.apple.fontservicesd")
@@ -50,7 +50,6 @@
 			(require-all
 				(global-name "com.apple.system.notification_center")
 				(require-any
-					(global-name "com.apple.distributed_notifications@1v3")
 					(global-name "com.apple.system.logger")
 					(global-name "com.apple.mobilegestalt.xpc")
 					(require-any (global-name "com.apple.cfprefsd.daemon")
@@ -76,6 +75,7 @@
 					(global-name "com.apple.ctkd.token-client")
 					(global-name "com.apple.CoreAuthentication.daemon")
 					(global-name "com.apple.lsd.mapdb")
+					(global-name "com.apple.distributed_notifications@1v3")
 					(require-all
 						(process-attribute is-apple-signed-executable)
 						(require-any
@@ -92,20 +92,20 @@
 					(require-all
 						(global-name "com.apple.logd")
 						(entitlement-is-bool-true "b'get-task-allow'")))))))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow opendirectory-user-modify)
-(allow socket-option-set)
-(allow syscall*)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow process-codesigning)
 (allow syscall-unix)
-(allow system-automount
-	(ce 72df 2af6 f7ec))
-(allow system-mac-label)
-(allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow syscall-mach)
+(allow syscall-mig)
+(allow system-fcntl
+	(ce 72f6 2afd f803))
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.UIKit")
 	(extension "b'com.apple.security.exception.shared-preference.read-write'")
@@ -118,7 +118,7 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'")
 	(preference-domain "com.apple.UIKit")
@@ -132,4 +132,4 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference-write)
+(allow default-message-filter)

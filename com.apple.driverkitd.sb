@@ -1,7 +1,7 @@
 (version 1)
 (deny default)
-(allow file-issue-extension)
-(allow file-mount
+(allow file-lock)
+(allow file-read*
 	(subpath "/private/var/preferences/Logging")
 	(require-any (literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/")
@@ -27,6 +27,14 @@
 (require-not (subpath "/System/Library/Caches/com.apple.kernelcaches")))
 		(require-not (literal "/usr/standalone/firmware/apticket.der"))
 		(require-any
+			(subpath "/usr/lib")
+			(require-any (subpath "/private/var/db/driverkitd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.driverkitd"))
+			(subpath "/private/var/db/timezone")
+			(subpath "/Library/RegionFeatures")
+			(subpath "/usr/share")
+			(subpath "/Applications")
+			(subpath "/private/var/containers/Bundle/Application")
 			(subpath "/System/Library")
 			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(literal "/dev/null")
@@ -42,14 +50,6 @@
 			(literal "/dev/zero")
 			(literal "/dev/random")
 			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
-			(subpath "/usr/lib")
-			(require-any (subpath "/private/var/db/driverkitd")
-(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.driverkitd"))
-			(subpath "/private/var/db/timezone")
-			(subpath "/Library/RegionFeatures")
-			(subpath "/usr/share")
-			(subpath "/Applications")
-			(subpath "/private/var/containers/Bundle/Application")
 			(require-all
 				(entitlement-is-bool-true "b'com.apple.coreduetd.people'")
 				(require-any
@@ -79,10 +79,10 @@
 				(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
 				(extension "b'com.apple.logd.read-only'")
 				(require-any
-					(require-any (subpath "/private/var/userdata/diagnostics")
-(subpath "/private/var/db/timesync"))
 					(require-any (subpath "/private/var/db/diagnostics")
-(subpath "/private/var/db/uuidtext"))))
+(subpath "/private/var/db/uuidtext"))
+					(require-any (subpath "/private/var/userdata/diagnostics")
+(subpath "/private/var/db/timesync"))))
 			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
@@ -104,6 +104,13 @@
 				(vnode-type BLOCK-DEVICE)
 				(vnode-type CHARACTER-DEVICE)
 				(require-any
+					(subpath "/private/preboot/Cryptexes")
+					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.bin")
+					(literal "/")
+					(literal "/private/etc/fstab")
+					(literal "/private/preboot")
+					(subpath "/System/Developer")
+					(subpath "/private/var/MobileAsset/PreinstalledAssetsV2/InstallWithOs")
 					(literal "/private")
 					(subpath "/Developer")
 					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
@@ -118,13 +125,6 @@
 					(subpath "/System/Cryptexes")
 					(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
 					(literal "/private/etc/hosts")
-					(subpath "/private/preboot/Cryptexes")
-					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.bin")
-					(literal "/")
-					(literal "/private/etc/fstab")
-					(literal "/private/preboot")
-					(subpath "/System/Developer")
-					(subpath "/private/var/MobileAsset/PreinstalledAssetsV2/InstallWithOs")
 					(require-all
 						(process-attribute is-apple-signed-executable)
 						(require-any
@@ -153,17 +153,17 @@
 					(require-all
 						(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
 						(require-any
-							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")
-							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")))
+							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
+							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
 					(require-all
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
 						(extension "b'com.apple.sandbox.oopjit'")))))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(literal-prefix "${HOME}")
 	(literal-prefix "${HOME}/Library/Caches/powerlog.launchd")
@@ -199,8 +199,8 @@
 		(require-any
 			(literal-prefix "${HOME}")
 			(literal-prefix "${HOME}/Library/Preferences"))))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(require-any (subpath "/private/var/db/driverkitd")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.driverkitd"))
 	(subpath-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-write}")
@@ -218,9 +218,6 @@
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))))
 	(require-all
-		(vnode-type BLOCK-DEVICE)
-		(vnode-type CHARACTER-DEVICE))
-	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
@@ -230,22 +227,25 @@
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
-				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
-(allow file-write-acl
+				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
+	(require-all
+		(vnode-type BLOCK-DEVICE)
+		(vnode-type CHARACTER-DEVICE)))
+(allow file-write-data
 	(literal "/dev/aes_0")
 	(require-all
 		(require-not (literal "/dev/urandom"))
 		(require-not (literal "/dev/random"))
 		(require-any
-			(literal "/dev/zero")
 			(literal "/dev/null")
-			(literal "/dev/dtracehelper"))))
-(allow file-write-setugid
+			(literal "/dev/dtracehelper")
+			(literal "/dev/zero"))))
+(allow file-write-unlink
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
-(allow file-write-times
+(allow file-write-xattr
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
@@ -266,8 +266,6 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
-(allow file-write-unlink)
-(allow file-write-xattr)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -275,33 +273,35 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow hid-control
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow iokit-get-properties
 	(require-any (iokit-property "OSKernelCPUType")
 (iokit-property "OSKernelCPUSubtype"))
 	(require-all
 		(iokit-property "supports-third-party-drivers")
 		(iokit-user-client-class "IOPlatformDevice")))
-(allow iokit-open*
+(allow iokit-open-service
 	(entitlement-is-bool-true "b'com.apple.security.exception.iokit-user-client-class'"))
-(allow ipc-sysv-sem)
-(allow ipc-sysv-shm)
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-lookup)
-(allow mach-task-name)
-(allow mach-task-read)
+(allow job-creation)
+(allow lsopen)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-priv-host-port)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow opendirectory-user-modify)
-(allow process-fork)
-(allow process-info-listpids)
-(allow socket-ioctl)
-(allow socket-option*)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow process-codesigning)
+(allow process-info-codesignature)
+(allow process-info-pidinfo)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*)
-(allow syscall-unix
-	(cc 40bc a2b2 f7ec))
+(allow syscall-unix)
+(allow syscall-mach)
 (allow syscall-mig
+	(cc 40d3 a2bf f803))
+(allow sysctl-read
 	(sysctl-name "kern.bootargs")
 	(sysctl-name "kern.osbuildconfig")
 	(extension "b'com.apple.security.exception.sysctl.read-write'")
@@ -313,15 +313,6 @@
 	(require-all
 		(sysctl-name "sysctl.proc_native")
 		(require-any
-			(sysctl-name "hw.target")
-			(sysctl-name "hw.product")
-			(sysctl-name "hw.physicalcpu")
-			(require-any (sysctl-name "hw.activecpu")
-(sysctl-name "kern.secure_kernel"))
-			(sysctl-name "hw.tbfrequency_compat")
-			(sysctl-name "sysctl.name2oid")
-			(sysctl-name "security.mac.lockdown_mode_state")
-			(sysctl-name "kern.bootsessionuuid")
 			(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
 (sysctl-name "hw.physicalcpu_max"))
@@ -393,6 +384,15 @@
 			(require-any (sysctl-name "hw.cpufamily")
 (sysctl-name "hw.logicalcpu")
 (sysctl-name "hw.nperflevels"))
+			(sysctl-name "hw.target")
+			(sysctl-name "hw.product")
+			(sysctl-name "hw.physicalcpu")
+			(require-any (sysctl-name "hw.activecpu")
+(sysctl-name "kern.secure_kernel"))
+			(sysctl-name "hw.tbfrequency_compat")
+			(sysctl-name "sysctl.name2oid")
+			(sysctl-name "security.mac.lockdown_mode_state")
+			(sysctl-name "kern.bootsessionuuid")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any (sysctl-name "kern.willshutdown")
@@ -406,13 +406,13 @@
 			(require-all
 				(sysctl-name "kern.proc.pid.")
 				(process-attribute is-apple-signed-executable)))))
-(allow system-automount)
-(allow system-fsctl)
-(allow system-info)
+(allow system-fcntl)
 (allow system-kext*)
 (allow system-kext-load)
-(allow system-mac*)
-(allow system-mac-label)
+(allow system-kext-unload)
+(allow system-kext-query)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow user-preference-write)
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow default-message-filter)

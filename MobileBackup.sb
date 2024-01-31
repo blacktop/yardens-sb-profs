@@ -1,21 +1,21 @@
 (version 1)
 (allow default)
-(deny file-lock)
-(deny file-map-executable
+(deny file-mknod)
+(deny file-mount
 	(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/"))
 	(require-all
 		(literal "/private/var/")
 		(subpath-prefix "${FRONT_USER_HOME}")
 		(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/")))
-(deny file-mount
+(deny file-read*
 	(subpath "/private/var/run/mobile_image_mounter"))
-(deny file-write-mode
+(deny file-write-setugid
 	(subpath "/private/var/run/mobile_image_mounter")
 	(require-not (vnode-type DIRECTORY)))
-(deny file-write-setugid
+(deny file-write-unlink
 	(literal "/private")
 	(literal "/private/var")
 	(literal "/private/var/run"))
-(deny ipc-sysv-sem)
-(deny managed-preference-read)
+(deny job-creation)
+(deny storage-class-map)

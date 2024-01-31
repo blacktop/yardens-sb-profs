@@ -1,18 +1,18 @@
 (version 1)
 (deny default)
-(allow file-clone
+(allow file-issue-extension
 	(require-all (require-not (literal "/System/Library/Caches/apticket.der"))
 (require-not (subpath "/System/Library/Caches/com.apple.factorydata"))
 (require-not (subpath "/System/Library/Caches/com.apple.kernelcaches"))))
-(allow file-issue-extension)
-(allow file-link
+(allow file-lock)
+(allow file-map-executable
 	(subpath "/System/Library/PrivateFrameworks")
 	(subpath "/usr/lib")
 	(subpath "/System/Library/Frameworks")
 	(subpath "/System/Library")
 	(subpath "/System/Cryptexes")
 	(subpath "/private/preboot/Cryptexes"))
-(allow file-mount
+(allow file-read*
 	(require-any (literal "/private/var/Managed Preferences/mobile/com.apple.UIKit.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/Preferences/com.apple.UIKit.plist"))
 	(require-any (literal "/private/var/Managed Preferences/mobile/com.apple.AppSupport.plist")
@@ -24,6 +24,11 @@
 (require-not (subpath "/System/Library/Caches/com.apple.factorydata"))
 (require-not (subpath "/System/Library/Caches/com.apple.kernelcaches")))
 		(require-any
+			(literal "/private")
+			(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
+			(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
+			(literal "/System")
+			(literal "/private/preboot")
 			(literal "/dev/null")
 			(literal "/dev/urandom")
 			(literal "/private/etc/passwd")
@@ -37,11 +42,6 @@
 			(literal "/")
 			(subpath "/System/Cryptexes")
 			(subpath "/private/preboot/Cryptexes")
-			(literal "/private")
-			(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
-			(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
-			(literal "/System")
-			(literal "/private/preboot")
 			(require-all
 				(literal "/private/var/")
 				(extension "b'com.apple.sandbox.container'")
@@ -55,12 +55,12 @@
 			(require-all
 				(file-mode #o0004)
 				(require-any
-					(subpath "/System")
 					(subpath "/usr/lib")
 					(subpath "/usr/share")
 					(subpath "/private/var/db/dyld")
-					(subpath "/private/var/db/timezone"))))))
-(allow file-mount-update
+					(subpath "/private/var/db/timezone")
+					(subpath "/System"))))))
+(allow file-read-data
 	(subpath "/private/var/preferences/Logging")
 	(literal "/private/etc/passwd")
 	(require-any (subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache")
@@ -70,7 +70,7 @@
 	(literal "/")
 	(subpath "/usr/share")
 	(subpath "/Library"))
-(allow file-read*
+(allow file-read-metadata
 	(require-any (literal "/var")
 (literal "/etc")
 (literal "/tmp"))
@@ -97,14 +97,11 @@
 				(literal "/private/var/")
 				(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+$")
 				(subpath-prefix "${FRONT_USER_HOME}")))))
-(allow file-revoke
+(allow file-test-existence
 	(require-all
 		(require-not (subpath "/usr/local"))
 		(require-not (subpath "/AppleInternal"))
 		(require-any
-			(subpath "/usr/share")
-			(subpath "/Library")
-			(literal "/")
 			(require-any (subpath "/private")
 (literal "/etc/passwd")
 (subpath "/var/db")
@@ -113,11 +110,14 @@
 			(subpath "/usr/lib")
 			(subpath "/usr/standalone")
 			(literal "/dev")
-			(subpath "/System"))))
-(allow file-write-acl
+			(subpath "/System")
+			(subpath "/usr/share")
+			(subpath "/Library")
+			(literal "/"))))
+(allow file-write-data
 	(literal "/dev/null")
 	(literal "/dev/zero"))
-(allow hid-control
+(allow iokit-get-properties
 	(require-all
 		(iokit-user-client-class "AGXAcceleratorG")
 		(require-any (iokit-property "MetalPluginName")
@@ -163,25 +163,25 @@
 	(require-all
 		(iokit-property "artwork-scale-factor")
 		(iokit-user-client-class "IOPlatformDevice")))
-(allow iokit-issue-extension
+(allow iokit-open-user-client
 	(iokit-user-client-class "AppleJPEGDriverUserClient")
 	(iokit-user-client-class "IOSurfaceAcceleratorClient")
 	(iokit-user-client-class "IOSurfaceRootUserClient")
 	(iokit-user-client-class "AppleKeyStoreUserClient")
 	(iokit-user-client-class "AGXDeviceUserClient"))
-(allow iokit-open*
+(allow iokit-open-service
 	(iokit-user-client-class "AppleKeyStore")
 	(iokit-user-client-class "AppleJPEGDriver")
 	(iokit-user-client-class "AGXAcceleratorG")
 	(iokit-user-client-class "IOSurfaceRoot")
 	(iokit-user-client-class "AppleM2ScalerCSCDriver"))
-(allow iokit-open-user-client)
-(allow ipc-posix-sem-wait
+(allow iokit-set-properties)
+(allow ipc-posix-shm-read-data
 	(ipc-posix-name "apple.shm.notification_center")
 	(ipc-posix-name "apple.cfprefs."))
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.SystemConfiguration.NetworkInformation")
 	(global-name "com.apple.logd.events")
 	(global-name "com.apple.runningboard")
@@ -205,30 +205,40 @@
 	(global-name "com.apple.UIKit.KeyboardManagement.hosted")
 	(global-name "com.apple.containermanagerd.system")
 	(global-name "com.apple.frontboard.systemappservices"))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
-(allow opendirectory-user-modify)
-(allow process-info-listpids
+(allow mach-task-special-port-get)
+(allow mach-task-special-port-set)
+(allow process-codesigning)
+(allow process-info-pidinfo
 	(target others))
-(allow socket-option-set
-	(c1 43a7 9c04 9c03)
+(allow syscall-unix
+	(c1 43be 9c11 9c10)
 	(require-not (syscall-number SYS_memorystatus_control))
 	(debug-mode))
-(allow syscall*
-	(cb 43b1 9c01 bc0a))
-(allow syscall-unix
-	(cc 43b4 9bff bc0a))
 (allow syscall-mach
+	(cb 43c8 9c0e bc20))
+(allow syscall-mig
+	(cc 43cb 9c0c bc20))
+(allow sysctl*
 	(require-all
 		(require-not (sysctl-name "vm.footprint_suspend"))
 		(require-not (sysctl-name "vm.task_no_footprint_for_debug"))
 		(sysctl-name "kern.wq_limit_cooperative_threads")))
-(allow syscall-mig
+(allow sysctl-read
 	(require-all
 		(require-not (sysctl-name "vm.footprint_suspend"))
 		(require-not (sysctl-name "vm.task_no_footprint_for_debug"))
 		(require-any
+			(sysctl-name "hw.target")
+			(require-any (sysctl-name "hw.activecpu")
+(sysctl-name "kern.secure_kernel"))
+			(sysctl-name "hw.physicalcpu")
+			(sysctl-name "sysctl.name2oid")
+			(sysctl-name "hw.product")
+			(sysctl-name "kern.bootargs")
+			(sysctl-name "hw.tbfrequency_compat")
+			(sysctl-name "security.mac.lockdown_mode_state")
+			(sysctl-name "kern.bootsessionuuid")
 			(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
 (sysctl-name "hw.physicalcpu_max"))
@@ -300,30 +310,20 @@
 			(require-any (sysctl-name "hw.cpufamily")
 (sysctl-name "hw.logicalcpu")
 (sysctl-name "hw.nperflevels"))
-			(sysctl-name "hw.target")
-			(require-any (sysctl-name "hw.activecpu")
-(sysctl-name "kern.secure_kernel"))
-			(sysctl-name "hw.physicalcpu")
-			(sysctl-name "sysctl.name2oid")
-			(sysctl-name "hw.product")
-			(sysctl-name "kern.bootargs")
-			(sysctl-name "hw.tbfrequency_compat")
-			(sysctl-name "security.mac.lockdown_mode_state")
-			(sysctl-name "kern.bootsessionuuid")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any (sysctl-name "kern.willshutdown")
 (sysctl-name "kern.willuserspacereboot"))))))
-(allow system-automount
-	(ce 43ba 9bdc bc0a))
-(allow system-mac*
+(allow system-fcntl
+	(ce 43d1 9be9 bc20))
+(allow system-mac-syscall
 	(mac-syscall-number 2)
+	(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")
 	(mac-syscall-number 4)
 	(require-not (mac-syscall-number 67))
-	(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")
 	(require-all
 		(mac-syscall-number 90)
 		(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'")))
-(allow system-mac-label)
-(allow system-nfssvc)
-(allow user-preference-write)
+(allow system-memorystatus-control)
+(allow system-privilege)
+(allow default-message-filter)

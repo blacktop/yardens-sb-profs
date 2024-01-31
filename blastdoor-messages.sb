@@ -1,6 +1,6 @@
 (version 1)
 (deny default)
-(allow file*
+(allow file-clone
 	(require-all
 		(extension "b'com.apple.blastdoor.read-write'")
 		(require-any
@@ -15,8 +15,8 @@
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 			(require-any (subpath "/private/var/tmp/com.apple.messages/Wallpapers")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/Wallpapers")))))
-(allow file-issue-extension)
-(allow file-mount
+(allow file-lock)
+(allow file-read*
 	(require-any (literal "/private/var/Managed Preferences/mobile/com.apple.coremedia.plist")
 (literal "/private/var/Managed Preferences/mobile/com.apple.coreaudio.plist")
 (literal "/private/var/Managed Preferences/mobile/.GlobalPreferences_m.plist")
@@ -38,85 +38,85 @@
 		(require-any (subpath "/private/var/tmp/com.apple.messages/PassPreview")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.blastdoor.read-write'")
 			(extension "b'com.apple.app-sandbox.read-write'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.messages/Wallpapers")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/Wallpapers"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.blastdoor.read-write'")
 			(extension "b'com.apple.app-sandbox.read-write'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.facetimemessagestored/IncomingVideoVoiceMail")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.facetimemessagestored/IncomingVideoVoiceMail"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(debug-mode)
 		(subpath "/AppleInternal/Library/Messages/BlastDoorTestData")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.TelephonyUtilities/SharePlayActivityImages")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.TelephonyUtilities/SharePlayActivityImages")
 (subpath-prefix "${HOME}/Media/PhotoData/UBF/scopes/syndication/originals")
 (subpath-prefix "${HOME}/Library/Photos/Libraries/Syndication.photoslibrary/scopes/syndication/originals"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(subpath "/private/var/tmp/com.apple.messages")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.identityservicesd")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.identityservicesd"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp/com[UNSUPPORTED]apple[UNSUPPORTED]MobileSMS/?")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.imtransferagent")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.imtransferagent"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(literal "/private/var/")
 		(subpath-prefix "${FRONT_USER_HOME}")
 		(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(subpath-prefix "${HOME}/Library/SMS")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'"))))
-(allow file-read*
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'"))))
+(allow file-read-metadata
 	(require-any (literal-prefix "${FRONT_USER_HOME}")
 (literal-prefix "${FRONT_USER_HOME}/Library/Preferences"))
 	(require-all
 		(require-not (subpath "/Library/Preferences"))
 		(require-not (literal "/private/var/run/syslog"))))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(require-all
 		(extension "b'com.apple.blastdoor.read-write'")
 		(require-any
@@ -131,24 +131,24 @@
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 			(require-any (subpath "/private/var/tmp/com.apple.messages/Wallpapers")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/Wallpapers")))))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/dtracehelper")
 	(literal "/dev/null")
 	(literal "/dev/zero"))
-(allow file-write-data
+(allow file-write-flags
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.messages/PassPreview")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 		(require-not (extension "b'com.apple.blastdoor.read-write'"))
 		(require-not (extension "b'com.apple.app-sandbox.read-write'"))))
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow opendirectory-user-modify)
-(allow process-legacy-codesigning-blob-get)
-(allow process-legacy-codesigning-cdhash-get)
-(allow process-legacy-codesigning-identity-get)
-(allow socket-option-set
-	(c1 3663 b572 b522)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow process-codesigning)
+(allow process-legacy-codesigning-entitlements-blob-get)
+(allow process-legacy-codesigning-entitlements-der-blob-get)
+(allow process-legacy-codesigning-status-get)
+(allow syscall-unix
+	(c1 3673 b588 b538)
 	(require-all
 		(require-not (syscall-number SYS_necp_open))
 		(require-not (syscall-number SYS_necp_client_action))
@@ -246,6 +246,11 @@
 			(require-all
 				(require-not (state-flag "b''"))
 				(require-any
+					(syscall-number SYS_lseek)
+					(syscall-number SYS_readlink)
+					(syscall-number SYS_read_nocancel)
+					(syscall-number SYS_mprotect)
+					(syscall-number SYS_kevent_qos)
 					(syscall-number SYS_map_with_linking_np)
 					(syscall-number SYS_sigaction)
 					(syscall-number SYS_psynch_cvbroad)
@@ -285,11 +290,6 @@
 					(syscall-number SYS_getxattr)
 					(syscall-number SYS_munmap)
 					(syscall-number SYS_shared_region_check_np)
-					(syscall-number SYS_lseek)
-					(syscall-number SYS_readlink)
-					(syscall-number SYS_read_nocancel)
-					(syscall-number SYS_mprotect)
-					(syscall-number SYS_kevent_qos)
 					(require-all
 						(require-not (syscall-number SYS_iopolicysys))
 						(require-any
@@ -301,15 +301,15 @@
 							(require-all
 								(syscall-number SYS_memorystatus_control)
 								(debug-mode)))))))))
-(allow syscall*
-	(cb 3671 b520 e264))
-(allow syscall-unix
-	(cc 3674 b51e b51d)
+(allow syscall-mach
+	(cb 3681 b536 e27b))
+(allow syscall-mig
+	(cc 3684 b534 b533)
 	(require-all
 		(require-not (kernel-mig-routine 328))
 		(kernel-mig-routine 325)
 		(state-flag "b''")))
-(allow syscall-mig
+(allow sysctl-read
 	(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
 (sysctl-name "hw.physicalcpu_max"))
@@ -338,7 +338,7 @@
 (sysctl-name "kern.osvariant_status"))
 	(sysctl-name "security.mac.lockdown_mode_state")
 	(sysctl-name "hw.cachelinesize"))
-(allow system-automount
-	(ce 367d b50d f7ec))
-(allow system-mac*)
-(allow user-preference-write)
+(allow system-fcntl
+	(ce 368d b523 f803))
+(allow system-mac-syscall)
+(allow default-message-filter)

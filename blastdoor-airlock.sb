@@ -1,21 +1,21 @@
 (version 1)
 (deny default)
-(allow file-clone
+(allow file-issue-extension
 	(require-all
 		(extension-class "com.apple.app-sandbox.read")
 		(require-any
-			(subpath "/private/preboot/Cryptexes")
-			(subpath "/System/Cryptexes"))))
-(allow file-issue-extension)
-(allow file-link
+			(subpath "/System/Cryptexes")
+			(subpath "/private/preboot/Cryptexes"))))
+(allow file-lock)
+(allow file-map-executable
 	(subpath "/usr/lib")
 	(subpath "/System/Library")
 	(require-all
 		(require-not (subpath "/Developer/Library"))
 		(require-any
-			(subpath "/private/preboot/Cryptexes")
-			(subpath "/System/Cryptexes"))))
-(allow file-mount
+			(subpath "/System/Cryptexes")
+			(subpath "/private/preboot/Cryptexes"))))
+(allow file-read*
 	(require-any (literal "/private/var/Managed Preferences/mobile/com.apple.coremedia.plist")
 (literal "/private/var/Managed Preferences/mobile/com.apple.coreaudio.plist")
 (literal "/private/var/Managed Preferences/mobile/.GlobalPreferences_m.plist")
@@ -31,32 +31,27 @@
 		(debug-mode)
 		(subpath "/AppleInternal/Library/Messages/BlastDoorTestData")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.TelephonyUtilities/SharePlayActivityImages")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.TelephonyUtilities/SharePlayActivityImages")
 (subpath-prefix "${HOME}/Media/PhotoData/UBF/scopes/syndication/originals")
 (subpath-prefix "${HOME}/Library/Photos/Libraries/Syndication.photoslibrary/scopes/syndication/originals"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(subpath "/private/var/tmp/com.apple.messages")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.identityservicesd")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.identityservicesd"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
-	(require-all
-		(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp/com[UNSUPPORTED]apple[UNSUPPORTED]MobileSMS/?")
-		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(require-not (literal "/private/var"))
 		(require-all (require-not (subpath "/AppleInternal/Library/VideoCodecs"))
@@ -67,15 +62,6 @@
 		(require-not (subpath "/private/var/MobileSoftwareUpdate"))
 		(require-not (literal "/dev"))
 		(require-any
-			(literal "/dev/null")
-			(literal "/private")
-			(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
-			(literal "/dev/urandom")
-			(literal "/private/etc/passwd")
-			(literal "/private/etc/services")
-			(require-any (literal "/private/etc/group")
-(literal "/private/etc/protocols"))
-			(subpath "/System/Cryptexes")
 			(literal "/dev/zero")
 			(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
 			(literal "/System")
@@ -85,38 +71,52 @@
 			(literal "/")
 			(literal "/private/etc/fstab")
 			(literal "/private/preboot")
+			(literal "/dev/null")
+			(literal "/private")
+			(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
+			(literal "/dev/urandom")
+			(literal "/private/etc/passwd")
+			(literal "/private/etc/services")
+			(require-any (literal "/private/etc/group")
+(literal "/private/etc/protocols"))
+			(subpath "/System/Cryptexes")
 			(require-all
 				(file-mode #o0004)
 				(require-any
-					(subpath "/System")
 					(subpath "/usr/lib")
 					(subpath "/usr/share")
 					(subpath "/private/var/db/dyld")
-					(subpath "/private/var/db/timezone")))))
+					(subpath "/private/var/db/timezone")
+					(subpath "/System")))))
+	(require-all
+		(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp/com[UNSUPPORTED]apple[UNSUPPORTED]MobileSMS/?")
+		(require-any
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.imtransferagent")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.imtransferagent"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(literal "/private/var/")
 		(subpath-prefix "${FRONT_USER_HOME}")
 		(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'")))
 	(require-all
 		(subpath-prefix "${HOME}/Library/SMS")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'"))))
-(allow file-read*
+			(extension "b'com.apple.blastdoor.read'")
+			(extension "b'com.apple.app-sandbox.read'"))))
+(allow file-read-metadata
 	(require-any (literal-prefix "${FRONT_USER_HOME}")
 (literal-prefix "${FRONT_USER_HOME}/Library/Preferences"))
 	(require-all
@@ -128,19 +128,19 @@
 (literal "/tmp"))
 			(subpath "/private/var/db/timezone")
 			(literal "/private/etc/localtime"))))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(require-all
 		(literal "/private/var/cores/")
 		(regex #"^/private/var/cores/.+[.]core$")
 		(process-attribute is-apple-signed-executable)))
-(allow file-write-acl
+(allow file-write-data
 	(require-all
 		(require-not (literal "/dev/dtracehelper"))
 		(require-any
 			(literal "/dev/null")
 			(literal "/dev/zero"))))
-(allow hid-control
+(allow iokit-get-properties
 	(require-all
 		(iokit-property "platform-name")
 		(iokit-user-client-class "IOPlatformExpertDevice"))
@@ -168,18 +168,18 @@
 		(require-any
 			(iokit-property "AVCSupported")
 			(iokit-property "HEVCCanDecodeTileToCanvas"))))
-(allow iokit-issue-extension
+(allow iokit-open-user-client
 	(iokit-user-client-class "IOSurfaceRootUserClient"))
-(allow iokit-open*
+(allow iokit-open-service
 	(iokit-user-client-class "AGXFamilyAccelerator")
 	(iokit-user-client-class "IOSurfaceRoot"))
-(allow ipc-posix-sem-wait
+(allow ipc-posix-shm-read-data
 	(ipc-posix-name "apple.shm.notification_center"))
-(allow lsopen
+(allow mach-bootstrap
 	(state-flag "b''"))
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.logd")
 	(global-name "com.apple.system.notification_center")
 	(require-all
@@ -193,14 +193,14 @@
 		(require-not (global-name "com.apple.mobilegestalt.xpc"))
 		(require-not (global-name "com.apple.powerlog.plxpclogger.xpc"))
 		(global-name "com.apple.system.logger")))
-(allow network-inbound
+(allow network-outbound
 	(literal "/private/var/run/syslog"))
-(allow opendirectory-user-modify)
-(allow process-legacy-codesigning-blob-get)
-(allow process-legacy-codesigning-cdhash-get)
-(allow process-legacy-codesigning-identity-get)
-(allow socket-option-set
-	(c1 35ce b6ab b649)
+(allow process-codesigning)
+(allow process-legacy-codesigning-entitlements-blob-get)
+(allow process-legacy-codesigning-entitlements-der-blob-get)
+(allow process-legacy-codesigning-status-get)
+(allow syscall-unix
+	(c1 35de b6c1 b65f)
 	(require-all
 		(require-not (syscall-number SYS_necp_open))
 		(require-not (syscall-number SYS_necp_client_action))
@@ -346,6 +346,12 @@
 			(require-all
 				(require-not (state-flag "b''"))
 				(require-any
+					(syscall-number SYS_map_with_linking_np)
+					(syscall-number SYS_sigaction)
+					(syscall-number SYS_fstatfs64)
+					(syscall-number SYS_getegid)
+					(syscall-number SYS_madvise)
+					(syscall-number SYS_kdebug_typefilter)
 					(syscall-number SYS_getpid)
 					(syscall-number SYS_workq_open)
 					(syscall-number SYS_kdebug_trace_string)
@@ -386,28 +392,22 @@
 					(syscall-number SYS_open)
 					(syscall-number 38)
 					(syscall-number SYS_getfsstat)
-					(syscall-number SYS_map_with_linking_np)
-					(syscall-number SYS_sigaction)
-					(syscall-number SYS_fstatfs64)
-					(syscall-number SYS_getegid)
-					(syscall-number SYS_madvise)
-					(syscall-number SYS_kdebug_typefilter)
 					(require-all
 						(syscall-number SYS_memorystatus_control)
 						(debug-mode)))))))
-(allow syscall*
-	(cb 35db b647 b641)
+(allow syscall-mach
+	(cb 35eb b65d b657)
 	(machtrap-number MSC__kernelrpc_mach_port_extract_member_trap)
 	(machtrap-number MSC_pid_for_task)
 	(machtrap-number MSC_thread_self_trap)
 	(machtrap-number MSC_mach_voucher_extract_attr_recipe_trap)
 	(machtrap-number MSC__kernelrpc_mach_port_get_attributes_trap))
-(allow syscall-unix
-	(cc 35de b63f b63c)
+(allow syscall-mig
+	(cc 35ee b655 b652)
 	(require-all
 		(kernel-mig-routine 325)
 		(require-not (state-flag "b''"))))
-(allow syscall-mig
+(allow sysctl-read
 	(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
 (sysctl-name "hw.physicalcpu_max"))
@@ -430,9 +430,9 @@
 (sysctl-name "kern.osvariant_status"))
 	(sysctl-name "security.mac.lockdown_mode_state")
 	(sysctl-name "hw.cachelinesize"))
-(allow system-automount
-	(ce 35ea b62d f7ec))
-(allow system-mac*)
-(allow system-nfssvc
+(allow system-fcntl
+	(ce 35fa b643 f803))
+(allow system-mac-syscall)
+(allow system-privilege
 	(privilege-id "PRIV_GLOBAL_PROC_INFO"))
-(allow user-preference-write)
+(allow default-message-filter)

@@ -1,6 +1,6 @@
 (version 1)
 (deny default)
-(allow device-camera
+(allow darwin-notification-post
 	(require-any (notification-name "_AXNotification_AXSClassicInvertColorsPreference")
 (notification-name "com.apple.webinspectord.availability_check")
 (notification-name "com.apple.WebContentFilter.remoteUI.WebContentAnalysisUI-com.apple.uikit.viewService.connectionRequest")
@@ -17,15 +17,12 @@
 (notification-name "com.apple.accessibility.AirPodsSpatialAudioLockToDeviceChanged")
 (notification-name "com.apple.accessibility.application.status")
 (notification-name "com.apple.accessibility.automation.enabled.status")))
-(allow darwin-notification-post
+(allow dynamic-code-generation
 	(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
-(allow file-clone
+(allow file-issue-extension
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
 	(require-all
 		(extension-class "com.apple.app-sandbox.read-write")
-		(extension "b'com.apple.app-sandbox.read-write'"))
-	(require-all
-		(extension-class "com.apple.mediaserverd.read-write")
 		(extension "b'com.apple.app-sandbox.read-write'"))
 	(require-all
 		(extension-class "com.apple.app-sandbox.read")
@@ -39,6 +36,9 @@
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.app-sandbox.read-write'")
 			(extension "b'com.apple.sharing.airdrop.readonly'")))
+	(require-all
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension "b'com.apple.app-sandbox.read-write'"))
 	(require-all
 		(extension-class "com.apple.sharing.airdrop.readonly")
 		(require-any
@@ -58,10 +58,10 @@
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
+					(subpath "/private/preboot/Cryptexes/OS/System/Library")
 					(subpath "/System/Cryptexes/OS/System/Library")
 					(subpath "/System/Library")
 					(extension "b'com.apple.app-sandbox.read'")
-					(subpath "/private/preboot/Cryptexes/OS/System/Library")
 					(require-all
 						(extension "b'com.apple.assets.read'")
 						(require-any
@@ -82,8 +82,8 @@
 				(require-any
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.fileprovider.read-write'"))))))
-(allow file-issue-extension)
-(allow file-link
+(allow file-lock)
+(allow file-map-executable
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
 	(require-any (subpath "/System/Cryptexes/OS/usr/lib")
 (subpath "/System/Cryptexes/OS/System/Library/PrivateFrameworks")
@@ -97,7 +97,7 @@
 	(require-all
 		(extension "b'com.apple.sandbox.executable'")
 		(literal)))
-(allow file-mount
+(allow file-read*
 	(subpath "/private/var/preferences/Logging")
 	(literal "/private/var/Managed Preferences/mobile/.GlobalPreferences.plist")
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
@@ -210,37 +210,46 @@
 								(require-any
 									(subpath "/private/var/MobileAsset")
 									(subpath-prefix "${HOME}/Library/Assets"))))))))))
-(allow file-mount-update
+(allow file-read-data
 	(literal "/usr/local/lib/log")
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-read*)
-(allow file-read-data
+(allow file-read-metadata
+	(vnode-type DIRECTORY)
+	(vnode-type SYMLINK)
+	(literal-prefix "${HOME}")
+	(literal-prefix "${HOME}/Library/Caches/powerlog.launchd")
+	(require-not (literal "/private/var/db/MobileIdentityData/Version.plist"))
+	(literal-prefix "${HOME}/Library/Preferences")
+	(extension "b'com.apple.app-sandbox.read'")
+	(extension "b'com.apple.app-sandbox.read-write'")
+	(extension "b'com.apple.sharing.airdrop.readonly'"))
+(allow file-read-xattr
 	(require-not (xattr "com.apple.security.private.")))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(extension "b'com.apple.app-sandbox.read-write'")
 	(require-all
 		(require-not (subpath-prefix "${HOME}/Library/Preferences"))
 		(literal-prefix "${HOME}/Library/Caches/DateFormats.plist")))
-(allow file-write*
+(allow file-write-create
 	(require-all
 		(require-not (vnode-type SYMLINK))
 		(require-all (require-not (literal-prefix "${HOME}/Library/Preferences/com.apple.UIKit.plist"))
 (require-not (literal-prefix "${HOME}/Library/Preferences/com.apple.Accessibility.plist")))))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/aes_0")
 	(require-all
 		(require-not (literal "/dev/urandom"))
 		(require-not (literal "/dev/random"))
 		(require-any
+			(literal "/dev/zero")
 			(literal "/dev/dtracehelper")
-			(literal "/dev/null")
-			(literal "/dev/zero"))))
-(allow file-write-times
+			(literal "/dev/null"))))
+(allow file-write-xattr
 	(require-not (xattr "com.apple.security.private.")))
-(allow hid-control
+(allow iokit-get-properties
 	(iokit-property "IOSurfaceAcceleratorCapabilitiesDict")
 	(require-any (iokit-property "product-description")
 (iokit-property "device-perf-memory-class")
@@ -327,25 +336,25 @@
 	(require-all
 		(iokit-property "home-button-type")
 		(iokit-user-client-class "IOPlatformDevice")))
-(allow iokit-issue-extension
+(allow iokit-open-user-client
 	(iokit-user-client-class "AppleJPEGDriverUserClient"))
-(allow(message-number 206) lsopen)
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow(message-number 206) mach-bootstrap)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(require-all
 		(require-not (global-name "com.apple.webkit.camera"))
 		(require-any
 			(require-all
 				(extension "b'com.apple.webkit.extension.mach'")
 				(require-any
+					(global-name "com.apple.mobileassetd.v2")
+					(global-name "com.apple.iconservices")
+					(global-name "com.apple.mobilegestalt.xpc")
 					(global-name "com.apple.iphone.axserver-systemwide")
 					(global-name "com.apple.webinspector")
 					(global-name "com.apple.tccd")
 					(global-name "com.apple.frontboard.systemappservices")
-					(global-name "com.apple.mobileassetd.v2")
-					(global-name "com.apple.iconservices")
-					(global-name "com.apple.mobilegestalt.xpc")
 					(require-all
 						(require-not (xpc-service-name "com.apple.audio.toolbox.reporting.service"))
 						(require-not (global-name "com.apple.mobilegestalt.xpc"))
@@ -393,20 +402,20 @@
 						(require-not (global-name "com.apple.lsd.mapdb"))
 						(require-not (global-name "com.apple.distributed_notifications@1v3"))
 						(global-name "com.apple.logd")))))))
-(allow mach-priv-host-port
+(allow mach-register
 	(local-name "com.apple.iphone.axserver"))
-(allow mach-task-name)
-(allow mach-task-read
+(allow mach-task-special-port*)
+(allow mach-task-special-port-get
 	(target self)
 	(state-flag "b''"))
-(allow mach-task-special-port*
+(allow mach-task-special-port-set
 	(state-flag "b''"))
-(allow opendirectory-user-modify)
-(allow process-legacy-codesigning-blob-get)
-(allow process-legacy-codesigning-cdhash-get)
-(allow process-legacy-codesigning-identity-get)
-(allow socket-option-set
-	(c1 3bfb aa78 a9c9)
+(allow process-codesigning)
+(allow process-legacy-codesigning-entitlements-blob-get)
+(allow process-legacy-codesigning-entitlements-der-blob-get)
+(allow process-legacy-codesigning-status-get)
+(allow syscall-unix
+	(c1 3c12 aa85 a9d6)
 	(require-all
 		(syscall-number SYS_sem_open)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
@@ -415,9 +424,6 @@
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
 		(syscall-number SYS_fsetxattr)
-		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
-	(require-all
-		(syscall-number SYS_guarded_close_np)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
 		(syscall-number SYS_kdebug_trace_string)
@@ -517,13 +523,18 @@
 			(syscall-number SYS_listxattr)
 			(syscall-number SYS___disable_threadsignal)))
 	(require-all
-		(syscall-number SYS_fileport_makefd)
-		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
-	(require-all
 		(require-not (syscall-number SYS_socket))
 		(require-not (syscall-number SYS_connect))
 		(require-not (syscall-number SYS_sigreturn))
 		(require-any
+			(syscall-number SYS___pthread_kill)
+			(syscall-number SYS_sigprocmask)
+			(syscall-number SYS_fgetxattr)
+			(syscall-number SYS_openat_nocancel)
+			(syscall-number SYS_write)
+			(syscall-number SYS_pread_nocancel)
+			(syscall-number SYS___semwait_signal)
+			(syscall-number SYS_getgid)
 			(syscall-number SYS_open_dprotected_np)
 			(syscall-number SYS_psynch_rw_wrlock)
 			(syscall-number SYS_sendto)
@@ -633,14 +644,6 @@
 			(syscall-number SYS_change_fdguard_np)
 			(syscall-number SYS_listxattr)
 			(syscall-number SYS___disable_threadsignal)
-			(syscall-number SYS___pthread_kill)
-			(syscall-number SYS_sigprocmask)
-			(syscall-number SYS_fgetxattr)
-			(syscall-number SYS_openat_nocancel)
-			(syscall-number SYS_write)
-			(syscall-number SYS_pread_nocancel)
-			(syscall-number SYS___semwait_signal)
-			(syscall-number SYS_getgid)
 			(require-all
 				(syscall-number SYS_sigaction)
 				(require-not (state-flag "b''")))
@@ -668,6 +671,12 @@
 			(require-all
 				(syscall-number SYS_dup2)
 				(require-not (state-flag "b''")))))
+	(require-all
+		(syscall-number SYS_guarded_close_np)
+		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
+	(require-all
+		(syscall-number SYS_fileport_makefd)
+		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
 		(syscall-number SYS_kqueue)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
@@ -779,8 +788,8 @@
 	(require-all
 		(syscall-number SYS_listxattr)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'"))))
-(allow syscall*
-	(cb 3c07 a9c7 a996)
+(allow syscall-mach
+	(cb 3c1e a9d4 a9a3)
 	(machtrap-number MSC__kernelrpc_mach_port_destruct_trap)
 	(machtrap-number MSC_host_create_mach_voucher_trap)
 	(machtrap-number MSC_semaphore_timedwait_trap)
@@ -830,19 +839,19 @@
 		(machtrap-number MSC_mach_voucher_extract_attr_recipe_trap)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
-		(machtrap-number MSC_task_self_trap)
-		(require-not (state-flag "b''")))
-	(require-all
-		(machtrap-number MSC_mach_timebase_info_trap)
-		(require-not (state-flag "b''")))
-	(require-all
 		(machtrap-number MSC_pid_for_task)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
 		(machtrap-number MSC_thread_self_trap)
-		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'"))))
-(allow syscall-unix
-	(cc 3c0f a994 a94c)
+		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
+	(require-all
+		(machtrap-number MSC_task_self_trap)
+		(require-not (state-flag "b''")))
+	(require-all
+		(machtrap-number MSC_mach_timebase_info_trap)
+		(require-not (state-flag "b''"))))
+(allow syscall-mig
+	(cc 3c26 a9a1 a959)
 	(kernel-mig-routine 256)
 	(kernel-mig-routine 169)
 	(kernel-mig-routine 259)
@@ -898,56 +907,56 @@
 		(kernel-mig-routine 69)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
-		(kernel-mig-routine 325)
-		(require-not (state-flag "b''")))
-	(require-all
 		(kernel-mig-routine 194)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
-	(require-all
-		(kernel-mig-routine 336)
-		(require-not (state-flag "b''")))
 	(require-all
 		(kernel-mig-routine 72)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
-		(kernel-mig-routine 33)
-		(require-not (state-flag "b''")))
-	(require-all
 		(kernel-mig-routine 120)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
-	(require-all
-		(kernel-mig-routine 132)
-		(require-not (state-flag "b''")))
 	(require-all
 		(kernel-mig-routine 260)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
-		(kernel-mig-routine host_page_size)
-		(require-not (state-flag "b''")))
-	(require-all
 		(kernel-mig-routine 319)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
-		(kernel-mig-routine 0)
+		(kernel-mig-routine 325)
 		(require-not (state-flag "b''")))
 	(require-all
 		(kernel-mig-routine mach_zone_info_for_largest_zone)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
+		(kernel-mig-routine 336)
+		(require-not (state-flag "b''")))
+	(require-all
 		(kernel-mig-routine 59)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
+	(require-all
+		(kernel-mig-routine 33)
+		(require-not (state-flag "b''")))
 	(require-all
 		(kernel-mig-routine 136)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
+		(kernel-mig-routine 132)
+		(require-not (state-flag "b''")))
+	(require-all
 		(kernel-mig-routine 126)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
+	(require-all
+		(kernel-mig-routine host_page_size)
+		(require-not (state-flag "b''")))
 	(require-all
 		(kernel-mig-routine 46)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
 	(require-all
 		(kernel-mig-routine 122)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
+	(require-all
+		(kernel-mig-routine 0)
+		(require-not (state-flag "b''")))
 	(require-all
 		(kernel-mig-routine 118)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'")))
@@ -960,7 +969,7 @@
 	(require-all
 		(kernel-mig-routine 76)
 		(require-not (entitlement-is-bool-true "b'com.apple.private.webkit.lockdown-mode'"))))
-(allow syscall-mig
+(allow sysctl-read
 	(sysctl-name "vm.malloc_ranges")
 	(require-all
 		(require-not (sysctl-name "vm.task_no_footprint_for_debug"))
@@ -1016,16 +1025,16 @@
 				(require-not (sysctl-name "hw.cpufrequency_compat"))
 				(sysctl-name "sysctl.proc_native")
 				(sysctl-name "hw.tbfrequency_compat")))))
-(allow system*)
-(allow system-automount
-	(ce 3c2a a931 a92e)
+(allow system-audit)
+(allow system-fcntl
+	(ce 3c41 a93e a93b)
 	(require-all
 		(fcntl-command F_OFD_GETLK)
 		(require-not (state-flag "b''")))
 	(require-all
 		(fcntl-command F_OFD_SETLKWTIMEOUT)
 		(require-not (state-flag "b''"))))
-(allow system-mac*
+(allow system-mac-syscall
 	(require-all
 		(mac-syscall-number 5)
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
@@ -1050,8 +1059,8 @@
 	(require-all
 		(mac-syscall-number 67)
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")))
-(allow system-mac-label)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow user-preference-read
 	(preference-domain "com.apple.LaunchServices")
 	(preference-domain "com.apple.Metal")
 	(preference-domain "com.apple.UIKit")
@@ -1093,7 +1102,7 @@
 	(preference-domain "com.apple.corevideo")
 	(preference-domain "com.apple.lookup.shared")
 	(preference-domain "com.apple.security"))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-write)
+(allow default-message-filter)

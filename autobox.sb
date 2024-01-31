@@ -1,33 +1,32 @@
 (version 1)
 (deny default)
-(allow file-chroot
+(allow file-ioctl
 	(literal "/dev/aes_0")
 	(literal "/dev/dtracehelper"))
-(allow file-issue-extension)
-(allow file-link
+(allow file-lock)
+(allow file-map-executable
 	(require-any (signing-identifier "com.apple.lockdownmoded")
 (signing-identifier "com.apple.audio.AudioConverterService"))
 	(signing-identifier "com.apple.ImageIOXPCService")
 	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
-(allow file-mount-update
+(allow file-read-data
 	(require-any (signing-identifier "com.apple.lockdownmoded")
 (signing-identifier "com.apple.audio.AudioConverterService"))
 	(signing-identifier "com.apple.ImageIOXPCService")
 	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
-(allow file-revoke)
-(allow hid-control)
-(allow iokit-issue-extension)
-(allow iokit-open*)
+(allow file-test-existence)
+(allow iokit-get-properties)
 (allow iokit-open-user-client)
-(allow ipc-sysv-shm)
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow iokit-open-service)
+(allow iokit-set-properties)
+(allow lsopen)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(require-all
 		(require-any (signing-identifier "com.apple.lockdownmoded")
 (signing-identifier "com.apple.audio.AudioConverterService"))
 		(require-any
-			(global-name "com.apple.pluginkit.pkd")
 			(xpc-service-name "com.apple.extensionkitservice")
 			(extension "b'com.apple.pluginkit.plugin-service'")
 			(xpc-service-name-regex #".+")
@@ -45,6 +44,7 @@
 			(global-name "com.apple.containermanagerd")
 			(require-not (process-attribute is-apple-signed-executable))
 			(global-name "com.apple.mobile.usermanagerd.xpc")
+			(global-name "com.apple.pluginkit.pkd")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
@@ -61,7 +61,6 @@
 	(require-all
 		(signing-identifier "com.apple.ImageIOXPCService")
 		(require-any
-			(global-name "com.apple.pluginkit.pkd")
 			(xpc-service-name "com.apple.extensionkitservice")
 			(extension "b'com.apple.pluginkit.plugin-service'")
 			(xpc-service-name-regex #".+")
@@ -79,6 +78,7 @@
 			(global-name "com.apple.containermanagerd")
 			(require-not (process-attribute is-apple-signed-executable))
 			(global-name "com.apple.mobile.usermanagerd.xpc")
+			(global-name "com.apple.pluginkit.pkd")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
@@ -95,7 +95,6 @@
 	(require-all
 		(signing-identifier "com.apple.CoreGraphics.CGPDFService")
 		(require-any
-			(global-name "com.apple.pluginkit.pkd")
 			(xpc-service-name "com.apple.extensionkitservice")
 			(extension "b'com.apple.pluginkit.plugin-service'")
 			(xpc-service-name-regex #".+")
@@ -113,6 +112,7 @@
 			(global-name "com.apple.containermanagerd")
 			(require-not (process-attribute is-apple-signed-executable))
 			(global-name "com.apple.mobile.usermanagerd.xpc")
+			(global-name "com.apple.pluginkit.pkd")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
@@ -126,14 +126,14 @@
 			(require-all
 				(global-name "com.apple.system.notification_center")
 				(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'")))))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow opendirectory-user-modify)
-(allow pseudo-tty)
-(allow socket-option-set
-	(c1 3298 bbe5 bbde)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow process-codesigning)
+(allow socket-ioctl)
+(allow syscall-unix
+	(c1 32a8 bbfb bbf4)
 	(require-not (syscall-number SYS_memorystatus_control))
 	(debug-mode)
 	(require-all
@@ -148,13 +148,13 @@
 	(require-all
 		(syscall-number SYS_guarded_open_dprotected_np)
 		(entitlement-is-bool-true "b'com.apple.coreduetd.people'")))
-(allow syscall*)
-(allow syscall-unix
-	(cc 32a2 bbdc bc0a))
-(allow syscall-mach
+(allow syscall-mach)
+(allow syscall-mig
+	(cc 32b2 bbf2 bc20))
+(allow sysctl*
 	(sysctl-name "kern.wq_limit_cooperative_threads")
 	(extension "b'com.apple.security.exception.sysctl.read-write'"))
-(allow syscall-mig
+(allow sysctl-read
 	(extension "b'com.apple.security.exception.sysctl.read-write'")
 	(extension "b'com.apple.security.exception.sysctl.read-only'")
 	(require-all
@@ -252,28 +252,28 @@
 				(process-attribute is-apple-signed-executable)
 				(require-any (sysctl-name "kern.willshutdown")
 (sysctl-name "kern.willuserspacereboot"))))))
-(allow system-automount
-	(ce 32a6 bbb3 bc0a))
-(allow system-debug
+(allow system-fcntl
+	(ce 32b6 bbc9 bc20))
+(allow system-fsctl
 	(fsctl-command-regex [UNSUPPORTED](_IO "A" 20)))
-(allow system-mac*
+(allow system-mac-syscall
 	(mac-syscall-number 2)
 	(require-not (mac-syscall-number 5))
 	(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
-(allow system-mac-label)
-(allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
-	(require-any (signing-identifier "com.apple.lockdownmoded")
-(signing-identifier "com.apple.audio.AudioConverterService"))
-	(signing-identifier "com.apple.ImageIOXPCService")
-	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
-(allow user-preference*
-	(preference-domain "kCFPreferencesAnyApplication")
-	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
 (allow user-preference-read
 	(require-any (signing-identifier "com.apple.lockdownmoded")
 (signing-identifier "com.apple.audio.AudioConverterService"))
 	(signing-identifier "com.apple.ImageIOXPCService")
 	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
-(allow user-preference-write)
+(allow managed-preference-read
+	(preference-domain "kCFPreferencesAnyApplication")
+	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+(allow user-preference-write
+	(require-any (signing-identifier "com.apple.lockdownmoded")
+(signing-identifier "com.apple.audio.AudioConverterService"))
+	(signing-identifier "com.apple.ImageIOXPCService")
+	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
+(allow default-message-filter)
