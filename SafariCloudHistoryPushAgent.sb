@@ -109,11 +109,11 @@
 (allow syscall*)
 (allow syscall-unix)
 (allow system-automount)
+(allow system-mac*)
 (allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow user-preference*
+(allow system-nfssvc)
+(allow system-swap
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.SafariCloudHistoryPushAgent")
 	(extension "b'com.apple.security.exception.shared-preference.read-write'")
@@ -126,7 +126,7 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'")
 	(preference-domain "com.apple.SafariCloudHistoryPushAgent")
@@ -140,6 +140,6 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow managed-preference-read
+(allow user-preference-read
 	(preference-domain "com.apple.SafariCloudHistoryPushAgent"))
-(allow storage-class-map)
+(allow user-preference-write)

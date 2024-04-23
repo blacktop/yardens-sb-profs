@@ -4,8 +4,8 @@
 	(require-all
 		(extension-class "com.apple.app-sandbox.read")
 		(require-any
-			(subpath "/System/Cryptexes")
-			(subpath "/private/preboot/Cryptexes"))))
+			(subpath "/private/preboot/Cryptexes")
+			(subpath "/System/Cryptexes"))))
 (allow file-issue-extension)
 (allow file-link
 	(subpath "/usr/lib")
@@ -13,8 +13,8 @@
 	(require-all
 		(require-not (subpath "/Developer/Library"))
 		(require-any
-			(subpath "/System/Cryptexes")
-			(subpath "/private/preboot/Cryptexes"))))
+			(subpath "/private/preboot/Cryptexes")
+			(subpath "/System/Cryptexes"))))
 (allow file-mount
 	(require-any (literal "/private/var/Managed Preferences/mobile/.GlobalPreferences_m.plist")
 (literal "/private/var/Managed Preferences/mobile/kCFPreferencesAnyApplication.plist")
@@ -38,42 +38,6 @@
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.blastdoor.read'")))
 	(require-all
-		(require-not (literal "/private/var"))
-		(require-all (require-not (subpath "/AppleInternal/Library/VideoCodecs"))
-(require-not (subpath "/usr/standalone/firmware"))
-(require-not (subpath "/private/xarts"))
-(require-not (subpath "/private/var/wireless/baseband_data")))
-		(require-not (subpath "/private/var/hardware"))
-		(require-not (subpath "/private/var/MobileSoftwareUpdate"))
-		(require-not (literal "/dev"))
-		(require-any
-			(literal "/dev/null")
-			(literal "/private")
-			(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
-			(literal "/dev/urandom")
-			(literal "/private/etc/passwd")
-			(literal "/private/etc/services")
-			(require-any (literal "/private/etc/group")
-(literal "/private/etc/protocols"))
-			(subpath "/System/Cryptexes")
-			(literal "/dev/zero")
-			(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
-			(literal "/System")
-			(literal "/private/etc/hosts")
-			(subpath "/private/preboot/Cryptexes")
-			(literal "/dev/random")
-			(literal "/")
-			(literal "/private/etc/fstab")
-			(literal "/private/preboot")
-			(require-all
-				(file-mode #o0004)
-				(require-any
-					(subpath "/System")
-					(subpath "/usr/lib")
-					(subpath "/usr/share")
-					(subpath "/private/var/db/dyld")
-					(subpath "/private/var/db/timezone")))))
-	(require-all
 		(subpath "/private/var/tmp/com.apple.messages")
 		(require-any
 			(extension "b'com.apple.app-sandbox.read'")
@@ -89,6 +53,42 @@
 		(require-any
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.blastdoor.read'")))
+	(require-all
+		(require-not (literal "/private/var"))
+		(require-all (require-not (subpath "/AppleInternal/Library/VideoCodecs"))
+(require-not (subpath "/usr/standalone/firmware"))
+(require-not (subpath "/private/xarts"))
+(require-not (subpath "/private/var/wireless/baseband_data")))
+		(require-not (subpath "/private/var/hardware"))
+		(require-not (subpath "/private/var/MobileSoftwareUpdate"))
+		(require-not (literal "/dev"))
+		(require-any
+			(literal "/private/etc/passwd")
+			(literal "/private/etc/services")
+			(require-any (literal "/private/etc/group")
+(literal "/private/etc/protocols"))
+			(subpath "/System/Cryptexes")
+			(literal "/dev/zero")
+			(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
+			(literal "/System")
+			(literal "/private/etc/hosts")
+			(subpath "/private/preboot/Cryptexes")
+			(literal "/dev/random")
+			(literal "/")
+			(literal "/private/etc/fstab")
+			(literal "/private/preboot")
+			(literal "/dev/null")
+			(literal "/private")
+			(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
+			(literal "/dev/urandom")
+			(require-all
+				(file-mode #o0004)
+				(require-any
+					(subpath "/System")
+					(subpath "/usr/lib")
+					(subpath "/usr/share")
+					(subpath "/private/var/db/dyld")
+					(subpath "/private/var/db/timezone")))))
 	(require-all
 		(subpath "/private/var/tmp/com.apple.imtransferagent")
 		(require-any
@@ -129,10 +129,6 @@
 				(require-not (subpath "/private/var/MobileSoftwareUpdate"))
 				(require-not (literal "/dev"))
 				(require-any
-					(literal "/dev/null")
-					(literal "/private")
-					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
-					(literal "/dev/urandom")
 					(literal "/private/etc/passwd")
 					(literal "/private/etc/services")
 					(require-any (literal "/private/etc/group")
@@ -147,6 +143,10 @@
 					(literal "/")
 					(literal "/private/etc/fstab")
 					(literal "/private/preboot")
+					(literal "/dev/null")
+					(literal "/private")
+					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
+					(literal "/dev/urandom")
 					(require-all
 						(file-mode #o0004)
 						(require-any
@@ -174,11 +174,11 @@
 		(require-not (subpath "/Library/Preferences"))
 		(require-not (literal "/private/var/run/syslog"))
 		(require-any
+			(literal "/tmp")
+			(literal "/private/etc/localtime")
 			(require-any (literal "/etc")
 (literal "/var"))
-			(subpath "/private/var/db/timezone")
-			(literal "/tmp")
-			(literal "/private/etc/localtime"))))
+			(subpath "/private/var/db/timezone"))))
 (allow file-revoke)
 (allow file-test-existence
 	(require-all
@@ -217,8 +217,8 @@
 	(require-all
 		(iokit-user-client-class "AppleAVD")
 		(require-any
-			(iokit-property "HEVCCanDecodeTileToCanvas")
-			(iokit-property "AVCSupported"))))
+			(iokit-property "AVCSupported")
+			(iokit-property "HEVCCanDecodeTileToCanvas"))))
 (allow ipc-posix-sem-wait
 	(ipc-posix-name "apple.shm.notification_center"))
 (allow lsopen
@@ -246,7 +246,7 @@
 (allow process-legacy-codesigning-cdhash-get)
 (allow process-legacy-codesigning-identity-get)
 (allow socket-option-set
-	(c1 3632 b3fb b398)
+	(c1 3630 b470 b40b)
 	(require-all
 		(require-not (syscall-number SYS_necp_open))
 		(require-not (syscall-number SYS_necp_client_action))
@@ -394,12 +394,14 @@
 				(require-any
 					(syscall-number SYS_map_with_linking_np)
 					(syscall-number SYS_sigaction)
+					(syscall-number SYS_openat)
 					(syscall-number SYS_fstatfs64)
 					(syscall-number SYS_getegid)
 					(syscall-number SYS_madvise)
 					(syscall-number SYS_kdebug_typefilter)
 					(syscall-number SYS_getpid)
 					(syscall-number SYS_workq_open)
+					(syscall-number SYS_fstatat)
 					(syscall-number SYS_kdebug_trace_string)
 					(syscall-number SYS_workq_kernreturn)
 					(syscall-number SYS_gettimeofday)
@@ -415,42 +417,40 @@
 					(syscall-number SYS_mmap)
 					(syscall-number SYS_psynch_rw_unlock)
 					(syscall-number SYS_lstat64)
+					(syscall-number SYS_open)
 					(syscall-number SYS_thread_selfid)
 					(syscall-number SYS_kdebug_trace64)
 					(syscall-number SYS_setrlimit)
+					(syscall-number 38)
 					(syscall-number SYS_psynch_rw_rdlock)
 					(syscall-number SYS_stat64)
 					(syscall-number SYS_read)
+					(syscall-number SYS_memorystatus_control)
 					(syscall-number SYS_getattrlist)
 					(syscall-number SYS_issetugid)
 					(syscall-number SYS_kevent_id)
 					(syscall-number SYS_getdirentries64)
 					(syscall-number SYS_geteuid)
 					(syscall-number SYS_fstatat64)
+					(syscall-number SYS_dup)
 					(syscall-number SYS_munmap)
 					(syscall-number SYS_fsgetpath)
 					(syscall-number SYS_shared_region_check_np)
 					(syscall-number SYS_lseek)
+					(syscall-number SYS___mac_syscall)
 					(syscall-number SYS_read_nocancel)
 					(syscall-number SYS_mprotect)
 					(syscall-number SYS_kevent_qos)
-					(syscall-number SYS_openat)
-					(syscall-number SYS_fstatat)
-					(syscall-number SYS_open)
-					(syscall-number 38)
-					(syscall-number SYS_getfsstat)
-					(require-all
-						(syscall-number SYS_memorystatus_control)
-						(debug-mode)))))))
+					(syscall-number SYS_getfsstat))))))
 (allow syscall*
-	(cb 363f b396 b390)
+	(cb 363d b409 b402)
 	(machtrap-number MSC__kernelrpc_mach_port_extract_member_trap)
 	(machtrap-number MSC_pid_for_task)
 	(machtrap-number MSC_thread_self_trap)
 	(machtrap-number MSC_mach_voucher_extract_attr_recipe_trap)
 	(machtrap-number MSC__kernelrpc_mach_port_get_attributes_trap))
 (allow syscall-unix
-	(cc 3641 b38e b388)
+	(cc 3643 b400 b3fa)
 	(require-all
 		(require-not (kernel-mig-routine 136))
 		(require-not (kernel-mig-routine 135))
@@ -480,12 +480,10 @@
 (sysctl-name "hw.machine"))
 	(sysctl-name "hw.cachelinesize"))
 (allow system-automount
-	(ce 3651 b378 f53e))
-(allow system-mac-label)
-(allow system-mac-syscall
-	(require-all
-		(memorystatus-control-command MEMORYSTATUS_CMD_INCREASE_JETSAM_TASK_LIMIT)
-		(debug-mode)))
-(allow system-package-check
+	(ce 3653 b3ea f4bc))
+(allow system-mac*)
+(allow system-mac-label
+	(memorystatus-control-command MEMORYSTATUS_CMD_INCREASE_JETSAM_TASK_LIMIT))
+(allow system-nfssvc
 	(privilege-id "PRIV_GLOBAL_PROC_INFO"))
-(allow storage-class-map)
+(allow user-preference-write)

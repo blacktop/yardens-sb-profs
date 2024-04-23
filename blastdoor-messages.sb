@@ -39,18 +39,18 @@
 		(require-any (subpath "/private/var/tmp/com.apple.messages/PassPreview")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 		(require-any
+			(extension "b'com.apple.app-sandbox.read-write'")
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.blastdoor.read'")
-			(extension "b'com.apple.blastdoor.read-write'")
-			(extension "b'com.apple.app-sandbox.read-write'")))
+			(extension "b'com.apple.blastdoor.read-write'")))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.messages/Wallpapers")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/Wallpapers"))
 		(require-any
+			(extension "b'com.apple.app-sandbox.read-write'")
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.blastdoor.read'")
-			(extension "b'com.apple.blastdoor.read-write'")
-			(extension "b'com.apple.app-sandbox.read-write'")))
+			(extension "b'com.apple.blastdoor.read-write'")))
 	(require-all
 		(subpath "/private/var/tmp/com.apple.TelephonyUtilities/SharePlayActivityImages")
 		(require-any
@@ -125,10 +125,6 @@
 				(subpath "/private/var/MobileSoftwareUpdate")
 				(literal "/dev")
 				(require-any
-					(literal "/dev/null")
-					(literal "/private")
-					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
-					(literal "/dev/urandom")
 					(literal "/private/etc/passwd")
 					(literal "/private/etc/services")
 					(require-any (literal "/private/etc/group")
@@ -143,6 +139,10 @@
 					(literal "/")
 					(literal "/private/etc/fstab")
 					(literal "/private/preboot")
+					(literal "/dev/null")
+					(literal "/private")
+					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
+					(literal "/dev/urandom")
 					(require-all
 						(file-mode #o0004)
 						(require-any
@@ -196,7 +196,7 @@
 (allow process-legacy-codesigning-cdhash-get)
 (allow process-legacy-codesigning-identity-get)
 (allow socket-option-set
-	(c1 36bc b2b4 b25c)
+	(c1 36be b321 b2c9)
 	(require-all
 		(require-not (syscall-number SYS_necp_open))
 		(require-not (syscall-number SYS_necp_client_action))
@@ -216,25 +216,6 @@
 			(require-all
 				(require-not (state-flag "b''"))
 				(require-any
-					(syscall-number SYS_shared_region_map_and_slide_2_np)
-					(syscall-number SYS_sigprocmask)
-					(syscall-number SYS_sigsuspend_nocancel)
-					(syscall-number SYS_psynch_cvwait)
-					(syscall-number SYS_map_with_linking_np)
-					(syscall-number SYS_sigaction)
-					(syscall-number SYS_psynch_cvbroad)
-					(syscall-number SYS_madvise)
-					(syscall-number SYS_kdebug_typefilter)
-					(syscall-number SYS_getpid)
-					(syscall-number SYS_workq_open)
-					(syscall-number SYS_psynch_cvsignal)
-					(syscall-number SYS_kdebug_trace_string)
-					(syscall-number SYS_workq_kernreturn)
-					(syscall-number SYS_gettimeofday)
-					(syscall-number SYS_getrlimit)
-					(syscall-number SYS_stat64_extended)
-					(syscall-number SYS_socket)
-					(syscall-number SYS_gettid)
 					(syscall-number SYS_pathconf)
 					(syscall-number SYS_psynch_mutexdrop)
 					(syscall-number SYS_objc_bp_assist_cfg_np)
@@ -265,18 +246,35 @@
 					(syscall-number SYS_read_nocancel)
 					(syscall-number SYS_mprotect)
 					(syscall-number SYS_kevent_qos)
+					(syscall-number SYS_shared_region_map_and_slide_2_np)
+					(syscall-number SYS_sigprocmask)
+					(syscall-number SYS_sigsuspend_nocancel)
+					(syscall-number SYS_psynch_cvwait)
+					(syscall-number SYS_map_with_linking_np)
+					(syscall-number SYS_sigaction)
+					(syscall-number SYS_psynch_cvbroad)
+					(syscall-number SYS_madvise)
+					(syscall-number SYS_kdebug_typefilter)
+					(syscall-number SYS_getpid)
+					(syscall-number SYS_workq_open)
+					(syscall-number SYS_psynch_cvsignal)
+					(syscall-number SYS_kdebug_trace_string)
+					(syscall-number SYS_workq_kernreturn)
+					(syscall-number SYS_gettimeofday)
+					(syscall-number SYS_getrlimit)
+					(syscall-number SYS_stat64_extended)
+					(syscall-number SYS_socket)
+					(syscall-number SYS_gettid)
 					(require-all
 						(require-not (syscall-number SYS_iopolicysys))
 						(require-any
-							(syscall-number SYS_dup)
+							(syscall-number SYS_getfsstat)
 							(syscall-number SYS_openat)
 							(syscall-number SYS_fstatat)
 							(syscall-number SYS_open)
 							(syscall-number 38)
-							(syscall-number SYS_getfsstat)
-							(require-all
-								(syscall-number SYS_memorystatus_control)
-								(debug-mode))))))
+							(syscall-number SYS_memorystatus_control)
+							(syscall-number SYS_dup)))))
 			(require-all
 				(syscall-number SYS_memorystatus_available_memory)
 				(state-flag "b''"))
@@ -359,9 +357,9 @@
 				(syscall-number SYS_listxattr)
 				(state-flag "b''")))))
 (allow syscall*
-	(cb 36ca b25a deb3))
+	(cb 36cc b2c7 b407))
 (allow syscall-unix
-	(cc 36cc b258 b255)
+	(cc 36ce b2c5 b2c2)
 	(require-all
 		(require-not (kernel-mig-routine 136))
 		(require-not (kernel-mig-routine 135))
@@ -398,6 +396,6 @@
 (sysctl-name "hw.machine"))
 	(sysctl-name "hw.cachelinesize"))
 (allow system-automount
-	(ce 36d5 b245 f53e))
-(allow system-mac-label)
-(allow storage-class-map)
+	(ce 36d7 b2b2 f4bc))
+(allow system-mac*)
+(allow user-preference-write)

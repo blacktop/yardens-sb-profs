@@ -12,13 +12,18 @@
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
@@ -32,11 +37,6 @@
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
-			(require-all
 				(extension-class "com.apple.mediaserverd.read-write")
 				(require-any
 					(extension "b'com.apple.app-sandbox.read-write'")
@@ -45,36 +45,36 @@
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))))
 	(require-all
 		(extension-class "com.apple.app-sandbox.read")
 		(require-any
@@ -83,13 +83,18 @@
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
@@ -103,11 +108,6 @@
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
-			(require-all
 				(extension-class "com.apple.mediaserverd.read-write")
 				(require-any
 					(extension "b'com.apple.app-sandbox.read-write'")
@@ -116,36 +116,36 @@
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))))
 	(require-all
 		(extension-class "com.apple.mediaserverd.read-write")
 		(require-any
@@ -154,13 +154,18 @@
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
@@ -174,11 +179,6 @@
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
-			(require-all
 				(extension-class "com.apple.mediaserverd.read-write")
 				(require-any
 					(extension "b'com.apple.app-sandbox.read-write'")
@@ -187,36 +187,36 @@
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))))
 	(require-all
 		(extension-class "com.apple.aned.read-only")
 		(require-any
@@ -225,13 +225,18 @@
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
@@ -245,11 +250,6 @@
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
-			(require-all
 				(extension-class "com.apple.mediaserverd.read-write")
 				(require-any
 					(extension "b'com.apple.app-sandbox.read-write'")
@@ -258,36 +258,36 @@
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))))
 	(require-all
 		(extension-class "com.apple.mediaserverd.read")
 		(require-any
@@ -296,13 +296,18 @@
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
@@ -316,11 +321,6 @@
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
-			(require-all
 				(extension-class "com.apple.mediaserverd.read-write")
 				(require-any
 					(extension "b'com.apple.app-sandbox.read-write'")
@@ -329,65 +329,65 @@
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
+					(extension "b'com.apple.quicklook.readonly'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 					(extension "b'com.apple.app-sandbox.read'")
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-					(extension "b'com.apple.sharing.airdrop.readonly'")
-					(extension "b'com.apple.quicklook.readonly'")))))
+					(extension "b'com.apple.sharing.airdrop.readonly'")))))
 	(require-all
 		(extension-class "com.apple.quicklook.readonly")
 		(require-any
+			(extension "b'com.apple.quicklook.readonly'")
 			(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.app-sandbox.read-write'")
 			(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 			(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 			(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-			(extension "b'com.apple.sharing.airdrop.readonly'")
-			(extension "b'com.apple.quicklook.readonly'")))
+			(extension "b'com.apple.sharing.airdrop.readonly'")))
 	(require-all
 		(extension-class "com.apple.sharing.airdrop.readonly")
 		(require-any
+			(extension "b'com.apple.quicklook.readonly'")
 			(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.app-sandbox.read-write'")
 			(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 			(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 			(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-			(extension "b'com.apple.sharing.airdrop.readonly'")
-			(extension "b'com.apple.quicklook.readonly'")))
+			(extension "b'com.apple.sharing.airdrop.readonly'")))
 	(require-all
 		(extension "b'com.apple.sandbox.executable'")
 		(require-not (literal))
 		(require-any
+			(extension-class "com.apple.mediaserverd.read")
 			(extension-class "com.apple.app-sandbox.read")
-			(extension-class "com.apple.aned.read-only")
-			(extension-class "com.apple.mediaserverd.read")))
+			(extension-class "com.apple.aned.read-only")))
 	(require-all
 		(require-all (require-not (literal "/System/Library/Caches/apticket.der"))
 (require-not (subpath "/System/Library/Caches/com.apple.factorydata"))
@@ -1106,7 +1106,6 @@
 		(require-not (subpath "/private/var/hardware/FactoryData"))
 		(require-not (literal "/usr/standalone/firmware/apticket.der"))
 		(require-any
-			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(literal "/dev/null")
 			(literal "/dev/aes_0")
 			(subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.icloud.findmydevice.managed/Library")
@@ -1142,6 +1141,7 @@
 			(literal "/private/var/db/com.apple.networkextension.tracker-info")
 			(subpath-prefix "${HOME}/Library/Caches/com.apple.AppleAccount")
 			(subpath-prefix "${HOME}/Library/Caches/ClassKit")
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(literal "/private/var/")
 				(require-any
@@ -1188,12 +1188,6 @@
 				(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}")))
 			(require-all
-				(subpath-prefix "${HOME}/Library/Application Support/CloudDocs/session/r")
-				(vnode-type REGULAR-FILE))
-			(require-all
-				(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Application Support/CloudDocs/session/r/?")
-				(vnode-type REGULAR-FILE))
-			(require-all
 				(literal "/private/var/preferences/com.apple.networkextension.uuidcache.plist")
 				(process-attribute is-apple-signed-executable))
 			(require-all
@@ -1210,6 +1204,12 @@
 					(require-all
 						(vnode-type DIRECTORY)
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.progressd"))))
+			(require-all
+				(subpath-prefix "${HOME}/Library/Application Support/CloudDocs/session/r")
+				(vnode-type REGULAR-FILE))
+			(require-all
+				(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Application Support/CloudDocs/session/r/?")
+				(vnode-type REGULAR-FILE))
 			(require-all
 				(vnode-type DIRECTORY)
 				(require-any
@@ -1263,19 +1263,20 @@
 					(subpath "/private/var/preferences/Logging")
 					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
 					(subpath "/System/Library/PrivateFrameworks")
+					(require-any (literal "/private/var/db/eligibilityd/eligibility.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist"))
 					(literal "/private/etc/passwd")
 					(subpath "/usr/lib")
 					(subpath "/private/var/db/timezone")
 					(subpath "/Library/RegionFeatures")
-					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist")
+					(literal "/System")
 					(literal "/private/etc/services")
 					(require-any (literal "/private/etc/group")
 (literal "/private/etc/protocols"))
 					(subpath "/System/Library/Frameworks")
-					(literal "/System")
+					(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 					(subpath "/System/Cryptexes")
 					(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
-					(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 					(literal "/private/etc/hosts")
 					(subpath "/private/preboot/Cryptexes")
 					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.bin")
@@ -1289,7 +1290,6 @@
 					(require-all
 						(process-attribute is-apple-signed-executable)
 						(require-any
-							(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 							(subpath "/usr/libexec")
 							(require-any (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
@@ -1297,6 +1297,7 @@
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationSetAsideDetails.plist"))
 							(literal "/private/var/preferences/SystemConfiguration/preferences.plist")
+							(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 							(require-all
 								(subpath "/usr/local/libexec")
 								(debug-mode))))
@@ -1322,6 +1323,11 @@
 									(subpath "/AppleInternal")
 									(subpath "/usr/local/lib")))))
 					(require-all
+						(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
+						(require-any
+							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
+							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
+					(require-all
 						(subpath "/usr/appleinternal")
 						(require-any
 							(debug-mode)
@@ -1330,11 +1336,6 @@
 								(require-any
 									(subpath "/AppleInternal")
 									(subpath "/usr/local/lib")))))
-					(require-all
-						(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
-						(require-any
-							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
-							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
 					(require-all
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
@@ -1441,6 +1442,12 @@
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/")
 		(extension "b'com.apple.sandbox.system-container'"))
 	(require-all
+		(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
+		(extension "b'com.apple.sandbox.system-group'")
+		(require-any
+			(entitlement-is-present "b'com.apple.security.system-groups'")
+			(entitlement-is-present "b'com.apple.security.system-group-containers'")))
+	(require-all
 		(process-attribute is-apple-signed-executable)
 		(vnode-type DIRECTORY))
 	(require-all
@@ -1473,12 +1480,6 @@
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]/[UNSUPPORTED]DocumentRevisions-V100/PerUID/?")
 (subpath-prefix "${FRONT_USER_HOME}/.DocumentRevisions-V100/PerUID"))
 				(extension "b'com.apple.revisiond.revision'"))))
-	(require-all
-		(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
-		(extension "b'com.apple.sandbox.system-group'")
-		(require-any
-			(entitlement-is-present "b'com.apple.security.system-groups'")
-			(entitlement-is-present "b'com.apple.security.system-group-containers'")))
 	(require-all
 		(vnode-type SYMLINK)
 		(require-any
@@ -1608,13 +1609,6 @@
 			(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
 			(extension "b'com.apple.librarian.ubiquity-container'")))
 	(require-all
-		(literal "/private/var/")
-		(subpath-prefix "${FRONT_USER_HOME}")
-		(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$")
-		(require-any
-			(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
-			(extension "b'com.apple.librarian.ubiquity-container'")))
-	(require-all
 		(vnode-type REGULAR-FILE)
 		(require-any
 			(require-all
@@ -1646,6 +1640,13 @@
 					(require-all
 						(vnode-type DIRECTORY)
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.progressd"))))))
+	(require-all
+		(literal "/private/var/")
+		(subpath-prefix "${FRONT_USER_HOME}")
+		(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$")
+		(require-any
+			(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
+			(extension "b'com.apple.librarian.ubiquity-container'")))
 	(require-all
 		(vnode-type DIRECTORY)
 		(require-any
@@ -1758,7 +1759,6 @@
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(require-any
-			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(extension "b'com.apple.sandbox.oopjit'")
 			(require-any (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.progressd")
 (subpath-prefix "${HOME}/Library/Caches/com.apple.progressd")
@@ -1777,6 +1777,7 @@
 			(subpath-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-write}")
 			(subpath-prefix "${HOME}/Library/Caches/com.apple.AppleAccount")
 			(subpath-prefix "${HOME}/Library/Caches/ClassKit")
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(literal "/private/var/")
 				(require-any
@@ -1803,10 +1804,6 @@
 				(require-any
 					(entitlement-is-bool-true "b'com.apple.private.librarian.container-proxy'")
 					(extension "b'com.apple.librarian.ubiquity-container'")))
-			(require-all
-				(literal "/private/var/")
-				(subpath-prefix "${FRONT_USER_HOME}")
-				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))
 			(require-all
 				(vnode-type REGULAR-FILE)
 				(require-any
@@ -1839,6 +1836,10 @@
 							(require-all
 								(vnode-type DIRECTORY)
 								(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.progressd"))))))
+			(require-all
+				(literal "/private/var/")
+				(subpath-prefix "${FRONT_USER_HOME}")
+				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$"))
 			(require-all
 				(vnode-type DIRECTORY)
 				(require-any
@@ -1938,7 +1939,6 @@
 			(require-all
 				(literal "/private/var/containers/Shared/SystemGroup/")
 				(require-any
-					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(require-any (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.progressd")
 (subpath-prefix "${HOME}/Library/Caches/com.apple.progressd")
 (subpath-prefix "${HOME}/Library/Mobile Documents/iCloud~com~apple~homeroom")
@@ -1956,6 +1956,7 @@
 					(subpath-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-write}")
 					(subpath-prefix "${HOME}/Library/Caches/com.apple.AppleAccount")
 					(subpath-prefix "${HOME}/Library/Caches/ClassKit")
+					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 					(require-all
 						(extension "b'com.apple.sandbox.system-group'")
 						(require-any
@@ -2294,11 +2295,11 @@
 	(require-all
 		(global-name "com.apple.networkd_privileged")
 		(require-any
+			(entitlement-is-bool-true "b'com.apple.networkd.modify_settings'")
 			(entitlement-is-bool-true "b'com.apple.networkd.disable_opportunistic'")
 			(entitlement-is-bool-true "b'com.apple.networkd.advisory_socket'")
 			(entitlement-is-bool-true "b'com.apple.networkd_privileged'")
-			(entitlement-is-bool-true "b'com.apple.networkd.persistent_interface'")
-			(entitlement-is-bool-true "b'com.apple.networkd.modify_settings'")))
+			(entitlement-is-bool-true "b'com.apple.networkd.persistent_interface'")))
 	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
@@ -2347,11 +2348,11 @@
 (allow syscall*)
 (allow syscall-unix)
 (allow system-automount)
+(allow system-mac*)
 (allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow user-preference*
+(allow system-nfssvc)
+(allow system-swap
 	(preference-domain "com.apple.appleaccount")
 	(preference-domain "com.apple.coremedia")
 	(preference-domain "com.apple.storeservices.itfe")
@@ -2377,9 +2378,9 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow managed-preference-read
+(allow user-preference-read
 	(preference-domain "com.apple.progressd"))
-(allow storage-class-map)
+(allow user-preference-write)

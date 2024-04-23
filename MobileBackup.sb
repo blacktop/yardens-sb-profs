@@ -20,4 +20,4 @@
 	(literal "/private/var/run"))
 (deny ipc-sysv-sem)
 (deny system-fsctl)
-(deny user-preference-write)
+(deny managed-preference-read)

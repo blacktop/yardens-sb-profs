@@ -29,7 +29,6 @@
 		(require-not (subpath "/private/var/hardware/FactoryData"))
 		(require-not (literal "/usr/standalone/firmware/apticket.der"))
 		(require-any
-			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(literal "/dev/null")
 			(literal "/dev/aes_0")
 			(subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.icloud.findmydevice.managed/Library")
@@ -49,6 +48,7 @@
 (literal-prefix "${HOME}/Library/Safari/History.db-journal"))
 			(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin")
 			(literal-prefix "${HOME}/Library/Safari")
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(uid 0)
 				(literal "/private/etc/master.passwd"))
@@ -108,19 +108,20 @@
 					(subpath "/private/var/preferences/Logging")
 					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
 					(subpath "/System/Library/PrivateFrameworks")
+					(require-any (literal "/private/var/db/eligibilityd/eligibility.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist"))
 					(literal "/private/etc/passwd")
 					(subpath "/usr/lib")
 					(subpath "/private/var/db/timezone")
 					(subpath "/Library/RegionFeatures")
-					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist")
+					(literal "/System")
 					(literal "/private/etc/services")
 					(require-any (literal "/private/etc/group")
 (literal "/private/etc/protocols"))
 					(subpath "/System/Library/Frameworks")
-					(literal "/System")
+					(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 					(subpath "/System/Cryptexes")
 					(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
-					(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 					(literal "/private/etc/hosts")
 					(subpath "/private/preboot/Cryptexes")
 					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.bin")
@@ -134,7 +135,6 @@
 					(require-all
 						(process-attribute is-apple-signed-executable)
 						(require-any
-							(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 							(subpath "/usr/libexec")
 							(require-any (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
@@ -142,6 +142,7 @@
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationSetAsideDetails.plist"))
 							(literal "/private/var/preferences/SystemConfiguration/preferences.plist")
+							(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 							(require-all
 								(subpath "/usr/local/libexec")
 								(debug-mode))))
@@ -167,15 +168,6 @@
 									(subpath "/AppleInternal")
 									(subpath "/usr/local/lib")))))
 					(require-all
-						(subpath "/usr/appleinternal")
-						(require-any
-							(debug-mode)
-							(require-all
-								(debug-mode)
-								(require-any
-									(subpath "/AppleInternal")
-									(subpath "/usr/local/lib")))))
-					(require-all
 						(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
 						(require-any
 							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
@@ -183,7 +175,16 @@
 					(require-all
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
-						(extension "b'com.apple.sandbox.oopjit'")))))))
+						(extension "b'com.apple.sandbox.oopjit'"))
+					(require-all
+						(subpath "/usr/appleinternal")
+						(require-any
+							(debug-mode)
+							(require-all
+								(debug-mode)
+								(require-any
+									(subpath "/AppleInternal")
+									(subpath "/usr/local/lib"))))))))))
 (allow file-mount-update
 	(require-all
 		(literal)
@@ -222,8 +223,8 @@
 	(require-all
 		(process-attribute is-apple-signed-executable)
 		(require-any
-			(literal-prefix "${HOME}/Library/Preferences")
-			(literal-prefix "${HOME}"))))
+			(literal-prefix "${HOME}")
+			(literal-prefix "${HOME}/Library/Preferences"))))
 (allow file-revoke)
 (allow file-test-existence
 	(require-any (literal-prefix "${HOME}/Library/Safari/History.db")
@@ -340,8 +341,8 @@
 (allow syscall*)
 (allow syscall-unix)
 (allow system-automount)
+(allow system-mac*)
 (allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow storage-class-map)
+(allow system-nfssvc)
+(allow user-preference-write)

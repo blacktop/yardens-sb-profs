@@ -110,19 +110,19 @@
 (allow syscall*)
 (allow syscall-unix)
 (allow system-automount)
+(allow system-mac*)
 (allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow user-preference*
+(allow system-nfssvc)
+(allow system-swap
 	(preference-domain "com.apple.AppSupport")
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.message")
 	(preference-domain "com.apple.telephonyutilities.dialassist")
 	(preference-domain "com.apple.mobilephone")
+	(preference-domain "com.apple.carrier")
 	(extension "b'com.apple.security.exception.shared-preference.read-write'")
 	(extension "b'com.apple.security.exception.shared-preference.read-only'")
-	(preference-domain "com.apple.carrier")
 	(preference-domain "com.apple.Accessibility")
 	(preference-domain "com.apple.da")
 	(preference-domain "com.apple.hangtracer")
@@ -131,7 +131,7 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow storage-class-map)
+(allow user-preference-write)

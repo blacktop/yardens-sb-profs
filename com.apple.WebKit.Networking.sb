@@ -45,9 +45,9 @@
 		(require-any
 			(subpath "/private/preboot/Cryptexes/OS/System/Library")
 			(subpath "/Library/RegionFeatures")
+			(extension "b'com.apple.sandbox.executable'")
 			(subpath "/System/Cryptexes/OS/System/Library")
-			(subpath "/System/Library")
-			(extension "b'com.apple.sandbox.executable'")))
+			(subpath "/System/Library")))
 	(require-all
 		(extension-class "com.apple.nsurlstorage.extension-cache")
 		(extension "b'com.apple.app-sandbox.read-write'"))
@@ -240,12 +240,12 @@
 						(require-not (global-name "com.apple.securityd"))
 						(require-not (global-name "com.apple.ocspd"))
 						(require-any
+							(global-name "com.apple.accountsd.accountmanager")
 							(global-name "com.apple.GSSCred")
 							(global-name "com.apple.nehelper")
 							(global-name "com.apple.networkserviceproxy.fetch-token")
 							(global-name "com.apple.appstored.xpc.request")
 							(global-name "com.apple.appstored.xpc")
-							(global-name "com.apple.accountsd.accountmanager")
 							(require-all
 								(require-not (global-name "com.apple.cookied"))
 								(require-any
@@ -276,8 +276,8 @@
 														(require-not (global-name "com.apple.commcenter.cupolicy.xpc"))
 														(require-not (global-name "com.apple.symptomsd"))
 														(require-any
-															(global-name "com.apple.SystemConfiguration.NetworkInformation")
 															(global-name "com.apple.SystemConfiguration.configd")
+															(global-name "com.apple.SystemConfiguration.NetworkInformation")
 															(require-all
 																(require-not (global-name "com.apple.SystemConfiguration.DNSConfiguration"))
 																(require-not (global-name "com.apple.SystemConfiguration.helper"))
@@ -301,10 +301,10 @@
 	(require-all
 		(require-not (remote tcp "localhost:62078"))
 		(require-any
-			(remote udp "*:*")
-			(literal "/private/var/run/mDNSResponder")
 			(control-name "com.apple.netsrc")
-			(remote tcp "*:*"))))
+			(remote tcp "*:*")
+			(remote udp "*:*")
+			(literal "/private/var/run/mDNSResponder"))))
 (allow opendirectory-user-modify)
 (allow process-fork
 	(entitlement-is-bool-true "b'com.apple.security.exception.process-info'"))
@@ -328,12 +328,11 @@
 (allow socket-option*
 	(require-not (socket-option-level IPPROTO_HOPOPTS))
 	(socket-option-name 20)
-	(socket-option-name 7)
 	(socket-option-name 27)
+	(socket-option-name 7)
 	(require-all
 		(socket-option-level SOL_SOCKET)
 		(require-any
-			(socket-option-name SO_NECP_LISTENUUID)
 			(socket-option-name SO_TIMESTAMP)
 			(socket-option-name 0)
 			(socket-option-name SO_NECP_CLIENTUUID)
@@ -344,7 +343,8 @@
 			(socket-option-name SO_RCVBUF)
 			(socket-option-name SO_DELEGATED)
 			(socket-option-name SO_REUSEPORT)
-			(socket-option-name SO_NECP_ATTRIBUTES)))
+			(socket-option-name SO_NECP_ATTRIBUTES)
+			(socket-option-name SO_NECP_LISTENUUID)))
 	(require-all
 		(socket-option-level IPPROTO_IPV6)
 		(require-any
@@ -356,12 +356,12 @@
 		(socket-option-level IPPROTO_TCP)
 		(socket-option-name 513)))
 (allow socket-option-set
-	(c1 3b54 a898 a980)
+	(c1 3b55 a912 a9fa)
 	(syscall-number 38))
 (allow syscall*
-	(cb 3b5e a896 f53e))
+	(cb 3b5f a910 f4bc))
 (allow syscall-unix
-	(cc 3b61 a894 f53e))
+	(cc 3b62 a90e f4bc))
 (allow syscall-mach
 	(extension "b'com.apple.security.exception.sysctl.read-write'"))
 (allow syscall-mig
@@ -375,7 +375,7 @@
 	(sysctl-name "vm.malloc_ranges")
 	(sysctl-name "kern.bootargs")
 	(sysctl-name "kern.secure_kernel")
-	(extension "b'com.apple.security.exception.sysctl.read-only'")
+	(extension "b'com.apple.security.exception.sysctl.read-write'")
 	(sysctl-name "kern.hostname")
 	(sysctl-name "vm.footprint_suspend")
 	(sysctl-name "kern.osversion")
@@ -385,15 +385,15 @@
 (sysctl-name "kern.osproductversion"))
 	(require-any (sysctl-name "hw.memsize")
 (sysctl-name "hw.machine"))
-	(extension "b'com.apple.security.exception.sysctl.read-write'")
+	(extension "b'com.apple.security.exception.sysctl.read-only'")
 	(require-all
 		(entitlement-is-bool-true "b'com.apple.security.exception.process-info'")
 		(require-any (sysctl-name "kern.proc.")
 (sysctl-name "kern.procargs2."))))
 (allow system*)
 (allow system-automount
-	(ce 3b67 a87f f53e))
-(allow system-mac-label
+	(ce 3b68 a8f9 f4bc))
+(allow system-mac*
 	(require-all
 		(mac-syscall-number 1)
 		(mac-policy-name-regex "b'Fvnguard\x0f\x00\x0f'"))
@@ -418,23 +418,23 @@
 	(require-all
 		(mac-syscall-number 67)
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")))
+(allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check
+(allow system-nfssvc
 	(require-all
 		(privilege-id "PRIV_NET_PRIVILEGED_SOCKET_DELEGATE")
 		(entitlement-is-bool-true "b'com.apple.private.network.socket-delegate'")))
-(allow system-set-time
+(allow system-sched
 	(socket-domain 39)
 	(require-all
 		(require-not (socket-domain AF_ROUTE))
 		(socket-domain AF_SYSTEM)
 		(socket-protocol 2)))
-(allow user-preference*
+(allow system-swap
 	(preference-domain "com.apple.CFNetwork")
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.shared-preference.read-only'"))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow storage-class-map)
+(allow user-preference-write)

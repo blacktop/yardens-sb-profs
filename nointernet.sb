@@ -6,4 +6,4 @@
 (deny network-inbound
 	(require-not (control-name "com.apple.flow-divert")))
 (deny system-fsctl)
-(deny user-preference-write)
+(deny managed-preference-read)

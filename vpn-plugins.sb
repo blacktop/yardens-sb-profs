@@ -468,9 +468,9 @@
 							(require-all
 								(extension-class "com.apple.aned.read-only")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -482,9 +482,9 @@
 							(require-all
 								(extension-class "com.apple.app-sandbox.read")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -496,9 +496,9 @@
 							(require-all
 								(extension-class "com.apple.mediaserverd.read")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -553,9 +553,9 @@
 							(require-all
 								(extension-class "com.apple.aned.read-only")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -567,9 +567,9 @@
 							(require-all
 								(extension-class "com.apple.app-sandbox.read")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -581,9 +581,9 @@
 							(require-all
 								(extension-class "com.apple.mediaserverd.read")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -638,9 +638,9 @@
 							(require-all
 								(extension-class "com.apple.aned.read-only")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -652,9 +652,9 @@
 							(require-all
 								(extension-class "com.apple.app-sandbox.read")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -666,9 +666,9 @@
 							(require-all
 								(extension-class "com.apple.mediaserverd.read")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -723,9 +723,9 @@
 							(require-all
 								(extension-class "com.apple.aned.read-only")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -737,9 +737,9 @@
 							(require-all
 								(extension-class "com.apple.app-sandbox.read")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -751,9 +751,9 @@
 							(require-all
 								(extension-class "com.apple.mediaserverd.read")
 								(require-any
+									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-									(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 									(require-all
 										(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -810,9 +810,9 @@
 									(require-all
 										(extension-class "com.apple.aned.read-only")
 										(require-any
+											(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 											(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-											(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 											(require-all
 												(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -824,9 +824,9 @@
 									(require-all
 										(extension-class "com.apple.app-sandbox.read")
 										(require-any
+											(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 											(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-											(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 											(require-all
 												(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -838,9 +838,9 @@
 									(require-all
 										(extension-class "com.apple.mediaserverd.read")
 										(require-any
+											(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 											(require-any (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/System/?")
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/iTunesArtwork"))
-											(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/StoreKit/?")
 											(require-all
 												(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
@@ -865,9 +865,6 @@
 				(extension "b'com.apple.sandbox.executable'"))
 			(require-all
 				(extension-class "com.apple.wcd.readonly")
-				(extension "b'com.apple.sandbox.executable'"))
-			(require-all
-				(extension-class "com.apple.aned.read-only")
 				(extension "b'com.apple.sandbox.executable'"))
 			(require-all
 				(entitlement-is-bool-true "b'com.apple.security.system-container'")
@@ -900,13 +897,8 @@
 										(extension-class "com.apple.mediaserverd.read")
 										(regex #"^/private/var/containers/Data/System/[^/]+/" #"^/private/var/containers/Data/System/[^/]+$"))))))))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
+				(extension-class "com.apple.aned.read-only")
 				(extension "b'com.apple.sandbox.executable'"))
-			(require-all
-				(extension "b'com.apple.fileprovider.read-write'")
-				(require-any
-					(extension-class "com.apple.app-sandbox.read-write")
-					(extension-class "com.apple.app-sandbox.read")))
 			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
@@ -964,6 +956,14 @@
 									(require-all
 										(extension-class "com.apple.aned.read-only")
 										(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))))
+			(require-all
+				(extension "b'com.apple.fileprovider.read-write'")
+				(require-any
+					(extension-class "com.apple.app-sandbox.read-write")
+					(extension-class "com.apple.app-sandbox.read")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(extension "b'com.apple.sandbox.executable'"))
 			(require-all
 				(debug-mode)
 				(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts"))
@@ -1168,16 +1168,18 @@
 					(subpath "/private/var/preferences/Logging")
 					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
 					(subpath "/System/Library/PrivateFrameworks")
+					(require-any (literal "/private/var/db/eligibilityd/eligibility.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist"))
 					(literal "/private/etc/passwd")
 					(subpath "/usr/lib")
 					(subpath "/private/var/db/timezone")
 					(subpath "/Library/RegionFeatures")
-					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist")
+					(subpath "/private/var/MobileAsset/PreinstalledAssetsV2/InstallWithOs")
 					(literal "/private/etc/services")
 					(require-any (literal "/private/etc/group")
 (literal "/private/etc/protocols"))
 					(subpath "/System/Library/Frameworks")
-					(subpath "/private/var/MobileAsset/PreinstalledAssetsV2/InstallWithOs")
+					(subpath "/System/Developer")
 					(subpath "/System/Cryptexes")
 					(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
 					(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
@@ -1190,7 +1192,6 @@
 					(literal "/private/etc/fstab")
 					(literal "/private/preboot")
 					(subpath "/System/Library")
-					(subpath "/System/Developer")
 					(require-all
 						(process-attribute is-apple-signed-executable)
 						(require-any
@@ -1287,6 +1288,11 @@
 		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
 	(require-all
+		(process-attribute is-apple-signed-executable)
+		(require-any
+			(literal-prefix "${HOME}")
+			(literal-prefix "${HOME}/Library/Preferences")))
+	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
@@ -1294,12 +1300,7 @@
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
-				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
-	(require-all
-		(process-attribute is-apple-signed-executable)
-		(require-any
-			(literal-prefix "${HOME}")
-			(literal-prefix "${HOME}/Library/Preferences"))))
+				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
 (allow file-revoke)
 (allow file-write*
 	(require-not (literal-prefix "${HOME}/Library/Logs/CrashReporter/CFNetwork_")))
@@ -1413,11 +1414,11 @@
 	(require-all
 		(global-name "com.apple.networkd_privileged")
 		(require-any
+			(entitlement-is-bool-true "b'com.apple.networkd.modify_settings'")
 			(entitlement-is-bool-true "b'com.apple.networkd.disable_opportunistic'")
 			(entitlement-is-bool-true "b'com.apple.networkd.advisory_socket'")
 			(entitlement-is-bool-true "b'com.apple.networkd_privileged'")
-			(entitlement-is-bool-true "b'com.apple.networkd.persistent_interface'")
-			(entitlement-is-bool-true "b'com.apple.networkd.modify_settings'")))
+			(entitlement-is-bool-true "b'com.apple.networkd.persistent_interface'")))
 	(require-all
 		(global-name "com.apple.coreduetd.people")
 		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
@@ -1471,8 +1472,8 @@
 (allow syscall*)
 (allow syscall-unix)
 (allow system-automount)
+(allow system-mac*)
 (allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow storage-class-map)
+(allow system-nfssvc)
+(allow user-preference-write)

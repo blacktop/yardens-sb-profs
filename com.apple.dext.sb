@@ -132,21 +132,25 @@
 (allow mach-task-special-port-get)
 (allow opendirectory-user-modify)
 (allow socket-option-set
-	(c1 40f5 a038 a033)
+	(c1 40f6 a093 a08a)
 	(require-all
+		(require-not (syscall-number SYS_shm_open))
+		(require-not (syscall-number SYS_fstatfs64))
+		(require-not (syscall-number SYS_getegid))
+		(require-not (syscall-number SYS_objc_bp_assist_cfg_np))
+		(require-not (syscall-number SYS_getdirentries64))
 		(debug-mode)
 		(require-any
-			(syscall-number SYS_setrlimit)
-			(syscall-number SYS_sigaltstack)
 			(syscall-number SYS_sigaction)
-			(syscall-number SYS_memorystatus_control))))
+			(syscall-number SYS_sigaltstack)
+			(syscall-number SYS_setrlimit))))
 (allow syscall*
-	(cb 40ff a031 f53e))
+	(cb 4100 a088 f4bc))
 (allow syscall-unix)
 (allow syscall-mig)
 (allow system-automount
-	(ce 366c a02f f53e))
-(allow system-mac-label
+	(ce 366e a086 f4bc))
+(allow system-mac*
 	(require-all
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")
 		(require-not (mac-syscall-number 4))
@@ -156,7 +160,7 @@
 	(require-all
 		(mac-syscall-number 90)
 		(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'")))
+(allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow storage-class-map)
+(allow system-nfssvc)
+(allow user-preference-write)

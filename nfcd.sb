@@ -99,14 +99,6 @@
 		(entitlement-is-present "b'com.apple.security.system-groups'")
 		(entitlement-is-present "b'com.apple.security.system-group-containers'"))
 	(require-all
-		(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
-		(extension "b'com.apple.logd.read-only'")
-		(require-any
-			(require-any (subpath "/private/var/userdata/diagnostics")
-(subpath "/private/var/db/timesync"))
-			(require-any (subpath "/private/var/db/diagnostics")
-(subpath "/private/var/db/uuidtext"))))
-	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
@@ -124,6 +116,14 @@
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))
 	(require-all
+		(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
+		(extension "b'com.apple.logd.read-only'")
+		(require-any
+			(require-any (subpath "/private/var/userdata/diagnostics")
+(subpath "/private/var/db/timesync"))
+			(require-any (subpath "/private/var/db/diagnostics")
+(subpath "/private/var/db/uuidtext"))))
+	(require-all
 		(vnode-type BLOCK-DEVICE)
 		(vnode-type CHARACTER-DEVICE)
 		(require-any
@@ -132,19 +132,20 @@
 			(subpath "/private/var/preferences/Logging")
 			(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
 			(subpath "/System/Library/PrivateFrameworks")
+			(require-any (literal "/private/var/db/eligibilityd/eligibility.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist"))
 			(literal "/private/etc/passwd")
 			(subpath "/usr/lib")
 			(subpath "/private/var/db/timezone")
 			(subpath "/Library/RegionFeatures")
-			(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist")
+			(literal "/System")
 			(literal "/private/etc/services")
 			(require-any (literal "/private/etc/group")
 (literal "/private/etc/protocols"))
 			(subpath "/System/Library/Frameworks")
-			(literal "/System")
+			(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 			(subpath "/System/Cryptexes")
 			(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
-			(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 			(literal "/private/etc/hosts")
 			(subpath "/private/preboot/Cryptexes")
 			(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.bin")
@@ -158,7 +159,6 @@
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
-					(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 					(subpath "/usr/libexec")
 					(require-any (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
@@ -166,6 +166,7 @@
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationSetAsideDetails.plist"))
 					(literal "/private/var/preferences/SystemConfiguration/preferences.plist")
+					(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 					(require-all
 						(subpath "/usr/local/libexec")
 						(debug-mode))))
@@ -235,9 +236,6 @@
 		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
 	(require-all
-		(vnode-type DIRECTORY)
-		(process-attribute is-apple-signed-executable))
-	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
@@ -246,6 +244,9 @@
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
+	(require-all
+		(vnode-type DIRECTORY)
+		(process-attribute is-apple-signed-executable))
 	(require-all
 		(process-attribute is-apple-signed-executable)
 		(require-any
@@ -292,9 +293,9 @@
 	(require-all
 		(vnode-type DIRECTORY)
 		(require-any
+			(literal-prefix "${HOME}/Library/Logs/awd")
 			(literal-prefix "${HOME}/Library/Logs/CrashReporter/DiagnosticLogs")
-			(literal-prefix "${HOME}/Library/Logs/CrashReporter")
-			(literal-prefix "${HOME}/Library/Logs/awd"))))
+			(literal-prefix "${HOME}/Library/Logs/CrashReporter"))))
 (allow file-write-acl
 	(literal "/dev/aes_0")
 	(require-any (literal "/dev/nfc.log")
@@ -304,9 +305,9 @@
 		(require-not (literal "/dev/urandom"))
 		(require-not (literal "/dev/random"))
 		(require-any
-			(literal "/dev/zero")
 			(literal "/dev/null")
-			(literal "/dev/dtracehelper"))))
+			(literal "/dev/dtracehelper")
+			(literal "/dev/zero"))))
 (allow file-write-setugid
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
@@ -385,6 +386,7 @@
 	(global-name "com.apple.mobile.softwareupdated")
 	(global-name "com.apple.PowerManagement.control")
 	(global-name "com.apple.frontboard.systemappservices")
+	(global-name "com.apple.mobileasset.autoasset")
 	(global-name "com.apple.mobileassetd")
 	(global-name "com.apple.mobileassetd.v2")
 	(xpc-service-name "com.apple.extensionkitservice")
@@ -427,6 +429,9 @@
 		(global-name "com.apple.coreduetd.people")
 		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
+		(global-name "com.apple.system.notification_center")
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
+	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
 		(require-any
@@ -438,9 +443,6 @@
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
 					(global-name "com.apple.mobile.usermanagerd.xpc")))))
-	(require-all
-		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
@@ -473,13 +475,13 @@
 (allow syscall*)
 (allow syscall-unix)
 (allow system-automount)
+(allow system-mac*)
 (allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow system-set-time
+(allow system-nfssvc)
+(allow system-sched
 	(socket-domain AF_SYSTEM))
-(allow user-preference*
+(allow system-swap
 	(require-any (preference-domain "com.apple.passd.class-d")
 (preference-domain "com.apple.seserviced.contactlessCredential.settings"))
 	(require-any (preference-domain "nfcd")
@@ -507,10 +509,10 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow managed-preference-read
+(allow user-preference-read
 	(require-any (preference-domain "nfcd")
 (preference-domain "com.apple.nfcd.nfttr")
 (preference-domain "com.apple.stockholm.analytics")
@@ -520,4 +522,4 @@
 	(preference-domain "com.apple.stockholm.atl")
 	(preference-domain "com.apple.stockholm")
 	(preference-domain "com.apple.stockholm.awd"))
-(allow storage-class-map)
+(allow user-preference-write)

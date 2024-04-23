@@ -37,15 +37,15 @@
 		(extension-class "com.apple.mediaserverd.read-write")
 		(extension "b'com.apple.app-sandbox.read-write'"))
 	(require-all
+		(extension "b'com.apple.sandbox.executable'")
+		(require-not (literal))
+		(extension-class "com.apple.app-sandbox.read"))
+	(require-all
 		(extension-class "com.apple.app-sandbox.read")
 		(require-any
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.app-sandbox.read-write'")
 			(extension "b'com.apple.sharing.airdrop.readonly'")))
-	(require-all
-		(extension "b'com.apple.sandbox.executable'")
-		(require-not (literal))
-		(extension-class "com.apple.app-sandbox.read"))
 	(require-all
 		(require-all (require-not (literal "/System/Library/Caches/apticket.der"))
 (require-not (subpath "/System/Library/Caches/com.apple.factorydata"))
@@ -61,26 +61,26 @@
 					(require-all
 						(extension "b'com.apple.assets.read'")
 						(require-any
-							(subpath "/private/var/MobileAsset")
-							(subpath-prefix "${HOME}/Library/Assets")))))
+							(subpath-prefix "${HOME}/Library/Assets")
+							(subpath "/private/var/MobileAsset")))))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
+					(extension "b'com.apple.app-sandbox.read-write'")
+					(extension "b'com.apple.fileprovider.read-write'")
 					(subpath "/private/preboot/Cryptexes/OS/System/Library")
 					(subpath "/Library/RegionFeatures")
 					(subpath "/System/Cryptexes/OS/System/Library")
 					(subpath "/System/Library")
-					(extension "b'com.apple.app-sandbox.read'")
-					(extension "b'com.apple.app-sandbox.read-write'")
-					(extension "b'com.apple.fileprovider.read-write'")))
+					(extension "b'com.apple.app-sandbox.read'")))
 			(require-all
 				(extension-class "com.apple.nsurlstorage.extension-cache")
 				(extension "b'com.apple.app-sandbox.read-write'"))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
-					(extension "b'com.apple.fileprovider.read-write'")
-					(extension "b'com.apple.app-sandbox.read-write'")))))
+					(extension "b'com.apple.app-sandbox.read-write'")
+					(extension "b'com.apple.fileprovider.read-write'")))))
 	(require-all
 		(extension-class "com.apple.mediaserverd.read")
 		(require-any
@@ -145,11 +145,6 @@
 			(require-all
 				(require-not (literal-prefix "${HOME}/Library/Preferences/com.apple.mobilemail.plist"))
 				(require-any
-					(literal "/dev/random")
-					(literal "/dev/dtracehelper")
-					(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache/Library/Caches/com.apple.MobileGestalt.plist")
-					(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin")
-					(subpath "/private/var/MobileAsset/AssetsV2/com_apple_MobileAsset_Font7")
 					(literal "/private/var/preferences/com.apple.networkd.plist")
 					(require-any (literal-prefix "${HOME}/Library/Preferences/com.apple.mediaremote.plist")
 (literal-prefix "${HOME}/Library/Preferences/com.apple.avfoundation.plist")
@@ -165,7 +160,12 @@
 					(literal "/private/etc/passwd")
 					(require-any (subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/PublicInfo")
 (subpath-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/PublicInfo")
-(subpath-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/PublicInfo")))))))
+(subpath-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/PublicInfo"))
+					(literal "/dev/random")
+					(literal "/dev/dtracehelper")
+					(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache/Library/Caches/com.apple.MobileGestalt.plist")
+					(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin")
+					(subpath "/private/var/MobileAsset/AssetsV2/com_apple_MobileAsset_Font7"))))))
 (allow file-mount-update
 	(require-all
 		(literal)
@@ -233,17 +233,17 @@
 (iokit-property "IOGLESDefaultUseMetal")
 (iokit-property "IOGLESMetalBundleName"))
 	(iokit-property "artwork-scale-factor")
-	(iokit-property "dfr")
+	(require-any (iokit-property "dfr")
+(iokit-property "hdcp-hoover-protocol")
+(iokit-property "DisplayPipeStrideRequirements")
+(iokit-property "DisplayPipePlaneBaseAlignment"))
 	(iokit-property "AVCSupported")
 	(iokit-property "product-id")
 	(iokit-property "IOPlatformUUID")
 	(require-any (iokit-property "canvas-width")
 (iokit-property "canvas-height"))
 	(iokit-property "als-colorCfg")
-	(require-any (iokit-property "hdcp-hoover-protocol")
-(iokit-property "DisplayPipeStrideRequirements")
-(iokit-property "DisplayPipePlaneBaseAlignment"))
-	(iokit-property "Protocol Characteristics")
+	(iokit-property "AppleJPEGNumCores")
 	(iokit-property "AppleJPEGSupportsAppleInterchangeFormats")
 	(require-any (iokit-property "ui-pip")
 (iokit-property "oled-display"))
@@ -251,15 +251,15 @@
 (iokit-property "MetalPluginClassName")
 (iokit-property "BaseAddressAlignmentRequirement"))
 	(iokit-property "soc-generation")
+	(iokit-property "compatible")
 	(require-any (iokit-property "chip-id")
 (iokit-property "software-behavior"))
 	(iokit-property "display-corner-radius")
-	(iokit-property "IOClassNameOverride")
-	(iokit-property "AppleJPEGNumCores")
-	(iokit-property "iommu-present")
-	(iokit-property "compatible")
-	(iokit-property "AppleJPEGSupportsRSTLogging")
 	(iokit-property "device-colors")
+	(iokit-property "IOClassNameOverride")
+	(iokit-property "Protocol Characteristics")
+	(iokit-property "iommu-present")
+	(iokit-property "AppleJPEGSupportsRSTLogging")
 	(require-all
 		(iokit-user-client-class "IOPlatformExpertDevice")
 		(require-any
@@ -396,14 +396,14 @@
 	(target others))
 (allow process-info-listpids)
 (allow socket-option-set
-	(c1 3ab8 a981 a97f)
+	(c1 3ab9 a9fb a9f9)
 	(require-all
 		(require-not (syscall-number SYS_faccessat))
 		(syscall-number 38)))
 (allow syscall*
-	(cb 3ac2 a97d f53e))
+	(cb 3ac3 a9f7 f4bc))
 (allow syscall-unix
-	(cc 3ac5 a97b f53e))
+	(cc 3ac6 a9f5 f4bc))
 (allow syscall-mig
 	(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
@@ -429,8 +429,8 @@
 		(sysctl-name "hw.tbfrequency_compat")))
 (allow system*)
 (allow system-automount
-	(ce 3acf a969 f53e))
-(allow system-mac-label
+	(ce 3ad0 a9e3 f4bc))
+(allow system-mac*
 	(require-all
 		(mac-syscall-number 5)
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
@@ -455,8 +455,8 @@
 	(require-all
 		(mac-syscall-number 67)
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")))
-(allow system-mac-syscall)
-(allow user-preference*
+(allow system-mac-label)
+(allow system-swap
 	(preference-domain "com.apple.Metal")
 	(preference-domain "com.apple.coremedia")
 	(preference-domain "com.apple.coreaudio")
@@ -470,7 +470,7 @@
 	(preference-domain "com.apple.coreanimation")
 	(preference-domain "com.apple.corevideo")
 	(extension "b'com.apple.security.exception.shared-preference.read-only'"))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow storage-class-map)
+(allow user-preference-write)

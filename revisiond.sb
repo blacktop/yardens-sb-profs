@@ -404,13 +404,13 @@
 (subpath-prefix "${ANY_USER_HOME}/.DocumentRevisions-V100")
 (subpath-prefix "${ANY_USER_HOME}/.DocumentRevisions-V100-bad-${DIGITS}"))
 				(require-any
-					(extension-class "com.apple.aned.read-only")
 					(extension-class "com.apple.mediaserverd.read")
+					(extension-class "com.apple.mediaserverd.read-write")
 					(extension-class "com.apple.app-sandbox.read-write")
 					(extension-class "com.apple.app-sandbox.read")
 					(require-any (extension-class "com.apple.revisiond.staging")
 (extension-class "com.apple.revisiond.revision"))
-					(extension-class "com.apple.mediaserverd.read-write")))
+					(extension-class "com.apple.aned.read-only")))
 			(require-all
 				(literal "/private/var/PersonaVolumes/")
 				(regex #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100$" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+$"))
@@ -444,11 +444,6 @@
 									(require-all
 										(extension-class "com.apple.mediaserverd.read")
 										(regex #"^/private/var/containers/Data/System/[^/]+/" #"^/private/var/containers/Data/System/[^/]+$"))))))))
-			(require-all
-				(extension "b'com.apple.fileprovider.read-write'")
-				(require-any
-					(extension-class "com.apple.app-sandbox.read-write")
-					(extension-class "com.apple.app-sandbox.read")))
 			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
@@ -506,6 +501,11 @@
 									(require-all
 										(extension-class "com.apple.aned.read-only")
 										(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))))
+			(require-all
+				(extension "b'com.apple.fileprovider.read-write'")
+				(require-any
+					(extension-class "com.apple.app-sandbox.read-write")
+					(extension-class "com.apple.app-sandbox.read")))
 			(require-all
 				(debug-mode)
 				(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts"))
@@ -607,9 +607,6 @@
 					(require-any (subpath "/private/var/db/diagnostics")
 (subpath "/private/var/db/uuidtext"))))
 			(require-all
-				(vnode-type BLOCK-DEVICE)
-				(vnode-type CHARACTER-DEVICE))
-			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
@@ -625,7 +622,10 @@
 							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
 							(require-all
 								(literal "/private/var/containers/Shared/SystemGroup/")
-								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))))
+								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))
+			(require-all
+				(vnode-type BLOCK-DEVICE)
+				(vnode-type CHARACTER-DEVICE)))))
 (allow file-mount-update
 	(require-all
 		(literal)
@@ -654,9 +654,6 @@
 		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
 	(require-all
-		(literal "/private/var/PersonaVolumes/")
-		(regex #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100$" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+$"))
-	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
@@ -665,6 +662,9 @@
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
+	(require-all
+		(literal "/private/var/PersonaVolumes/")
+		(regex #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100$" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+$"))
 	(require-all
 		(vnode-type DIRECTORY)
 		(process-attribute is-apple-signed-executable)))
@@ -695,9 +695,6 @@
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))))
 	(require-all
-		(vnode-type BLOCK-DEVICE)
-		(vnode-type CHARACTER-DEVICE))
-	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
@@ -707,7 +704,10 @@
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
-				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
+				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
+	(require-all
+		(vnode-type BLOCK-DEVICE)
+		(vnode-type CHARACTER-DEVICE)))
 (allow file-write-acl
 	(literal "/dev/aes_0")
 	(require-all
@@ -810,6 +810,9 @@
 		(global-name "com.apple.coreduetd.people")
 		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
+		(global-name "com.apple.system.notification_center")
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
+	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
 		(require-any
@@ -821,9 +824,6 @@
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
 					(global-name "com.apple.mobile.usermanagerd.xpc")))))
-	(require-all
-		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
@@ -858,12 +858,12 @@
 	(fsctl-command-regex [UNSUPPORTED](_IO "h" 24))
 	(fsctl-command-regex [UNSUPPORTED](_IO "h" 30))
 	(fsctl-command-regex [UNSUPPORTED](_IO "h" 32)))
+(allow system-mac*)
 (allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow system-reboot)
-(allow user-preference*
+(allow system-nfssvc)
+(allow system-privilege)
+(allow system-swap
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.revisiond")
 	(extension "b'com.apple.security.exception.shared-preference.read-write'")
@@ -876,7 +876,7 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'")
 	(preference-domain "com.apple.revisiond")
@@ -890,6 +890,6 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow managed-preference-read
+(allow user-preference-read
 	(preference-domain "com.apple.revisiond"))
-(allow storage-class-map)
+(allow user-preference-write)

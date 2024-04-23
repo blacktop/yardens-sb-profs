@@ -400,15 +400,6 @@
 				(extension-class "com.apple.nsurlsessiond.readonly")
 				(extension "b'com.apple.sandbox.executable'"))
 			(require-all
-				(extension-class "com.apple.vpn-plugin")
-				(require-any
-					(require-any (subpath "/private/var/containers/Bundle/VPNPlugin")
-(subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle/VPNPlugin"))
-					(literal "/System/Library/Frameworks/NetworkExtension.framework/PluginIKEv2.vpnplugin")))
-			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager"))
-			(require-all
 				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(require-any
 					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
@@ -439,16 +430,11 @@
 										(extension-class "com.apple.mediaserverd.read")
 										(regex #"^/private/var/containers/Data/System/[^/]+/" #"^/private/var/containers/Data/System/[^/]+$"))))))))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read-write")
-				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager"))
-			(require-all
-				(extension-class "com.apple.aned.read-only")
-				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager"))
-			(require-all
-				(extension "b'com.apple.fileprovider.read-write'")
+				(extension-class "com.apple.vpn-plugin")
 				(require-any
-					(extension-class "com.apple.app-sandbox.read-write")
-					(extension-class "com.apple.app-sandbox.read")))
+					(require-any (subpath "/private/var/containers/Bundle/VPNPlugin")
+(subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle/VPNPlugin"))
+					(literal "/System/Library/Frameworks/NetworkExtension.framework/PluginIKEv2.vpnplugin")))
 			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
@@ -507,14 +493,16 @@
 										(extension-class "com.apple.aned.read-only")
 										(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))))
 			(require-all
-				(extension-class "com.apple.app-sandbox.read-write")
+				(extension "b'com.apple.fileprovider.read-write'")
+				(require-any
+					(extension-class "com.apple.app-sandbox.read-write")
+					(extension-class "com.apple.app-sandbox.read")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
 				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager"))
 			(require-all
 				(debug-mode)
 				(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts"))
-			(require-all
-				(extension-class "com.apple.app-sandbox.read")
-				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager"))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
@@ -525,18 +513,30 @@
 				(extension-class "com.apple.mediaserverd.read-write")
 				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager"))
 			(require-all
+				(extension-class "com.apple.aned.read-only")
+				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager"))
+			(require-all
+				(extension-class "com.apple.app-sandbox.read-write")
+				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager"))
+			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
 					(subpath "/Library/RegionFeatures")
 					(subpath "/System/Library")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
+				(extension-class "com.apple.app-sandbox.read")
 				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager"))
 			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
 					(subpath "/Library/RegionFeatures")
-					(subpath "/System/Library"))))))
+					(subpath "/System/Library")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read-write")
+				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager"))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager")))))
 (allow file-ioctl)
 (allow file-issue-extension)
 (allow file-mount
@@ -563,7 +563,6 @@
 		(require-not (subpath "/private/var/hardware/FactoryData"))
 		(require-not (literal "/usr/standalone/firmware/apticket.der"))
 		(require-any
-			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(literal "/dev/null")
 			(literal "/dev/aes_0")
 			(subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.icloud.findmydevice.managed/Library")
@@ -613,6 +612,7 @@
 			(subpath "/private/var/run/racoon")
 			(literal "/private/var/preferences/com.apple.NetworkStatistics.plist")
 			(literal "/private/var/preferences/SystemConfiguration/preferences.plist")
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(literal "/private/var/preferences/com.apple.networkextension.uuidcache.plist"))
@@ -684,19 +684,20 @@
 					(subpath "/private/var/preferences/Logging")
 					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
 					(subpath "/System/Library/PrivateFrameworks")
+					(require-any (literal "/private/var/db/eligibilityd/eligibility.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist"))
 					(literal "/private/etc/passwd")
 					(subpath "/usr/lib")
 					(subpath "/private/var/db/timezone")
 					(subpath "/Library/RegionFeatures")
-					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist")
+					(literal "/System")
 					(literal "/private/etc/services")
 					(require-any (literal "/private/etc/group")
 (literal "/private/etc/protocols"))
 					(subpath "/System/Library/Frameworks")
-					(literal "/System")
+					(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 					(subpath "/System/Cryptexes")
 					(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
-					(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 					(literal "/private/etc/hosts")
 					(subpath "/private/preboot/Cryptexes")
 					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.bin")
@@ -710,7 +711,6 @@
 					(require-all
 						(process-attribute is-apple-signed-executable)
 						(require-any
-							(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 							(subpath "/usr/libexec")
 							(require-any (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
@@ -718,6 +718,7 @@
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationSetAsideDetails.plist"))
 							(literal "/private/var/preferences/SystemConfiguration/preferences.plist")
+							(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 							(require-all
 								(subpath "/usr/local/libexec")
 								(debug-mode))))
@@ -743,6 +744,11 @@
 									(subpath "/AppleInternal")
 									(subpath "/usr/local/lib")))))
 					(require-all
+						(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
+						(require-any
+							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
+							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
+					(require-all
 						(subpath "/usr/appleinternal")
 						(require-any
 							(debug-mode)
@@ -751,11 +757,6 @@
 								(require-any
 									(subpath "/AppleInternal")
 									(subpath "/usr/local/lib")))))
-					(require-all
-						(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
-						(require-any
-							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
-							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
 					(require-all
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
@@ -800,8 +801,8 @@
 	(require-all
 		(process-attribute is-apple-signed-executable)
 		(require-any
-			(literal-prefix "${HOME}/Library/Preferences")
-			(literal-prefix "${HOME}"))))
+			(literal-prefix "${HOME}")
+			(literal-prefix "${HOME}/Library/Preferences"))))
 (allow file-revoke)
 (allow file-test-existence
 	(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager")
@@ -854,6 +855,7 @@
 		(require-not (literal-prefix "${HOME}/Library/Logs/CrashReporter/CFNetwork_"))
 		(vnode-type DIRECTORY)
 		(require-any
+			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(literal-prefix "${HOME}/Library/Caches")
 			(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.nesessionmanager")
 			(subpath-prefix "${HOME}/Library/Caches/com.apple.nesessionmanager")
@@ -869,7 +871,6 @@
 			(extension "b'com.apple.app-sandbox.read-write'")
 			(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 			(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
-			(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 			(require-all
 				(literal "/private/var/preferences/SystemConfiguration/VPN-")
 				(regex #"^/private/var/preferences/SystemConfiguration/VPN-[^/]+[.]plist"))
@@ -882,6 +883,9 @@
 						(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 						(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))))
 			(require-all
+				(vnode-type BLOCK-DEVICE)
+				(vnode-type CHARACTER-DEVICE))
+			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
 					(require-all
@@ -891,10 +895,7 @@
 					(require-all
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
-						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
-			(require-all
-				(vnode-type BLOCK-DEVICE)
-				(vnode-type CHARACTER-DEVICE)))))
+						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))
 (allow file-write-acl
 	(literal "/dev/aes_0")
 	(require-all
@@ -1040,11 +1041,17 @@
 	(require-all
 		(global-name "com.apple.networkd_privileged")
 		(require-any
+			(entitlement-is-bool-true "b'com.apple.networkd.modify_settings'")
 			(entitlement-is-bool-true "b'com.apple.networkd.disable_opportunistic'")
 			(entitlement-is-bool-true "b'com.apple.networkd.advisory_socket'")
 			(entitlement-is-bool-true "b'com.apple.networkd_privileged'")
-			(entitlement-is-bool-true "b'com.apple.networkd.persistent_interface'")
-			(entitlement-is-bool-true "b'com.apple.networkd.modify_settings'")))
+			(entitlement-is-bool-true "b'com.apple.networkd.persistent_interface'")))
+	(require-all
+		(global-name "com.apple.coreduetd.people")
+		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
+	(require-all
+		(global-name "com.apple.system.notification_center")
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
@@ -1057,12 +1064,6 @@
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
 					(global-name "com.apple.mobile.usermanagerd.xpc")))))
-	(require-all
-		(global-name "com.apple.coreduetd.people")
-		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
-	(require-all
-		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
@@ -1140,6 +1141,7 @@
 (sysctl-name "kern.boottime")
 (sysctl-name "kern.clockrate")
 (sysctl-name "kern.development")
+(sysctl-name "kern.wq_limit_cooperative_threads")
 (sysctl-name "hw.usermem")
 (sysctl-name "hw.busfrequency")
 (sysctl-name "hw.busfrequency_compat")
@@ -1147,12 +1149,12 @@
 (sysctl-name "hw.cpu64bit_capable")
 (sysctl-name "hw.cpufrequency")
 (sysctl-name "hw.cpufrequency_compat")
-(sysctl-name "hw.l1dcachesize_compat")
-(sysctl-name "hw.l1icachesize_compat")
 (sysctl-name "hw.l3settings")
 (sysctl-name "hw.l3cachesize_compat")
 (sysctl-name "hw.l2settings")
-(sysctl-name "hw.l2cachesize_compat"))
+(sysctl-name "hw.l2cachesize_compat")
+(sysctl-name "hw.l1icachesize_compat")
+(sysctl-name "hw.l1dcachesize_compat"))
 			(sysctl-name "kern.maxvnodes")
 			(require-any (sysctl-name "kern.version")
 (sysctl-name "kern.ostype")
@@ -1165,41 +1167,40 @@
 (sysctl-name "kern.monotoniclock_offset_usecs"))
 			(require-any (sysctl-name "kern.hostid")
 (sysctl-name "hw.tbfrequency"))
-			(require-any (sysctl-name "kern.usrstack64")
-(sysctl-name "hw.cpufrequency_max"))
+			(sysctl-name "vm.malloc_ranges")
 			(require-any (sysctl-name "hw.activecpu")
 (sysctl-name "hw.pagesize_compat"))
-			(sysctl-name "vm.loadavg")
 			(sysctl-name "kern.bootsessionuuid")
+			(sysctl-name "kern.osversion")
 			(sysctl-name "kern.maxfilesperproc")
-			(sysctl-name "kern.memorystatus_level")
-			(sysctl-name "hw.cachelinesize")
+			(sysctl-name "vm.loadavg")
+			(require-any (sysctl-name "kern.usrstack64")
+(sysctl-name "hw.cpufrequency_max"))
 			(require-any (sysctl-name "hw.cpufamily")
 (sysctl-name "hw.logicalcpu")
 (sysctl-name "hw.nperflevels"))
 			(sysctl-name "hw.target")
-			(sysctl-name "kern.osversion")
-			(sysctl-name "hw.physicalcpu")
-			(require-any (sysctl-name "hw.memsize")
-(sysctl-name "hw.machine"))
-			(require-any (sysctl-name "hw.perflevel")
-(sysctl-name "kern.hv_vmm_present"))
-			(sysctl-name "vm.malloc_ranges")
-			(sysctl-name "kern.wq_limit_cooperative_threads")
-			(require-any (sysctl-name "kern.waketime")
-(sysctl-name "security.mac.sandbox.sentinel")
-(sysctl-name "machdep.ptrauth_enabled")
-(sysctl-name "machdep.virtual_address_size"))
-			(sysctl-name "hw.l2cachesize")
 			(sysctl-name "kern.secure_kernel")
-			(sysctl-name "sysctl.name2oid")
-			(sysctl-name "kern.hostname")
-			(sysctl-name "hw.product")
-			(sysctl-name "hw.tbfrequency_compat")
+			(sysctl-name "hw.physicalcpu")
+			(sysctl-name "hw.cachelinesize")
 			(sysctl-name "security.mac.lockdown_mode_state")
 			(require-any (sysctl-name "kern.osvariant_status")
 (sysctl-name "kern.osproductversion"))
+			(require-any (sysctl-name "hw.perflevel")
+(sysctl-name "kern.hv_vmm_present"))
+			(require-any (sysctl-name "kern.waketime")
+(sysctl-name "machdep.ptrauth_enabled")
+(sysctl-name "machdep.virtual_address_size")
+(sysctl-name "security.mac.sandbox.sentinel"))
+			(sysctl-name "hw.l2cachesize")
+			(sysctl-name "kern.hostname")
+			(sysctl-name "sysctl.name2oid")
 			(sysctl-name "hw.ncpu")
+			(sysctl-name "hw.product")
+			(require-any (sysctl-name "hw.memsize")
+(sysctl-name "hw.machine"))
+			(sysctl-name "hw.tbfrequency_compat")
+			(sysctl-name "kern.memorystatus_level")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
@@ -1209,12 +1210,12 @@
 					(sysctl-name "kern.bootargs")
 					(sysctl-name "kern.argmax"))))))
 (allow system-automount)
+(allow system-mac*)
 (allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow system-set-time)
-(allow user-preference*
+(allow system-nfssvc)
+(allow system-sched)
+(allow system-swap
 	(preference-domain "com.apple.CFNetwork")
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.networkextension")
@@ -1228,7 +1229,7 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow storage-class-map)
+(allow user-preference-write)

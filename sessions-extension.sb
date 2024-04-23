@@ -97,11 +97,11 @@
 (allow syscall*)
 (allow syscall-unix)
 (allow system-automount
-	(ce 733f 2a05 f53e))
+	(ce 730c 2a47 f4bc))
+(allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow user-preference*
+(allow system-nfssvc)
+(allow system-swap
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.UIKit")
 	(extension "b'com.apple.security.exception.shared-preference.read-write'")
@@ -114,7 +114,7 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'")
 	(preference-domain "com.apple.UIKit")
@@ -128,4 +128,4 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow storage-class-map)
+(allow user-preference-write)

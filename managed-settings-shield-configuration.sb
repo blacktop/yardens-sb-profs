@@ -125,19 +125,20 @@
 							(subpath "/private/var/preferences/Logging")
 							(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
 							(subpath "/System/Library/PrivateFrameworks")
+							(require-any (literal "/private/var/db/eligibilityd/eligibility.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist"))
 							(literal "/private/etc/passwd")
 							(subpath "/usr/lib")
 							(subpath "/private/var/db/timezone")
 							(subpath "/Library/RegionFeatures")
-							(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist")
+							(literal "/System")
 							(literal "/private/etc/services")
 							(require-any (literal "/private/etc/group")
 (literal "/private/etc/protocols"))
 							(subpath "/System/Library/Frameworks")
-							(literal "/System")
+							(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 							(subpath "/System/Cryptexes")
 							(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
-							(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 							(literal "/private/etc/hosts")
 							(subpath "/private/preboot/Cryptexes")
 							(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.bin")
@@ -151,7 +152,6 @@
 							(require-all
 								(process-attribute is-apple-signed-executable)
 								(require-any
-									(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 									(subpath "/usr/libexec")
 									(require-any (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
@@ -159,6 +159,7 @@
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationSetAsideDetails.plist"))
 									(literal "/private/var/preferences/SystemConfiguration/preferences.plist")
+									(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 									(require-all
 										(subpath "/usr/local/libexec")
 										(debug-mode))))
@@ -184,6 +185,11 @@
 											(subpath "/AppleInternal")
 											(subpath "/usr/local/lib")))))
 							(require-all
+								(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
+								(require-any
+									(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
+									(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
+							(require-all
 								(subpath "/usr/appleinternal")
 								(require-any
 									(debug-mode)
@@ -192,11 +198,6 @@
 										(require-any
 											(subpath "/AppleInternal")
 											(subpath "/usr/local/lib")))))
-							(require-all
-								(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
-								(require-any
-									(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
-									(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
 							(require-all
 								(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 								(subpath "/private/var/OOPJit")
@@ -287,14 +288,14 @@
 			(iokit-property "AppleJPEGNumCores")
 			(iokit-property "AppleJPEGSupportsAppleInterchangeFormats")))
 	(require-all
-		(iokit-property "soc-generation")
-		(iokit-user-client-class "IOPlatformDevice"))
-	(require-all
 		(iokit-property "artwork-scale-factor")
 		(iokit-user-client-class "IOPlatformDevice"))
 	(require-all
 		(require-any (iokit-property "external-hdr")
 (iokit-property "compatible-app-variant"))
+		(iokit-user-client-class "IOPlatformDevice"))
+	(require-all
+		(iokit-property "soc-generation")
 		(iokit-user-client-class "IOPlatformDevice"))
 	(require-all
 		(iokit-property "device-colors")
@@ -386,14 +387,16 @@
 (allow mach-task-special-port-get)
 (allow opendirectory-user-modify)
 (allow socket-option-set
-	(c1 6056 5d7d 5d7b)
+	(c1 6020 5ddb 5dd6)
+	(syscall-number SYS_csrctl)
 	(require-not (syscall-number SYS_flock))
-	(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
+	(entitlement-is-bool-true "b'com.apple.coreduetd.people'")
+	(syscall-number SYS_map_with_linking_np))
 (allow syscall*)
 (allow syscall-unix)
 (allow system-automount
-	(ce 0513 5d79 f53e))
-(allow system-mac-label
+	(ce 32f6 5dd4 f4bc))
+(allow system-mac*
 	(mac-syscall-number 90)
 	(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'")
 	(require-all
@@ -408,7 +411,7 @@
 	(require-all
 		(mac-syscall-number 1)
 		(mac-policy-name-regex "b'Fvnguard\x0f\x00\x0f'")))
+(allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow storage-class-map)
+(allow system-nfssvc)
+(allow user-preference-write)

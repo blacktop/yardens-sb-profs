@@ -108,9 +108,9 @@
 		(extension "b'com.apple.sandbox.executable'")
 		(require-not (literal))
 		(require-any
-			(extension-class "com.apple.app-sandbox.read")
 			(extension-class "com.apple.aned.read-only")
-			(extension-class "com.apple.mediaserverd.read")))
+			(extension-class "com.apple.mediaserverd.read")
+			(extension-class "com.apple.app-sandbox.read")))
 	(require-all
 		(require-all (require-not (literal "/System/Library/Caches/apticket.der"))
 (require-not (subpath "/System/Library/Caches/com.apple.factorydata"))
@@ -571,11 +571,11 @@
 			(require-all
 				(extension "b'com.apple.sandbox.executable'")
 				(require-any
-					(extension-class "com.apple.aned.read-only")
-					(extension-class "com.apple.mediaserverd.read")
 					(extension-class "com.apple.quicklook.readonly")
 					(extension-class "com.apple.sharing.airdrop.readonly")
 					(extension-class "com.apple.wcd.readonly")
+					(extension-class "com.apple.aned.read-only")
+					(extension-class "com.apple.mediaserverd.read")
 					(require-all
 						(process-attribute is-apple-signed-executable)
 						(extension-class "com.apple.webkit.map-executable"))))
@@ -802,19 +802,20 @@
 					(subpath "/private/var/preferences/Logging")
 					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
 					(subpath "/System/Library/PrivateFrameworks")
+					(require-any (literal "/private/var/db/eligibilityd/eligibility.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist"))
 					(literal "/private/etc/passwd")
 					(subpath "/usr/lib")
 					(subpath "/private/var/db/timezone")
 					(subpath "/Library/RegionFeatures")
-					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.plist")
+					(literal "/System")
 					(literal "/private/etc/services")
 					(require-any (literal "/private/etc/group")
 (literal "/private/etc/protocols"))
 					(subpath "/System/Library/Frameworks")
-					(literal "/System")
+					(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 					(subpath "/System/Cryptexes")
 					(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
-					(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
 					(literal "/private/etc/hosts")
 					(subpath "/private/preboot/Cryptexes")
 					(literal-prefix "${FRONT_USER_HOME}/Library/Application Support/com.apple.palette.green.bin")
@@ -828,7 +829,6 @@
 					(require-all
 						(process-attribute is-apple-signed-executable)
 						(require-any
-							(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 							(subpath "/usr/libexec")
 							(require-any (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/CloudConfigurationDetails.plist")
@@ -836,6 +836,7 @@
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationDetails.plist")
 (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/CloudConfigurationSetAsideDetails.plist"))
 							(literal "/private/var/preferences/SystemConfiguration/preferences.plist")
+							(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/CloudConfigurationSetAsideDetails.plist")
 							(require-all
 								(subpath "/usr/local/libexec")
 								(debug-mode))))
@@ -861,15 +862,6 @@
 									(subpath "/AppleInternal")
 									(subpath "/usr/local/lib")))))
 					(require-all
-						(subpath "/usr/appleinternal")
-						(require-any
-							(debug-mode)
-							(require-all
-								(debug-mode)
-								(require-any
-									(subpath "/AppleInternal")
-									(subpath "/usr/local/lib")))))
-					(require-all
 						(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
 						(require-any
 							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
@@ -877,7 +869,16 @@
 					(require-all
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
-						(extension "b'com.apple.sandbox.oopjit'")))))))
+						(extension "b'com.apple.sandbox.oopjit'"))
+					(require-all
+						(subpath "/usr/appleinternal")
+						(require-any
+							(debug-mode)
+							(require-all
+								(debug-mode)
+								(require-any
+									(subpath "/AppleInternal")
+									(subpath "/usr/local/lib"))))))))))
 (allow file-mount-update
 	(require-all
 		(extension "b'com.apple.sandbox.executable'")
@@ -914,8 +915,8 @@
 			(require-all
 				(entitlement-is-bool-true "b'com.apple.developer.media-device-discovery-extension'")
 				(require-any
-					(literal-prefix "${HOME}")
-					(literal-prefix "${HOME}/Library/Preferences")))
+					(literal-prefix "${HOME}/Library/Preferences")
+					(literal-prefix "${HOME}")))
 			(require-all
 				(literal "/private/var/PersonaVolumes/")
 				(regex #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/tmp$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library/" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Documents/" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Documents$"))))
@@ -988,14 +989,14 @@
 (literal "/usr/share/terminfo")
 (literal "/private/etc/"))
 		(require-any
+			(literal "/")
+			(subpath "/System")
+			(literal "/private/var/Managed Preferences/mobile/com.apple.webcontentfilter.plist")
 			(literal "/dev/urandom")
 			(literal "/private/var/Managed Preferences/mobile/com.apple.SystemConfiguration.plist")
 			(subpath "/usr/lib")
 			(literal "/private/var/Managed Preferences/mobile/.GlobalPreferences.plist")
 			(literal "/dev/random")
-			(literal "/")
-			(subpath "/System")
-			(literal "/private/var/Managed Preferences/mobile/com.apple.webcontentfilter.plist")
 			(require-all
 				(require-any (literal-prefix "${HOME}/Media/Recordings/")
 (literal-prefix "${HOME}/Library/Recordings/")
@@ -1348,10 +1349,10 @@
 	(require-all
 		(entitlement-is-bool-true "b'com.apple.developer.media-device-discovery-extension'")
 		(require-any
+			(sysctl-name "net.statistics")
 			(sysctl-name "net.routetable.")
 			(sysctl-name "kern.ipc.maxsockbuf")
-			(sysctl-name "kern.nisdomainname")
-			(sysctl-name "net.statistics")))
+			(sysctl-name "kern.nisdomainname")))
 	(require-all
 		(sysctl-name "sysctl.proc_native")
 		(require-any
@@ -1376,6 +1377,7 @@
 (sysctl-name "kern.boottime")
 (sysctl-name "kern.clockrate")
 (sysctl-name "kern.development")
+(sysctl-name "kern.wq_limit_cooperative_threads")
 (sysctl-name "hw.usermem")
 (sysctl-name "hw.busfrequency")
 (sysctl-name "hw.busfrequency_compat")
@@ -1383,12 +1385,12 @@
 (sysctl-name "hw.cpu64bit_capable")
 (sysctl-name "hw.cpufrequency")
 (sysctl-name "hw.cpufrequency_compat")
-(sysctl-name "hw.l1dcachesize_compat")
-(sysctl-name "hw.l1icachesize_compat")
 (sysctl-name "hw.l3settings")
 (sysctl-name "hw.l3cachesize_compat")
 (sysctl-name "hw.l2settings")
-(sysctl-name "hw.l2cachesize_compat"))
+(sysctl-name "hw.l2cachesize_compat")
+(sysctl-name "hw.l1icachesize_compat")
+(sysctl-name "hw.l1dcachesize_compat"))
 			(sysctl-name "hw.tbfrequency_compat")
 			(require-any (sysctl-name "kern.version")
 (sysctl-name "kern.ostype")
@@ -1400,19 +1402,14 @@
 (sysctl-name "kern.monotonicclock")
 (sysctl-name "kern.monotoniclock_offset_usecs"))
 			(sysctl-name "kern.bootsessionuuid")
-			(sysctl-name "kern.hostname")
-			(require-any (sysctl-name "hw.perflevel")
-(sysctl-name "kern.hv_vmm_present"))
+			(sysctl-name "security.mac.lockdown_mode_state")
+			(sysctl-name "kern.osversion")
 			(require-any (sysctl-name "hw.activecpu")
 (sysctl-name "hw.pagesize_compat"))
-			(require-any (sysctl-name "kern.waketime")
-(sysctl-name "security.mac.sandbox.sentinel")
-(sysctl-name "machdep.ptrauth_enabled")
-(sysctl-name "machdep.virtual_address_size"))
-			(sysctl-name "security.mac.lockdown_mode_state")
+			(sysctl-name "hw.ncpu")
+			(sysctl-name "kern.hostname")
 			(sysctl-name "kern.maxfilesperproc")
-			(require-any (sysctl-name "kern.osvariant_status")
-(sysctl-name "kern.osproductversion"))
+			(sysctl-name "hw.l2cachesize")
 			(require-any (sysctl-name "hw.memsize")
 (sysctl-name "hw.machine"))
 			(require-any (sysctl-name "hw.cpufamily")
@@ -1421,13 +1418,17 @@
 			(sysctl-name "hw.target")
 			(sysctl-name "hw.cachelinesize")
 			(sysctl-name "hw.physicalcpu")
-			(sysctl-name "hw.product")
-			(sysctl-name "hw.ncpu")
-			(sysctl-name "hw.l2cachesize")
-			(sysctl-name "kern.wq_limit_cooperative_threads")
-			(sysctl-name "vm.malloc_ranges")
+			(require-any (sysctl-name "kern.osvariant_status")
+(sysctl-name "kern.osproductversion"))
+			(require-any (sysctl-name "hw.perflevel")
+(sysctl-name "kern.hv_vmm_present"))
 			(sysctl-name "kern.secure_kernel")
-			(sysctl-name "kern.osversion")
+			(sysctl-name "hw.product")
+			(require-any (sysctl-name "kern.waketime")
+(sysctl-name "machdep.ptrauth_enabled")
+(sysctl-name "machdep.virtual_address_size")
+(sysctl-name "security.mac.sandbox.sentinel"))
+			(sysctl-name "vm.malloc_ranges")
 			(sysctl-name "sysctl.name2oid")
 			(require-any (sysctl-name "kern.hostid")
 (sysctl-name "hw.tbfrequency"))
@@ -1454,13 +1455,13 @@
 	(require-all
 		(fsctl-command-regex [UNSUPPORTED](_IO "J" 3))
 		(entitlement-is-bool-true "b'com.apple.developer.media-device-discovery-extension'")))
+(allow system-mac*)
 (allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-memorystatus-control)
-(allow system-package-check)
-(allow system-set-time
+(allow system-nfssvc)
+(allow system-sched
 	(entitlement-is-bool-true "b'com.apple.developer.media-device-discovery-extension'"))
-(allow user-preference*
+(allow system-swap
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.hangtracer")
 	(preference-domain "com.apple.Accessibility")
@@ -1475,7 +1476,7 @@
 	(require-all
 		(preference-domain "com.apple.CFNetwork")
 		(entitlement-is-bool-true "b'com.apple.developer.media-device-discovery-extension'")))
-(allow user-preference-read
+(allow user-preference*
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow storage-class-map)
+(allow user-preference-write)
