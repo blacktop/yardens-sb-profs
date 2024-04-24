@@ -1,11 +1,11 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-ioctl)
-(allow file-issue-extension)
-(allow file-read*
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-link)
+(allow file-lock)
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(literal-prefix "${HOME}/Library/PPTDevice")
 	(literal-prefix "${HOME}")
@@ -22,17 +22,9 @@
 	(extension "b'com.apple.sharing.airdrop.readonly'")
 	(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 	(require-all
-		(vnode-type DIRECTORY)
-		(process-attribute is-apple-signed-executable))
-	(require-all
 		(extension "b'com.apple.sandbox.system-container'")
 		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
-	(require-all
-		(process-attribute is-apple-signed-executable)
-		(require-any
-			(literal-prefix "${HOME}/Library/Preferences")
-			(literal-prefix "${HOME}")))
 	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
@@ -41,10 +33,16 @@
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
-				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
-(allow file-revoke)
-(allow file-write-unlink)
-(allow file-write-xattr)
+				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
+	(require-all
+		(vnode-type DIRECTORY)
+		(process-attribute is-apple-signed-executable))
+	(require-all
+		(process-attribute is-apple-signed-executable)
+		(require-any
+			(literal-prefix "${HOME}/Library/Preferences")
+			(literal-prefix "${HOME}"))))
+(allow file-test-existence)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -52,15 +50,17 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control)
-(allow iokit-open*)
-(allow ipc-sysv-shm)
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties)
+(allow iokit-open-service)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.securityd")
 	(global-name "com.apple.cdp.daemon")
 	(global-name "com.apple.pluginkit.pkd")
@@ -131,24 +131,24 @@
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow opendirectory-user-modify)
-(allow process-fork)
-(allow pseudo-tty)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow process-codesigning)
+(allow process-info-codesignature)
 (allow socket-ioctl)
-(allow socket-option*)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*)
 (allow syscall-unix)
-(allow system-automount)
-(allow system-mac*)
-(allow system-mac-label)
+(allow syscall-mach)
+(allow syscall-mig)
+(allow system-fcntl)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.facetime.bag")
 	(extension "b'com.apple.security.exception.shared-preference.read-write'")
@@ -165,7 +165,7 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'")
 	(preference-domain "com.apple.facetime.bag")
@@ -183,4 +183,4 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference-write)
+(allow process-exec-update-label)

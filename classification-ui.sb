@@ -1,9 +1,9 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-clone
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-issue-extension
 	(require-all
 		(extension-class "com.apple.aned.read-only")
 		(require-any
@@ -683,9 +683,9 @@
 				(require-any
 					(subpath "/Library/RegionFeatures")
 					(subpath "/System/Library"))))))
-(allow file-ioctl)
-(allow file-issue-extension)
-(allow file-mount
+(allow file-link)
+(allow file-lock)
+(allow file-read*
 	(require-any (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/")
 (subpath-prefix "${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-only}")
 (literal-prefix "NanoPreferencesSync/NanoDomains/${ENTITLEMENT:com.apple.security.exception.nano-preference.read-only}"))
@@ -888,7 +888,7 @@
 								(require-any
 									(subpath "/AppleInternal")
 									(subpath "/usr/local/lib"))))))))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(extension "b'com.apple.sandbox.executable'")
 		(require-not (literal)))
@@ -899,7 +899,7 @@
 		(literal "/private/var/")
 		(require-all (require-not (subpath-prefix "${HOME}"))
 (require-not (subpath-prefix "${FRONT_USER_HOME}")))))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(literal-prefix "${HOME}")
 	(literal-prefix "${HOME}/Library/Caches/powerlog.launchd")
@@ -932,7 +932,7 @@
 		(require-any
 			(literal-prefix "${HOME}")
 			(literal-prefix "${HOME}/Library/Preferences"))))
-(allow file-revoke
+(allow file-test-existence
 	(process-attribute is-apple-signed-executable)
 	(literal "/private/etc/passwd")
 	(literal "/private/etc/services")
@@ -1068,7 +1068,7 @@
 (literal-prefix "${HOME}/Library/Application Support/CloudDocs/session/unprotected/containers/"))
 				(literal-prefix "${HOME}/Library/Mobile Documents/")
 				(literal "/private/var/Managed Preferences/mobile/")))))
-(allow file-test-existence
+(allow file-write*
 	(subpath-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-write}")
 	(literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/NanoPreferencesSync/NanoDomains/${ENTITLEMENT:com.apple.security.exception.nano-preference.read-write}")
 	(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
@@ -1128,7 +1128,7 @@
 					(require-all
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(require-not (regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple."))))))))
-(allow file-write*
+(allow file-write-create
 	(vnode-type DIRECTORY)
 	(require-all
 		(extension "b'com.apple.sandbox.container'")
@@ -1145,7 +1145,7 @@
 				(literal "/private/var/PersonaVolumes/")
 				(require-not (regex #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library/Caches$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library/Caches/Snapshots$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library/Preferences$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Library/SyncedPreferences$"))
 				(require-not (regex #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Documents$" #"^/private/var/PersonaVolumes/[^/]+/Containers/Data/[^/]+/[^/]+/Documents/Inbox$"))))))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/aes_0")
 	(require-all
 		(extension "b'com.apple.sandbox.container'")
@@ -1161,7 +1161,7 @@
 			(literal "/dev/dtracehelper")
 			(literal "/dev/zero")
 			(literal "/dev/null"))))
-(allow file-write-setugid
+(allow file-write-unlink
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(extension "b'com.apple.sandbox.container'")
@@ -1192,7 +1192,7 @@
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
-(allow file-write-times
+(allow file-write-xattr
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
@@ -1213,8 +1213,6 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
-(allow file-write-unlink)
-(allow file-write-xattr)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -1222,9 +1220,11 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control)
-(allow iokit-issue-extension
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties)
+(allow iokit-open-user-client
 	(require-any (iokit-user-client-class "IOAccelDevice2")
 (iokit-user-client-class "IOAccelContext2")
 (iokit-user-client-class "IOAccelSharedUserClient2"))
@@ -1247,17 +1247,17 @@
 	(extension "b'com.apple.security.exception.iokit-user-client-class'")
 	(require-any (iokit-user-client-class "H11ANEInDirectPathClient")
 (iokit-user-client-class "AppleVirtIONeuralEngineDeviceUserClient")))
-(allow iokit-open*)
-(allow ipc-posix-sem-wait
+(allow iokit-open-service)
+(allow ipc-posix-shm-read-data
 	(require-all
 		(require-not (ipc-posix-name "apple.shm.notification_center"))
 		(ipc-posix-name "apple.cfprefs.")))
-(allow ipc-sysv-shm)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.backboard.animation-fence-arbiter")
 	(global-name "com.apple.powerlog.plxpclogger.xpc")
 	(global-name "com.apple.mobileassetd")
@@ -1373,22 +1373,22 @@
 							(require-all
 								(global-name "com.apple.logd")
 								(entitlement-is-bool-true "b'get-task-allow'")))))))))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow network-bind)
-(allow network-outbound)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
 (allow nvram*)
 (allow nvram-delete)
-(allow opendirectory-user-modify)
-(allow pseudo-tty)
+(allow nvram-get)
+(allow nvram-set)
+(allow process-codesigning)
 (allow socket-ioctl)
-(allow socket-option*)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*)
 (allow syscall-unix)
-(allow syscall-mig
+(allow syscall-mach)
+(allow syscall-mig)
+(allow sysctl-read
 	(sysctl-name "kern.bootsessionuuid")
 	(extension "b'com.apple.security.exception.sysctl.read-write'")
 	(extension "b'com.apple.security.exception.sysctl.read-only'")
@@ -1488,12 +1488,12 @@
 					(sysctl-name "kern.bootargs")
 					(require-any (sysctl-name "kern.willshutdown")
 (sysctl-name "kern.willuserspacereboot")))))))
-(allow system-automount)
-(allow system-mac*)
-(allow system-mac-label)
+(allow system-fcntl)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(preference-domain "com.apple.UIKit")
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.preferences.sounds")
@@ -1510,7 +1510,7 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-write)
+(allow process-exec-update-label)

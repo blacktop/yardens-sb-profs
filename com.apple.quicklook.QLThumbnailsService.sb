@@ -1,9 +1,9 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-clone
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-issue-extension
 	(require-all
 		(extension-class "com.apple.app-sandbox.read-write")
 		(require-any
@@ -692,21 +692,6 @@
 					(extension-class "com.apple.mediaserverd.read-write")
 					(extension-class "com.apple.mediaserverd.read")))
 			(require-all
-				(debug-mode)
-				(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts"))
-			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(subpath "/System/Library")
-					(subpath "/Library/RegionFeatures")
-					(subpath "/System/Library")))
-			(require-all
-				(extension-class "com.apple.mediaserverd.read-write")
-				(require-any
-					(extension "b'com.apple.app-sandbox.read-write'")
-					(extension-class "com.apple.mediaserverd.read-write")
-					(extension-class "com.apple.mediaserverd.read")))
-			(require-all
 				(extension-class "com.apple.aned.read-only")
 				(require-any
 					(extension "b'com.apple.sandbox.container'")
@@ -714,10 +699,10 @@
 						(extension-class "com.apple.mediaserverd.read")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
 					(require-all
-						(extension-class "com.apple.aned.read-only")
+						(extension-class "com.apple.mediaserverd.read-write")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
 					(require-all
-						(extension-class "com.apple.mediaserverd.read-write")
+						(extension-class "com.apple.aned.read-only")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
 					(require-all
 						(extension-class "com.apple.app-sandbox.read-write")
@@ -732,6 +717,46 @@
 						(extension-class "com.apple.mediaserverd.read")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))))
 			(require-all
+				(debug-mode)
+				(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts"))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(subpath "/System/Library")
+					(subpath "/Library/RegionFeatures")
+					(subpath "/System/Library")))
+			(require-all
+				(extension-class "com.apple.app-sandbox.read-write")
+				(require-any
+					(extension "b'com.apple.sandbox.container'")
+					(require-all
+						(extension-class "com.apple.mediaserverd.read")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
+						(extension-class "com.apple.mediaserverd.read-write")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
+						(extension-class "com.apple.aned.read-only")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
+						(extension-class "com.apple.app-sandbox.read-write")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
+						(extension-class "com.apple.app-sandbox.read")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
+						(extension-class "com.apple.mediaserverd.read-write")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
+						(extension-class "com.apple.mediaserverd.read")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read-write")
+				(require-any
+					(extension "b'com.apple.app-sandbox.read-write'")
+					(extension-class "com.apple.mediaserverd.read-write")
+					(extension-class "com.apple.mediaserverd.read")))
+			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
 					(subpath "/Library/RegionFeatures")
@@ -743,17 +768,47 @@
 					(extension-class "com.apple.mediaserverd.read-write")
 					(extension-class "com.apple.mediaserverd.read")))
 			(require-all
-				(extension-class "com.apple.app-sandbox.read-write")
+				(extension-class "com.apple.app-sandbox.read")
 				(require-any
 					(extension "b'com.apple.sandbox.container'")
 					(require-all
 						(extension-class "com.apple.mediaserverd.read")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
 					(require-all
+						(extension-class "com.apple.mediaserverd.read-write")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
 						(extension-class "com.apple.aned.read-only")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
 					(require-all
+						(extension-class "com.apple.app-sandbox.read-write")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
+						(extension-class "com.apple.app-sandbox.read")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
 						(extension-class "com.apple.mediaserverd.read-write")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
+						(extension-class "com.apple.mediaserverd.read")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))))
+			(require-all
+				(extension-class "com.apple.aned.read-only")
+				(require-any
+					(subpath "/Library/RegionFeatures")
+					(subpath "/System/Library")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read-write")
+				(require-any
+					(extension "b'com.apple.sandbox.container'")
+					(require-all
+						(extension-class "com.apple.mediaserverd.read")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
+						(extension-class "com.apple.mediaserverd.read-write")
+						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
+					(require-all
+						(extension-class "com.apple.aned.read-only")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
 					(require-all
 						(extension-class "com.apple.app-sandbox.read-write")
@@ -771,61 +826,6 @@
 				(extension-class "com.apple.quicklook.readonly")
 				(extension "b'com.apple.sandbox.container'"))
 			(require-all
-				(extension-class "com.apple.aned.read-only")
-				(require-any
-					(subpath "/Library/RegionFeatures")
-					(subpath "/System/Library")))
-			(require-all
-				(extension-class "com.apple.app-sandbox.read")
-				(require-any
-					(extension "b'com.apple.sandbox.container'")
-					(require-all
-						(extension-class "com.apple.mediaserverd.read")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.aned.read-only")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.mediaserverd.read-write")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.app-sandbox.read-write")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.app-sandbox.read")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.mediaserverd.read-write")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.mediaserverd.read")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))))
-			(require-all
-				(extension-class "com.apple.mediaserverd.read-write")
-				(require-any
-					(extension "b'com.apple.sandbox.container'")
-					(require-all
-						(extension-class "com.apple.mediaserverd.read")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.aned.read-only")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.mediaserverd.read-write")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.app-sandbox.read-write")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.app-sandbox.read")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.mediaserverd.read-write")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
-					(require-all
-						(extension-class "com.apple.mediaserverd.read")
-						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))))
-			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
 					(extension "b'com.apple.sandbox.container'")
@@ -833,10 +833,10 @@
 						(extension-class "com.apple.mediaserverd.read")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
 					(require-all
-						(extension-class "com.apple.aned.read-only")
+						(extension-class "com.apple.mediaserverd.read-write")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
 					(require-all
-						(extension-class "com.apple.mediaserverd.read-write")
+						(extension-class "com.apple.aned.read-only")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent"))
 					(require-all
 						(extension-class "com.apple.app-sandbox.read-write")
@@ -850,9 +850,9 @@
 					(require-all
 						(extension-class "com.apple.mediaserverd.read")
 						(subpath-prefix "${HOME}/Library/Caches/com.apple.quicklook.ThumbnailsAgent")))))))
-(allow file-ioctl)
-(allow file-issue-extension)
-(allow file-mount
+(allow file-link)
+(allow file-lock)
+(allow file-read*
 	(require-any (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/")
 (subpath-prefix "${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-only}")
 (literal-prefix "NanoPreferencesSync/NanoDomains/${ENTITLEMENT:com.apple.security.exception.nano-preference.read-only}"))
@@ -956,11 +956,11 @@
 				(subpath-prefix "${HOME}/Library/Application Support/CloudDocs/session/r")
 				(vnode-type REGULAR-FILE))
 			(require-all
-				(vnode-type REGULAR-FILE)
-				(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.quicklook.ThumbnailsAgent"))
-			(require-all
 				(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Application Support/CloudDocs/session/r/?")
 				(vnode-type REGULAR-FILE))
+			(require-all
+				(vnode-type REGULAR-FILE)
+				(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.quicklook.ThumbnailsAgent"))
 			(require-all
 				(vnode-type DIRECTORY)
 				(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.quicklook.ThumbnailsAgent"))
@@ -998,23 +998,6 @@
 				(extension "b'com.apple.sandbox.system-group'")
 				(entitlement-is-present "b'com.apple.security.system-groups'")
 				(entitlement-is-present "b'com.apple.security.system-group-containers'"))
-			(require-all
-				(extension "b'com.apple.sandbox.system-group'")
-				(require-any
-					(require-all
-						(entitlement-is-present "b'com.apple.security.system-groups'")
-						(require-any
-							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
-							(require-all
-								(literal "/private/var/containers/Shared/SystemGroup/")
-								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
-					(require-all
-						(entitlement-is-present "b'com.apple.security.system-group-containers'")
-						(require-any
-							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
-							(require-all
-								(literal "/private/var/containers/Shared/SystemGroup/")
-								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))
 			(require-all
 				(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
 				(extension "b'com.apple.logd.read-only'")
@@ -1108,8 +1091,25 @@
 					(require-all
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
-						(extension "b'com.apple.sandbox.oopjit'")))))))
-(allow file-mount-update
+						(extension "b'com.apple.sandbox.oopjit'"))))
+			(require-all
+				(extension "b'com.apple.sandbox.system-group'")
+				(require-any
+					(require-all
+						(entitlement-is-present "b'com.apple.security.system-groups'")
+						(require-any
+							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
+							(require-all
+								(literal "/private/var/containers/Shared/SystemGroup/")
+								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
+					(require-all
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
+						(require-any
+							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
+							(require-all
+								(literal "/private/var/containers/Shared/SystemGroup/")
+								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))))
+(allow file-read-data
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'")))
@@ -1158,7 +1158,7 @@
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]/[UNSUPPORTED]DocumentRevisions-V100/PerUID/?")
 (subpath-prefix "${FRONT_USER_HOME}/.DocumentRevisions-V100/PerUID"))
 				(extension "b'com.apple.revisiond.revision'")))))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(literal-prefix "${HOME}/Library/Mobile Documents")
 	(literal-prefix "${HOME}")
@@ -1190,12 +1190,6 @@
 		(process-attribute is-apple-signed-executable)
 		(vnode-type DIRECTORY))
 	(require-all
-		(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
-		(extension "b'com.apple.sandbox.system-group'")
-		(require-any
-			(entitlement-is-present "b'com.apple.security.system-groups'")
-			(entitlement-is-present "b'com.apple.security.system-group-containers'")))
-	(require-all
 		(vnode-type REGULAR-FILE)
 		(require-any
 			(require-all
@@ -1210,6 +1204,12 @@
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]/[UNSUPPORTED]DocumentRevisions-V100/PerUID/?")
 (subpath-prefix "${FRONT_USER_HOME}/.DocumentRevisions-V100/PerUID"))
 				(extension "b'com.apple.revisiond.revision'"))))
+	(require-all
+		(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
+		(extension "b'com.apple.sandbox.system-group'")
+		(require-any
+			(entitlement-is-present "b'com.apple.security.system-groups'")
+			(entitlement-is-present "b'com.apple.security.system-group-containers'")))
 	(require-all
 		(vnode-type DIRECTORY)
 		(require-any
@@ -1265,7 +1265,7 @@
 		(require-any
 			(literal-prefix "${HOME}")
 			(literal-prefix "${HOME}/Library/Preferences"))))
-(allow file-read-data
+(allow file-read-xattr
 	(require-all
 		(vnode-type REGULAR-FILE)
 		(require-any
@@ -1311,8 +1311,8 @@
 (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]/[UNSUPPORTED]DocumentRevisions-V100/PerUID/?")
 (subpath-prefix "${FRONT_USER_HOME}/.DocumentRevisions-V100/PerUID"))
 				(extension "b'com.apple.revisiond.revision'")))))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(require-any (subpath-prefix "${HOME}/Library/Caches/com.apple.QuickLook.thumbnailcache")
 (literal-prefix "${HOME}/Library/Application Support/Quick Look")
 (literal-prefix "${HOME}/Library/Application Support/Quick Look/cloudthumbnails.db")
@@ -1333,6 +1333,9 @@
 		(vnode-type REGULAR-FILE)
 		(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.quicklook.ThumbnailsAgent"))
 	(require-all
+		(vnode-type DIRECTORY)
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.quicklook.ThumbnailsAgent"))
+	(require-all
 		(extension "b'com.apple.fileprovider.read-write'")
 		(require-any
 			(require-any (subpath-prefix "${ANY_USER_HOME}/tmp/com.apple.fileproviderd")
@@ -1341,9 +1344,6 @@
 				(literal "/private/var/")
 				(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Application Support/Collaboration/com.apple.iWork/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/Library/Application Support/Collaboration/com.apple.iWork/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/Library/Application Support/Collaboration/com.apple.iWork/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/Library/Application Support/Collaboration/com.apple.iWork/")
 				(subpath-prefix "${FRONT_USER_HOME}"))))
-	(require-all
-		(vnode-type DIRECTORY)
-		(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.quicklook.ThumbnailsAgent"))
 	(require-all
 		(vnode-type REGULAR-FILE)
 		(extension "b'com.apple.revisiond.staging'")
@@ -1407,7 +1407,7 @@
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
-(allow file-write*
+(allow file-write-create
 	(require-all
 		(vnode-type DIRECTORY)
 		(require-any
@@ -1503,7 +1503,7 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/aes_0")
 	(require-all
 		(require-not (literal "/dev/urandom"))
@@ -1512,12 +1512,12 @@
 			(literal "/dev/null")
 			(literal "/dev/dtracehelper")
 			(literal "/dev/zero"))))
-(allow file-write-setugid
+(allow file-write-unlink
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
-(allow file-write-times
+(allow file-write-xattr
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
@@ -1538,8 +1538,6 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
-(allow file-write-unlink)
-(allow file-write-xattr)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -1547,9 +1545,11 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control)
-(allow iokit-issue-extension
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties)
+(allow iokit-open-user-client
 	(iokit-user-client-class "IOSurfaceSendRight")
 	(iokit-user-client-class "AGXCommandQueue")
 	(iokit-user-client-class "AGXSharedUserClient")
@@ -1560,13 +1560,13 @@
 	(iokit-user-client-class "IOSurfaceAcceleratorClient")
 	(extension "b'com.apple.security.exception.iokit-user-client-class'")
 	(iokit-user-client-class "IOMobileFramebufferUserClient"))
-(allow iokit-open*)
-(allow ipc-sysv-shm)
+(allow iokit-open-service)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(require-any (global-name "com.apple.coremedia.samplebufferaudiorenderer.xpc")
 (global-name "com.apple.coremedia.mediaplaybackd.audioprocessingtap.xpc")
 (global-name "com.apple.coremedia.mediaplaybackd.samplebufferrendersynchronizer.xpc")
@@ -1703,9 +1703,6 @@
 		(global-name "com.apple.coreduetd.people")
 		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
-		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
-	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
 		(require-any
@@ -1718,13 +1715,16 @@
 					(global-name "com.apple.Honeybee.event-notify")
 					(global-name "com.apple.mobile.usermanagerd.xpc")))))
 	(require-all
+		(global-name "com.apple.system.notification_center")
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
+	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow necp-client-open
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow network-inbound
 	(require-all
 		(extension "b'com.apple.app-sandbox.read-write'")
 		(require-any
@@ -1750,7 +1750,7 @@
 				(literal "/private/var/")
 				(subpath-prefix "${FRONT_USER_HOME}")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$")))))
-(allow network-inbound
+(allow network-outbound
 	(control-name "com.apple.flow-divert")
 	(literal "/private/var/run/syslog")
 	(require-all
@@ -1778,13 +1778,11 @@
 				(literal "/private/var/")
 				(subpath-prefix "${FRONT_USER_HOME}")
 				(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage/" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/File Provider Storage$")))))
-(allow network-bind)
-(allow network-outbound)
 (allow nvram*)
 (allow nvram-delete)
-(allow opendirectory-user-modify)
-(allow process-exec-interpreter)
-(allow process-fork)
+(allow nvram-get)
+(allow nvram-set)
+(allow process-codesigning)
 (allow process-info*)
 (allow process-info-codesignature)
 (allow process-info-dirtycontrol)
@@ -1793,23 +1791,25 @@
 (allow process-info-rusage)
 (allow process-info-pidinfo)
 (allow process-info-pidfdinfo)
-(allow pseudo-tty)
+(allow process-info-pidfileportinfo)
+(allow process-info-setcontrol)
 (allow socket-ioctl)
-(allow socket-option*)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*)
 (allow syscall-unix)
-(allow system-automount)
-(allow system-debug
+(allow syscall-mach)
+(allow syscall-mig)
+(allow system-fcntl)
+(allow system-fsctl
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 93))
 	(fsctl-command-regex [UNSUPPORTED](_IO "h" 32))
 	(fsctl-command-regex [UNSUPPORTED](_IO "h" 31))
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 72)))
-(allow system-mac*)
-(allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(preference-domain "com.apple.UIKit")
 	(preference-domain "com.apple.iokit.IOMobileGraphicsFamily")
 	(preference-domain "com.apple.coremedia")
@@ -1833,9 +1833,9 @@
 			(require-all
 				(preference-domain "com.apple.itunesstored")
 				(entitlement-is-bool-true "b'com.apple.itunesstored.private'")))))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-read
+(allow user-preference-write
 	(preference-domain "com.apple.quicklook.ThumbnailsAgent"))
-(allow user-preference-write)
+(allow process-exec-update-label)

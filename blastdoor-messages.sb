@@ -1,6 +1,6 @@
 (version 1)
 (deny default)
-(allow file*
+(allow file-clone
 	(require-all
 		(extension "b'com.apple.blastdoor.read-write'")
 		(require-any
@@ -15,8 +15,8 @@
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 			(require-any (subpath "/private/var/tmp/com.apple.messages/Wallpapers")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/Wallpapers")))))
-(allow file-issue-extension)
-(allow file-mount
+(allow file-lock)
+(allow file-read*
 	(require-any (literal "/private/var/Managed Preferences/mobile/.GlobalPreferences_m.plist")
 (literal "/private/var/Managed Preferences/mobile/kCFPreferencesAnyApplication.plist")
 (literal "/private/var/Managed Preferences/mobile/com.apple.avfoundation.plist")
@@ -157,14 +157,14 @@
 		(require-any
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.blastdoor.read'"))))
-(allow file-read*
+(allow file-read-metadata
 	(require-any (literal-prefix "${FRONT_USER_HOME}")
 (literal-prefix "${FRONT_USER_HOME}/Library/Preferences"))
 	(require-all
 		(require-not (subpath "/Library/Preferences"))
 		(require-not (literal "/private/var/run/syslog"))))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(require-all
 		(extension "b'com.apple.blastdoor.read-write'")
 		(require-any
@@ -179,23 +179,23 @@
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 			(require-any (subpath "/private/var/tmp/com.apple.messages/Wallpapers")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/Wallpapers")))))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/dtracehelper")
 	(literal "/dev/null")
 	(literal "/dev/zero"))
-(allow file-write-data
+(allow file-write-flags
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.messages/PassPreview")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 		(require-not (extension "b'com.apple.blastdoor.read-write'"))
 		(require-not (extension "b'com.apple.app-sandbox.read-write'"))))
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow opendirectory-user-modify)
-(allow process-legacy-codesigning-blob-get)
-(allow process-legacy-codesigning-cdhash-get)
-(allow process-legacy-codesigning-identity-get)
-(allow socket-option-set
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow process-codesigning)
+(allow process-legacy-codesigning-entitlements-blob-get)
+(allow process-legacy-codesigning-entitlements-der-blob-get)
+(allow process-legacy-codesigning-status-get)
+(allow syscall-unix
 	(c1 36be b321 b2c9)
 	(require-all
 		(require-not (syscall-number SYS_necp_open))
@@ -212,6 +212,9 @@
 				(state-flag "b''"))
 			(require-all
 				(syscall-number SYS___pthread_chdir)
+				(state-flag "b''"))
+			(require-all
+				(syscall-number SYS_memorystatus_available_memory)
 				(state-flag "b''"))
 			(require-all
 				(require-not (state-flag "b''"))
@@ -275,9 +278,6 @@
 							(syscall-number 38)
 							(syscall-number SYS_memorystatus_control)
 							(syscall-number SYS_dup)))))
-			(require-all
-				(syscall-number SYS_memorystatus_available_memory)
-				(state-flag "b''"))
 			(require-all
 				(syscall-number SYS_psynch_rw_yieldwrlock)
 				(state-flag "b''"))
@@ -356,9 +356,9 @@
 			(require-all
 				(syscall-number SYS_listxattr)
 				(state-flag "b''")))))
-(allow syscall*
+(allow syscall-mach
 	(cb 36cc b2c7 b407))
-(allow syscall-unix
+(allow syscall-mig
 	(cc 36ce b2c5 b2c2)
 	(require-all
 		(require-not (kernel-mig-routine 136))
@@ -366,7 +366,7 @@
 		(require-not (kernel-mig-routine 328))
 		(kernel-mig-routine 325)
 		(state-flag "b''")))
-(allow syscall-mig
+(allow sysctl-read
 	(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
 (sysctl-name "hw.physicalcpu_max"))
@@ -395,7 +395,7 @@
 	(require-any (sysctl-name "hw.memsize")
 (sysctl-name "hw.machine"))
 	(sysctl-name "hw.cachelinesize"))
-(allow system-automount
+(allow system-fcntl
 	(ce 36d7 b2b2 f4bc))
-(allow system-mac*)
-(allow user-preference-write)
+(allow system-mac-syscall)
+(allow process-exec-update-label)

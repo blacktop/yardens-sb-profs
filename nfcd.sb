@@ -1,15 +1,15 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-chroot
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-ioctl
 	(require-any (literal "/dev/nfc.log")
 (literal "/dev/spmi.nfc")
 (literal "/dev/tty.stockholm")))
-(allow file-ioctl)
-(allow file-issue-extension)
-(allow file-mount
+(allow file-link)
+(allow file-lock)
+(allow file-read*
 	(literal "/private/var/preferences/com.apple.networkd.plist")
 	(literal "/private/var/preferences/SystemConfiguration/com.apple.radios.plist")
 	(require-any (subpath-prefix "${HOME}/Library/NFStorage")
@@ -99,6 +99,14 @@
 		(entitlement-is-present "b'com.apple.security.system-groups'")
 		(entitlement-is-present "b'com.apple.security.system-group-containers'"))
 	(require-all
+		(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
+		(extension "b'com.apple.logd.read-only'")
+		(require-any
+			(require-any (subpath "/private/var/userdata/diagnostics")
+(subpath "/private/var/db/timesync"))
+			(require-any (subpath "/private/var/db/diagnostics")
+(subpath "/private/var/db/uuidtext"))))
+	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
@@ -115,14 +123,6 @@
 					(require-all
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))
-	(require-all
-		(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
-		(extension "b'com.apple.logd.read-only'")
-		(require-any
-			(require-any (subpath "/private/var/userdata/diagnostics")
-(subpath "/private/var/db/timesync"))
-			(require-any (subpath "/private/var/db/diagnostics")
-(subpath "/private/var/db/uuidtext"))))
 	(require-all
 		(vnode-type BLOCK-DEVICE)
 		(vnode-type CHARACTER-DEVICE)
@@ -192,6 +192,11 @@
 							(subpath "/AppleInternal")
 							(subpath "/usr/local/lib")))))
 			(require-all
+				(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
+				(require-any
+					(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
+					(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
+			(require-all
 				(subpath "/usr/appleinternal")
 				(require-any
 					(debug-mode)
@@ -201,19 +206,14 @@
 							(subpath "/AppleInternal")
 							(subpath "/usr/local/lib")))))
 			(require-all
-				(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
-				(require-any
-					(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
-					(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
-			(require-all
 				(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 				(subpath "/private/var/OOPJit")
 				(extension "b'com.apple.sandbox.oopjit'")))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(literal-prefix "${HOME}/Library/Logs/CrashReporter/DiagnosticLogs")
 	(literal-prefix "${HOME}/Library/Logs/CrashReporter")
@@ -232,6 +232,14 @@
 	(extension "b'com.apple.sharing.airdrop.readonly'")
 	(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 	(require-all
+		(vnode-type DIRECTORY)
+		(process-attribute is-apple-signed-executable))
+	(require-all
+		(process-attribute is-apple-signed-executable)
+		(require-any
+			(literal-prefix "${HOME}")
+			(literal-prefix "${HOME}/Library/Preferences")))
+	(require-all
 		(extension "b'com.apple.sandbox.system-container'")
 		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
@@ -243,17 +251,9 @@
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
-				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
-	(require-all
-		(vnode-type DIRECTORY)
-		(process-attribute is-apple-signed-executable))
-	(require-all
-		(process-attribute is-apple-signed-executable)
-		(require-any
-			(literal-prefix "${HOME}")
-			(literal-prefix "${HOME}/Library/Preferences"))))
-(allow file-revoke)
-(allow file-test-existence
+				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
+(allow file-test-existence)
+(allow file-write*
 	(require-any (subpath-prefix "${HOME}/Library/NFStorage")
 (literal-prefix "${HOME}/Library/Logs/CrashReporter/DiagnosticLogs/NearField"))
 	(require-any (literal-prefix "${HOME}/Library/Logs/nfcd")
@@ -276,9 +276,6 @@
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 				(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))))
 	(require-all
-		(vnode-type BLOCK-DEVICE)
-		(vnode-type CHARACTER-DEVICE))
-	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
 			(require-all
@@ -288,15 +285,18 @@
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
-				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
-(allow file-write*
+				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
+	(require-all
+		(vnode-type BLOCK-DEVICE)
+		(vnode-type CHARACTER-DEVICE)))
+(allow file-write-create
 	(require-all
 		(vnode-type DIRECTORY)
 		(require-any
 			(literal-prefix "${HOME}/Library/Logs/awd")
 			(literal-prefix "${HOME}/Library/Logs/CrashReporter/DiagnosticLogs")
 			(literal-prefix "${HOME}/Library/Logs/CrashReporter"))))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/aes_0")
 	(require-any (literal "/dev/nfc.log")
 (literal "/dev/spmi.nfc")
@@ -308,12 +308,12 @@
 			(literal "/dev/null")
 			(literal "/dev/dtracehelper")
 			(literal "/dev/zero"))))
-(allow file-write-setugid
+(allow file-write-unlink
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
-(allow file-write-times
+(allow file-write-xattr
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
@@ -334,8 +334,6 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
-(allow file-write-unlink)
-(allow file-write-xattr)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -343,26 +341,28 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control)
-(allow iokit-issue-extension
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties)
+(allow iokit-open-user-client
 	(iokit-user-client-class "AppleCredentialManagerUserClient")
 	(iokit-user-client-class "AppleSMCClient")
 	(iokit-user-client-class "AppleStockholmControlUserClient")
 	(iokit-user-client-class "AppleSSEUserClient")
 	(iokit-user-client-class "ApplePPMUserClient"))
-(allow iokit-open*)
-(allow iokit-open-user-client
+(allow iokit-open-service)
+(allow iokit-set-properties
 	(require-all
 		(require-any (iokit-property "IOPMUBootLPMCtrl")
 (iokit-property "IOPMUBootLPMState"))
 		(iokit-user-client-class "AppleDialogSPMIPMU")))
-(allow ipc-sysv-shm)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.securityd")
 	(global-name "com.apple.powerlog.plxpclogger.xpc")
 	(global-name "com.apple.SystemConfiguration.helper")
@@ -446,20 +446,18 @@
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow network-inbound
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow network-outbound
 	(require-any (control-name "com.apple.spmi.nfc")
 (control-name "com.apple.uart.stockholm")))
-(allow network-bind)
-(allow network-outbound)
 (allow nvram*)
 (allow nvram-delete)
-(allow opendirectory-user-modify)
-(allow process-exec-interpreter)
-(allow process-fork)
+(allow nvram-get)
+(allow nvram-set)
+(allow process-codesigning)
 (allow process-info*)
 (allow process-info-codesignature)
 (allow process-info-dirtycontrol)
@@ -468,20 +466,22 @@
 (allow process-info-rusage)
 (allow process-info-pidinfo)
 (allow process-info-pidfdinfo)
-(allow pseudo-tty)
+(allow process-info-pidfileportinfo)
+(allow process-info-setcontrol)
 (allow socket-ioctl)
-(allow socket-option*)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*)
 (allow syscall-unix)
-(allow system-automount)
-(allow system-mac*)
-(allow system-mac-label)
+(allow syscall-mach)
+(allow syscall-mig)
+(allow system-fcntl)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-sched
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow system-socket
 	(socket-domain AF_SYSTEM))
-(allow system-swap
+(allow user-preference-read
 	(require-any (preference-domain "com.apple.passd.class-d")
 (preference-domain "com.apple.seserviced.contactlessCredential.settings"))
 	(require-any (preference-domain "nfcd")
@@ -509,10 +509,10 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-read
+(allow user-preference-write
 	(require-any (preference-domain "nfcd")
 (preference-domain "com.apple.nfcd.nfttr")
 (preference-domain "com.apple.stockholm.analytics")
@@ -522,4 +522,4 @@
 	(preference-domain "com.apple.stockholm.atl")
 	(preference-domain "com.apple.stockholm")
 	(preference-domain "com.apple.stockholm.awd"))
-(allow user-preference-write)
+(allow process-exec-update-label)

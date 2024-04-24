@@ -1,7 +1,7 @@
 (version 1)
 (deny default)
-(allow file-issue-extension)
-(allow file-mount
+(allow file-lock)
+(allow file-read*
 	(require-all
 		(literal "/private/var")
 		(require-any (subpath "/AppleInternal/Library/VideoCodecs")
@@ -38,7 +38,7 @@
 					(subpath "/usr/share")
 					(subpath "/private/var/db/dyld")
 					(subpath "/private/var/db/timezone"))))))
-(allow file-read*
+(allow file-read-metadata
 	(require-all
 		(require-not (subpath "/Library/Preferences"))
 		(require-not (literal "/private/var/run/syslog"))
@@ -48,11 +48,11 @@
 			(subpath "/private/var/db/timezone")
 			(literal "/tmp")
 			(literal "/private/etc/localtime"))))
-(allow file-revoke)
-(allow mach-host-special-port-set)
-(allow opendirectory-user-modify)
-(allow process-fork)
-(allow socket-option-set
+(allow file-test-existence)
+(allow mach-kernel-endpoint)
+(allow process-codesigning)
+(allow process-info-codesignature)
+(allow syscall-unix
 	(c1 3658 b3e0 b356)
 	(require-all
 		(require-not (syscall-number SYS_necp_open))
@@ -221,7 +221,7 @@
 					(syscall-number 38)
 					(syscall-number SYS_memorystatus_control)
 					(syscall-number SYS_getfsstat))))))
-(allow syscall*
+(allow syscall-mach
 	(cb 3666 b354 b34a)
 	(machtrap-number MSC_semaphore_timedwait_trap)
 	(machtrap-number MSC__kernelrpc_mach_port_insert_member_trap)
@@ -233,10 +233,10 @@
 	(machtrap-number MSC__kernelrpc_mach_vm_purgable_control_trap)
 	(machtrap-number MSC_thread_self_trap)
 	(machtrap-number MSC__kernelrpc_mach_port_get_attributes_trap))
-(allow syscall-unix
+(allow syscall-mig
 	(cc 3668 b348 b3fe))
-(allow syscall-mig)
-(allow system-automount
+(allow sysctl-read)
+(allow system-fcntl
 	(ce 366e b346 f4bc))
-(allow system-mac*)
-(allow user-preference-write)
+(allow system-mac-syscall)
+(allow process-exec-update-label)

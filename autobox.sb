@@ -1,30 +1,30 @@
 (version 1)
 (deny default)
-(allow file-chroot
+(allow file-ioctl
 	(literal "/dev/aes_0")
 	(literal "/dev/dtracehelper"))
-(allow file-issue-extension)
-(allow file-link
+(allow file-lock)
+(allow file-map-executable
 	(require-any (signing-identifier "com.apple.lockdownmoded")
 (signing-identifier "com.apple.audio.AudioConverterService"))
 	(signing-identifier "com.apple.CTParserService")
 	(signing-identifier "com.apple.ImageIOXPCService")
 	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
-(allow file-mount-update
+(allow file-read-data
 	(require-any (signing-identifier "com.apple.lockdownmoded")
 (signing-identifier "com.apple.audio.AudioConverterService"))
 	(signing-identifier "com.apple.CTParserService")
 	(signing-identifier "com.apple.ImageIOXPCService")
 	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
-(allow file-revoke)
-(allow hid-control)
-(allow iokit-issue-extension)
-(allow iokit-open*)
+(allow file-test-existence)
+(allow iokit-get-properties)
 (allow iokit-open-user-client)
-(allow ipc-sysv-shm)
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow iokit-open-service)
+(allow iokit-set-properties)
+(allow lsopen)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(require-all
 		(require-any (signing-identifier "com.apple.lockdownmoded")
 (signing-identifier "com.apple.audio.AudioConverterService"))
@@ -158,11 +158,11 @@
 			(require-all
 				(global-name "com.apple.system.notification_center")
 				(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'")))))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow network-inbound
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow network-outbound
 	(control-name "com.apple.flow-divert")
 	(literal "/private/var/run/syslog")
 	(require-all
@@ -172,9 +172,9 @@
 (signing-identifier "com.apple.audio.AudioConverterService"))
 			(signing-identifier "com.apple.ImageIOXPCService")
 			(signing-identifier "com.apple.CoreGraphics.CGPDFService"))))
-(allow opendirectory-user-modify)
-(allow pseudo-tty)
-(allow socket-option-set
+(allow process-codesigning)
+(allow socket-ioctl)
+(allow syscall-unix
 	(c1 32ec b995 b98e)
 	(syscall-number SYS_map_with_linking_np)
 	(require-all
@@ -192,14 +192,14 @@
 	(require-all
 		(syscall-number SYS_guarded_open_dprotected_np)
 		(entitlement-is-bool-true "b'com.apple.coreduetd.people'")))
-(allow syscall*)
-(allow syscall-unix
+(allow syscall-mach)
+(allow syscall-mig
 	(require-not (kernel-mig-routine 196))
 	(debug-mode))
-(allow syscall-mach
+(allow sysctl*
 	(sysctl-name "kern.wq_limit_cooperative_threads")
 	(extension "b'com.apple.security.exception.sysctl.read-write'"))
-(allow syscall-mig
+(allow sysctl-read
 	(extension "b'com.apple.security.exception.sysctl.read-write'")
 	(extension "b'com.apple.security.exception.sysctl.read-only'")
 	(require-all
@@ -299,30 +299,30 @@
 					(sysctl-name "kern.proc.pid.")
 					(sysctl-name "kern.bootargs")
 					(sysctl-name "kern.argmax"))))))
-(allow system-automount
+(allow system-fcntl
 	(ce 32f6 b95d b9c1))
-(allow system-debug
+(allow system-fsctl
 	(fsctl-command-regex [UNSUPPORTED](_IO "A" 20)))
-(allow system-mac*
+(allow system-mac-syscall
 	(mac-syscall-number 2)
 	(require-not (mac-syscall-number 5))
 	(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
-(allow system-mac-label)
-(allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
-	(require-any (signing-identifier "com.apple.lockdownmoded")
-(signing-identifier "com.apple.audio.AudioConverterService"))
-	(signing-identifier "com.apple.CTParserService")
-	(signing-identifier "com.apple.ImageIOXPCService")
-	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
-(allow user-preference*
-	(preference-domain "kCFPreferencesAnyApplication")
-	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
 (allow user-preference-read
 	(require-any (signing-identifier "com.apple.lockdownmoded")
 (signing-identifier "com.apple.audio.AudioConverterService"))
 	(signing-identifier "com.apple.CTParserService")
 	(signing-identifier "com.apple.ImageIOXPCService")
 	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
-(allow user-preference-write)
+(allow managed-preference-read
+	(preference-domain "kCFPreferencesAnyApplication")
+	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+(allow user-preference-write
+	(require-any (signing-identifier "com.apple.lockdownmoded")
+(signing-identifier "com.apple.audio.AudioConverterService"))
+	(signing-identifier "com.apple.CTParserService")
+	(signing-identifier "com.apple.ImageIOXPCService")
+	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
+(allow process-exec-update-label)

@@ -1,7 +1,7 @@
 (version 1)
 (deny default)
-(allow file-issue-extension)
-(allow hid-control
+(allow file-lock)
+(allow iokit-get-properties
 	(require-all
 		(iokit-user-client-class "IOPlatformDevice")
 		(require-any
@@ -18,10 +18,10 @@
 			(iokit-property "artwork-scale-factor")
 			(iokit-property "soc-generation")
 			(iokit-property "is-muse"))))
-(allow ipc-sysv-shm)
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow lsopen)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.sessionservices")
 	(global-name "com.apple.CARenderServer")
 	(global-name "com.apple.fontservicesd")
@@ -88,20 +88,20 @@
 					(require-all
 						(global-name "com.apple.logd")
 						(entitlement-is-bool-true "b'get-task-allow'")))))))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow opendirectory-user-modify)
-(allow socket-option-set)
-(allow syscall*)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow process-codesigning)
 (allow syscall-unix)
-(allow system-automount
+(allow syscall-mach)
+(allow syscall-mig)
+(allow system-fcntl
 	(ce 730c 2a47 f4bc))
-(allow system-mac-label)
-(allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.UIKit")
 	(extension "b'com.apple.security.exception.shared-preference.read-write'")
@@ -114,7 +114,7 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'")
 	(preference-domain "com.apple.UIKit")
@@ -128,4 +128,4 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference-write)
+(allow process-exec-update-label)

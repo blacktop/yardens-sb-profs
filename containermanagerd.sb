@@ -1,9 +1,9 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-clone
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-issue-extension
 	(require-all
 		(extension-class "com.apple.app-sandbox.read-write")
 		(require-any
@@ -545,9 +545,9 @@
 				(require-any
 					(subpath "/Library/RegionFeatures")
 					(subpath "/System/Library"))))))
-(allow file-ioctl)
-(allow file-issue-extension)
-(allow file-mount
+(allow file-link)
+(allow file-lock)
+(allow file-read*
 	(require-any (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/")
 (subpath-prefix "${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-only}")
 (literal-prefix "NanoPreferencesSync/NanoDomains/${ENTITLEMENT:com.apple.security.exception.nano-preference.read-only}"))
@@ -753,11 +753,11 @@
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
 						(extension "b'com.apple.sandbox.oopjit'")))))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(subpath-prefix "${HOME}/Library/Caches/com.apple.containermanagerd")
 	(literal-prefix "${HOME}")
@@ -793,8 +793,8 @@
 		(require-any
 			(literal-prefix "${HOME}")
 			(vnode-type DIRECTORY))))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(require-any (subpath "/private/var/networkd/Containers")
 (subpath "/private/var/installd/Library/Caches")
 (subpath "/private/var/root/Library/Backup/SystemContainers")
@@ -855,7 +855,7 @@
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
-(allow file-write*
+(allow file-write-create
 	(require-all
 		(vnode-type DIRECTORY)
 		(require-any
@@ -918,7 +918,7 @@
 			(require-all
 				(vnode-type BLOCK-DEVICE)
 				(vnode-type CHARACTER-DEVICE)))))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/aes_0")
 	(require-all
 		(require-not (literal "/dev/urandom"))
@@ -927,16 +927,16 @@
 			(literal "/dev/null")
 			(literal "/dev/dtracehelper")
 			(literal "/dev/zero"))))
-(allow file-write-flags
+(allow file-write-owner
 	(require-any (literal "/private/var/root/Library")
 (literal "/private/var/root/Library/Logs"))
 	(literal "/private/var/root/Library/Caches"))
-(allow file-write-setugid
+(allow file-write-unlink
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
-(allow file-write-times
+(allow file-write-xattr
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
@@ -957,8 +957,6 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
-(allow file-write-unlink)
-(allow file-write-xattr)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -966,22 +964,24 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control)
-(allow iokit-open*)
-(allow ipc-posix*
-	(ipc-posix-name "containermanagerd."))
-(allow ipc-posix-issue-extension
-	(require-not (ipc-posix-name "purplebuddy.sentinel")))
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties)
+(allow iokit-open-service)
 (allow ipc-posix-sem*
+	(ipc-posix-name "containermanagerd."))
+(allow ipc-posix-sem-create
+	(require-not (ipc-posix-name "purplebuddy.sentinel")))
+(allow ipc-posix-sem-open
 	(require-any (ipc-posix-name "purplebuddy.sentinel")
 (ipc-posix-name "containermanagerd.fb_check")))
-(allow ipc-sysv-shm)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.pluginkit.pkd")
 	(global-name "com.apple.mobile.keybagd.UserManager.xpc")
 	(global-name "com.apple.mobile.keybagd.xpc")
@@ -1029,9 +1029,6 @@
 				(global-name "com.apple.coreduetd.people")
 				(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 			(require-all
-				(global-name "com.apple.system.notification_center")
-				(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
-			(require-all
 				(xpc-service-name "com.apple.WebKit.")
 				(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
 				(require-any
@@ -1044,19 +1041,20 @@
 							(global-name "com.apple.Honeybee.event-notify")
 							(global-name "com.apple.mobile.usermanagerd.xpc")))))
 			(require-all
+				(global-name "com.apple.system.notification_center")
+				(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
+			(require-all
 				(global-name "com.apple.osanalytics.osanalyticshelper")
 				(process-attribute is-apple-signed-executable)))))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow network-bind)
-(allow network-outbound)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
 (allow nvram*)
 (allow nvram-delete)
-(allow opendirectory-user-modify)
-(allow process-exec-interpreter)
-(allow process-fork)
+(allow nvram-get)
+(allow nvram-set)
+(allow process-codesigning)
 (allow process-info*)
 (allow process-info-codesignature)
 (allow process-info-dirtycontrol)
@@ -1065,19 +1063,21 @@
 (allow process-info-rusage)
 (allow process-info-pidinfo)
 (allow process-info-pidfdinfo)
-(allow pseudo-tty)
+(allow process-info-pidfileportinfo)
+(allow process-info-setcontrol)
 (allow socket-ioctl)
-(allow socket-option*)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*)
 (allow syscall-unix)
-(allow syscall-mach
+(allow syscall-mach)
+(allow syscall-mig)
+(allow sysctl*
 	(extension "b'com.apple.security.exception.sysctl.read-write'")
 	(sysctl-name "kern.wq_limit_cooperative_threads")
 	(require-all
 		(sysctl-name "kern.crash_behavior_test_mode")
 		(debug-mode)))
-(allow syscall-mig
+(allow sysctl-read
 	(extension "b'com.apple.security.exception.sysctl.read-write'")
 	(extension "b'com.apple.security.exception.sysctl.read-only'")
 	(sysctl-name "kern.bootsessionuuid")
@@ -1188,13 +1188,13 @@
 					(sysctl-name "kern.argmax")
 					(require-any (sysctl-name "kern.willshutdown")
 (sysctl-name "kern.willuserspacereboot")))))))
-(allow system-automount)
-(allow system-debug
+(allow system-fcntl)
+(allow system-fsctl
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 2))
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 113))
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 32)))
-(allow system-mac*)
-(allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow user-preference-write)
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow process-exec-update-label)

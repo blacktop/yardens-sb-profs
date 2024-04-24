@@ -1,10 +1,10 @@
 (version 1)
 (deny default)
-(allow boot-arg-set
-	(extension "b'com.apple.webkit.camera'"))
-(allow device*
-	(extension "b'com.apple.webkit.microphone'"))
 (allow device-camera
+	(extension "b'com.apple.webkit.camera'"))
+(allow device-microphone
+	(extension "b'com.apple.webkit.microphone'"))
+(allow darwin-notification-post
 	(require-any (notification-name "org.WebKit.lowMemory")
 (notification-name "org.WebKit.lowMemory.end")
 (notification-name "org.WebKit.lowMemory.begin")
@@ -21,9 +21,9 @@
 (notification-name "AppleTemperatureUnitPreferencesChangedNotification"))
 	(require-any (notification-name "com.apple.gpumemd.check_in_request")
 (notification-name "com.apple.Metal.AGXEnableOSSignposts")))
-(allow file-chroot
+(allow file-ioctl
 	(literal "/dev/dtracehelper"))
-(allow file-clone
+(allow file-issue-extension
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
 	(require-all
 		(extension-class "com.apple.nsurlstorage.extension-cache")
@@ -40,12 +40,6 @@
 		(extension "b'com.apple.sandbox.executable'")
 		(require-not (literal))
 		(extension-class "com.apple.app-sandbox.read"))
-	(require-all
-		(extension-class "com.apple.app-sandbox.read")
-		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.app-sandbox.read-write'")
-			(extension "b'com.apple.sharing.airdrop.readonly'")))
 	(require-all
 		(require-all (require-not (literal "/System/Library/Caches/apticket.der"))
 (require-not (subpath "/System/Library/Caches/com.apple.factorydata"))
@@ -82,6 +76,12 @@
 					(extension "b'com.apple.app-sandbox.read-write'")
 					(extension "b'com.apple.fileprovider.read-write'")))))
 	(require-all
+		(extension-class "com.apple.app-sandbox.read")
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.app-sandbox.read-write'")
+			(extension "b'com.apple.sharing.airdrop.readonly'")))
+	(require-all
 		(extension-class "com.apple.mediaserverd.read")
 		(require-any
 			(extension "b'com.apple.app-sandbox.read'")
@@ -93,8 +93,8 @@
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.app-sandbox.read-write'")
 			(extension "b'com.apple.sharing.airdrop.readonly'"))))
-(allow file-issue-extension)
-(allow file-link
+(allow file-lock)
+(allow file-map-executable
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
 	(require-any (subpath "/System/Cryptexes/OS/usr/lib")
 (subpath "/System/Cryptexes/OS/System/Library/PrivateFrameworks")
@@ -108,7 +108,7 @@
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-mount
+(allow file-read*
 	(subpath "/private/var/preferences/Logging")
 	(literal "/private/var/Managed Preferences/mobile/.GlobalPreferences.plist")
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
@@ -166,32 +166,32 @@
 					(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache/Library/Caches/com.apple.MobileGestalt.plist")
 					(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin")
 					(subpath "/private/var/MobileAsset/AssetsV2/com_apple_MobileAsset_Font7"))))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-read*)
-(allow file-read-data
+(allow file-read-metadata)
+(allow file-read-xattr
 	(require-not (xattr "com.apple.security.private.")))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(extension "b'com.apple.app-sandbox.read-write'")
 	(require-all
 		(require-not (literal-prefix "${HOME}/Library/Preferences/com.apple.springboard.plist"))
 		(literal-prefix "${HOME}/Library/Caches/DateFormats.plist")))
-(allow file-write*
+(allow file-write-create
 	(require-all
 		(require-not (vnode-type SYMLINK))
 		(require-all (require-not (literal-prefix "${HOME}/Library/Preferences/com.apple.UIKit.plist"))
 (require-not (literal-prefix "${HOME}/Library/Preferences/com.apple.Accessibility.plist")))))
-(allow file-write-acl
+(allow file-write-data
 	(require-all
 		(require-not (literal "/dev/urandom"))
 		(require-not (literal "/dev/random"))
 		(literal "/dev/dtracehelper")))
-(allow file-write-times
+(allow file-write-xattr
 	(require-not (xattr "com.apple.security.private.")))
-(allow hid-control
+(allow iokit-get-properties
 	(iokit-property "IOSurfaceAcceleratorCapabilitiesDict")
 	(require-any (iokit-property "product-description")
 (iokit-property "device-perf-memory-class")
@@ -271,22 +271,22 @@
 	(require-all
 		(iokit-property "home-button-type")
 		(iokit-user-client-class "IOPlatformDevice")))
-(allow iokit-get-properties
+(allow iokit-open*
 	(iokit-connection "IOGPU"))
-(allow iokit-issue-extension
+(allow iokit-open-user-client
 	(iokit-user-client-class "IOSurfaceAcceleratorClient")
 	(iokit-user-client-class "IOSurfaceRootUserClient")
 	(iokit-user-client-class "AGXDeviceUserClient"))
-(allow iokit-open*
+(allow iokit-open-service
 	(iokit-user-client-class "AGXAcceleratorG")
 	(iokit-user-client-class "IOSurfaceRoot")
 	(require-any (iokit-user-client-class "AppleParavirtGPU")
 (iokit-user-client-class "AppleVideoToolboxParavirtualizationDriver"))
 	(iokit-user-client-class "AppleM2ScalerCSCDriver"))
-(allow lsopen)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(require-all
 		(require-not (global-name "com.apple.webkit.camera"))
 		(require-any
@@ -385,26 +385,26 @@
 							(require-all
 								(global-name "com.apple.mobilegestalt.xpc")
 								(extension "b'com.apple.webkit.extension.mach'")))))))))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
-(allow network-inbound
+(allow mach-task-special-port-get)
+(allow mach-task-special-port-set)
+(allow network-outbound
 	(control-name "com.apple.flow-divert"))
-(allow opendirectory-user-modify)
-(allow process-fork
+(allow process-codesigning)
+(allow process-info-codesignature
 	(target self)
 	(target others))
-(allow process-info-listpids)
-(allow socket-option-set
+(allow process-info-pidinfo)
+(allow syscall-unix
 	(c1 3ab9 a9fb a9f9)
 	(require-all
 		(require-not (syscall-number SYS_faccessat))
 		(syscall-number 38)))
-(allow syscall*
+(allow syscall-mach
 	(cb 3ac3 a9f7 f4bc))
-(allow syscall-unix
-	(cc 3ac6 a9f5 f4bc))
 (allow syscall-mig
+	(cc 3ac6 a9f5 f4bc))
+(allow sysctl-read
 	(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
 (sysctl-name "hw.physicalcpu_max"))
@@ -427,10 +427,10 @@
 	(require-all
 		(require-not (sysctl-name "sysctl.proc_native"))
 		(sysctl-name "hw.tbfrequency_compat")))
-(allow system*)
-(allow system-automount
+(allow system-audit)
+(allow system-fcntl
 	(ce 3ad0 a9e3 f4bc))
-(allow system-mac*
+(allow system-mac-syscall
 	(require-all
 		(mac-syscall-number 5)
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
@@ -455,8 +455,8 @@
 	(require-all
 		(mac-syscall-number 67)
 		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")))
-(allow system-mac-label)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow user-preference-read
 	(preference-domain "com.apple.Metal")
 	(preference-domain "com.apple.coremedia")
 	(preference-domain "com.apple.coreaudio")
@@ -470,7 +470,7 @@
 	(preference-domain "com.apple.coreanimation")
 	(preference-domain "com.apple.corevideo")
 	(extension "b'com.apple.security.exception.shared-preference.read-only'"))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-write)
+(allow process-exec-update-label)

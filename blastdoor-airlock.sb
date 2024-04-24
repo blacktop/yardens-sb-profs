@@ -1,13 +1,13 @@
 (version 1)
 (deny default)
-(allow file-clone
+(allow file-issue-extension
 	(require-all
 		(extension-class "com.apple.app-sandbox.read")
 		(require-any
 			(subpath "/private/preboot/Cryptexes")
 			(subpath "/System/Cryptexes"))))
-(allow file-issue-extension)
-(allow file-link
+(allow file-lock)
+(allow file-map-executable
 	(subpath "/usr/lib")
 	(subpath "/System/Library")
 	(require-all
@@ -15,7 +15,7 @@
 		(require-any
 			(subpath "/private/preboot/Cryptexes")
 			(subpath "/System/Cryptexes"))))
-(allow file-mount
+(allow file-read*
 	(require-any (literal "/private/var/Managed Preferences/mobile/.GlobalPreferences_m.plist")
 (literal "/private/var/Managed Preferences/mobile/kCFPreferencesAnyApplication.plist")
 (literal "/private/var/Managed Preferences/mobile/com.apple.avfoundation.plist")
@@ -45,11 +45,6 @@
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.identityservicesd")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.identityservicesd"))
-		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
-	(require-all
-		(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp/com[UNSUPPORTED]apple[UNSUPPORTED]MobileSMS/?")
 		(require-any
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.blastdoor.read'")))
@@ -89,6 +84,11 @@
 					(subpath "/usr/share")
 					(subpath "/private/var/db/dyld")
 					(subpath "/private/var/db/timezone")))))
+	(require-all
+		(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp/com[UNSUPPORTED]apple[UNSUPPORTED]MobileSMS/?")
+		(require-any
+			(extension "b'com.apple.app-sandbox.read'")
+			(extension "b'com.apple.blastdoor.read'")))
 	(require-all
 		(subpath "/private/var/tmp/com.apple.imtransferagent")
 		(require-any
@@ -167,7 +167,7 @@
 		(require-any
 			(extension "b'com.apple.app-sandbox.read'")
 			(extension "b'com.apple.blastdoor.read'"))))
-(allow file-read*
+(allow file-read-metadata
 	(require-any (literal-prefix "${FRONT_USER_HOME}")
 (literal-prefix "${FRONT_USER_HOME}/Library/Preferences"))
 	(require-all
@@ -179,19 +179,19 @@
 			(require-any (literal "/etc")
 (literal "/var"))
 			(subpath "/private/var/db/timezone"))))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(require-all
 		(literal "/private/var/cores/")
 		(regex #"^/private/var/cores/.+[.]core$")
 		(process-attribute is-apple-signed-executable)))
-(allow file-write-acl
+(allow file-write-data
 	(require-all
 		(require-not (literal "/dev/dtracehelper"))
 		(require-any
 			(literal "/dev/null")
 			(literal "/dev/zero"))))
-(allow hid-control
+(allow iokit-get-properties
 	(require-all
 		(iokit-property "platform-name")
 		(iokit-user-client-class "IOPlatformExpertDevice"))
@@ -219,13 +219,13 @@
 		(require-any
 			(iokit-property "AVCSupported")
 			(iokit-property "HEVCCanDecodeTileToCanvas"))))
-(allow ipc-posix-sem-wait
+(allow ipc-posix-shm-read-data
 	(ipc-posix-name "apple.shm.notification_center"))
-(allow lsopen
+(allow mach-bootstrap
 	(state-flag "b''"))
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.logd")
 	(global-name "com.apple.system.notification_center")
 	(require-all
@@ -239,13 +239,13 @@
 		(require-not (global-name "com.apple.mobilegestalt.xpc"))
 		(require-not (global-name "com.apple.powerlog.plxpclogger.xpc"))
 		(global-name "com.apple.system.logger")))
-(allow network-inbound
+(allow network-outbound
 	(literal "/private/var/run/syslog"))
-(allow opendirectory-user-modify)
-(allow process-legacy-codesigning-blob-get)
-(allow process-legacy-codesigning-cdhash-get)
-(allow process-legacy-codesigning-identity-get)
-(allow socket-option-set
+(allow process-codesigning)
+(allow process-legacy-codesigning-entitlements-blob-get)
+(allow process-legacy-codesigning-entitlements-der-blob-get)
+(allow process-legacy-codesigning-status-get)
+(allow syscall-unix
 	(c1 3630 b470 b40b)
 	(require-all
 		(require-not (syscall-number SYS_necp_open))
@@ -442,21 +442,21 @@
 					(syscall-number SYS_mprotect)
 					(syscall-number SYS_kevent_qos)
 					(syscall-number SYS_getfsstat))))))
-(allow syscall*
+(allow syscall-mach
 	(cb 363d b409 b402)
 	(machtrap-number MSC__kernelrpc_mach_port_extract_member_trap)
 	(machtrap-number MSC_pid_for_task)
 	(machtrap-number MSC_thread_self_trap)
 	(machtrap-number MSC_mach_voucher_extract_attr_recipe_trap)
 	(machtrap-number MSC__kernelrpc_mach_port_get_attributes_trap))
-(allow syscall-unix
+(allow syscall-mig
 	(cc 3643 b400 b3fa)
 	(require-all
 		(require-not (kernel-mig-routine 136))
 		(require-not (kernel-mig-routine 135))
 		(kernel-mig-routine 325)
 		(require-not (state-flag "b''"))))
-(allow syscall-mig
+(allow sysctl-read
 	(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
 (sysctl-name "hw.physicalcpu_max"))
@@ -479,11 +479,11 @@
 	(require-any (sysctl-name "hw.memsize")
 (sysctl-name "hw.machine"))
 	(sysctl-name "hw.cachelinesize"))
-(allow system-automount
+(allow system-fcntl
 	(ce 3653 b3ea f4bc))
-(allow system-mac*)
-(allow system-mac-label
+(allow system-mac-syscall)
+(allow system-memorystatus-control
 	(memorystatus-control-command MEMORYSTATUS_CMD_INCREASE_JETSAM_TASK_LIMIT))
-(allow system-nfssvc
+(allow system-privilege
 	(privilege-id "PRIV_GLOBAL_PROC_INFO"))
-(allow user-preference-write)
+(allow process-exec-update-label)

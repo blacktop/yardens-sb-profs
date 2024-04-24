@@ -1,9 +1,9 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-clone
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-issue-extension
 	(require-all
 		(extension-class "com.apple.app-sandbox.read-write")
 		(require-any
@@ -533,9 +533,9 @@
 				(require-any
 					(subpath "/Library/RegionFeatures")
 					(subpath "/System/Library"))))))
-(allow file-ioctl)
-(allow file-issue-extension)
-(allow file-mount
+(allow file-link)
+(allow file-lock)
+(allow file-read*
 	(require-any (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/")
 (subpath-prefix "${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-only}")
 (literal-prefix "NanoPreferencesSync/NanoDomains/${ENTITLEMENT:com.apple.security.exception.nano-preference.read-only}"))
@@ -759,11 +759,11 @@
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
 						(extension "b'com.apple.sandbox.oopjit'")))))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(require-any (subpath "/private/var/tmp/com.apple.identityservicesd")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.identityservicesd"))
@@ -799,8 +799,8 @@
 	(require-all
 		(process-attribute is-apple-signed-executable)
 		(vnode-type DIRECTORY)))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(subpath-prefix "${HOME}/Library/IdentityServices")
 	(require-any (subpath-prefix "${HOME}/Library/CoreDuet/Knowledge")
 (literal-prefix "${HOME}/Library/Logs/awd/awd-identityservicesd.log")
@@ -842,7 +842,7 @@
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
-(allow file-write*
+(allow file-write-create
 	(require-all
 		(require-not (literal-prefix "${HOME}/Library/Logs/CrashReporter/CFNetwork_"))
 		(vnode-type DIRECTORY)
@@ -850,7 +850,7 @@
 			(literal-prefix "${HOME}/Library/Logs/awd")
 			(literal-prefix "${FRONT_USER_HOME}/Library/Logs/PersistentConnection")
 			(literal-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter/PersistentConnection"))))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/aes_0")
 	(require-all
 		(require-not (literal "/dev/urandom"))
@@ -859,12 +859,12 @@
 			(literal "/dev/null")
 			(literal "/dev/dtracehelper")
 			(literal "/dev/zero"))))
-(allow file-write-setugid
+(allow file-write-unlink
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
-(allow file-write-times
+(allow file-write-xattr
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
@@ -885,8 +885,6 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
-(allow file-write-unlink)
-(allow file-write-xattr)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -894,15 +892,17 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control)
-(allow iokit-open*)
-(allow ipc-sysv-shm)
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties)
+(allow iokit-open-service)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.securityd")
 	(global-name "com.apple.SystemConfiguration.DNSConfiguration")
 	(global-name "com.apple.fairplayd.versioned")
@@ -1064,34 +1064,34 @@
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
+(allow mach-task-special-port-set)
 (allow necp-client-open)
-(allow network*)
 (allow network-inbound)
-(allow opendirectory-user-modify)
-(allow process-fork)
-(allow process-info-listpids)
-(allow pseudo-tty)
+(allow network-bind)
+(allow network-outbound)
+(allow process-codesigning)
+(allow process-info-codesignature)
+(allow process-info-pidinfo)
 (allow socket-ioctl)
-(allow socket-option*)
-(allow socket-option-set
+(allow socket-option-get)
+(allow socket-option-set)
+(allow syscall-unix
 	(c1 59b3 70b9 70b6)
 	(require-all
 		(require-not (syscall-number SYS_execve))
 		(require-not (syscall-number SYS_posix_spawn))
 		(syscall-number SYS_flock)
 		(entitlement-is-bool-true "b'com.apple.coreduetd.people'")))
-(allow syscall*
+(allow syscall-mach
 	(cb 59bd 70b4 df7e))
-(allow syscall-unix
+(allow syscall-mig
 	(cc 59c0 70b2 70b0)
 	(require-all
 		(debug-mode)
 		(kernel-mig-routine 196)))
-(allow syscall-mig
+(allow sysctl-read
 	(extension "b'com.apple.security.exception.sysctl.read-write'")
 	(extension "b'com.apple.security.exception.sysctl.read-only'")
 	(sysctl-name "net.routetable.")
@@ -1203,12 +1203,12 @@
 					(require-any (sysctl-name "kern.willshutdown")
 (sysctl-name "kern.willuserspacereboot"))
 					(sysctl-name "kern.bootargs"))))))
-(allow system-automount)
-(allow system-mac*)
-(allow system-mac-label)
+(allow system-fcntl)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(require-any (preference-domain "com.apple.jett.switch-icloud")
 (preference-domain "com.apple.ids.service.com.apple.private.alloy.otaupdate"))
 	(require-any (preference-domain "com.apple.identityservicesd")
@@ -1249,10 +1249,10 @@
 	(require-all
 		(preference-domain "com.apple.security")
 		(process-attribute is-apple-signed-executable)))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-read
+(allow user-preference-write
 	(require-any (preference-domain "com.apple.identityservicesd")
 (preference-domain "com.apple.identityservices.idstatuscache")
 (preference-domain "com.apple.identityservices.serviceDisablement")
@@ -1265,4 +1265,4 @@
 	(preference-domain "com.apple.ids")
 	(preference-domain "com.apple.imessage.bag")
 	(preference-domain "com.apple.conference"))
-(allow user-preference-write)
+(allow process-exec-update-label)

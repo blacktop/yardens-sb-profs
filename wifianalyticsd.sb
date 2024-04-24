@@ -1,11 +1,11 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-ioctl)
-(allow file-issue-extension)
-(allow file-mount
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-link)
+(allow file-lock)
+(allow file-read*
 	(require-any (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/")
 (subpath-prefix "${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-only}")
 (literal-prefix "NanoPreferencesSync/NanoDomains/${ENTITLEMENT:com.apple.security.exception.nano-preference.read-only}"))
@@ -198,11 +198,11 @@
 										(require-any
 											(subpath "/AppleInternal")
 											(subpath "/usr/local/lib"))))))))))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(subpath-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter")
 	(literal-prefix "${HOME}")
@@ -224,6 +224,12 @@
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/")
 		(extension "b'com.apple.sandbox.system-container'"))
 	(require-all
+		(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
+		(extension "b'com.apple.sandbox.system-group'")
+		(require-any
+			(entitlement-is-present "b'com.apple.security.system-group-containers'")
+			(entitlement-is-present "b'com.apple.security.system-groups'")))
+	(require-all
 		(process-attribute is-apple-signed-executable)
 		(require-any
 			(vnode-type DIRECTORY)
@@ -233,17 +239,11 @@
 			(require-all
 				(literal "/private/var/")
 				(subpath-prefix "${FRONT_USER_HOME}")
-				(regex #"^/private/var/mobile/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/euser[0-9]+/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/[-0-9A-F]+/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/Users/[^/]+/Library/DeviceRegistry/[-0-9A-Z]+$"))))
-	(require-all
-		(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
-		(extension "b'com.apple.sandbox.system-group'")
-		(require-any
-			(entitlement-is-present "b'com.apple.security.system-group-containers'")
-			(entitlement-is-present "b'com.apple.security.system-groups'"))))
-(allow file-read-data
+				(regex #"^/private/var/mobile/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/euser[0-9]+/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/[-0-9A-F]+/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/Users/[^/]+/Library/DeviceRegistry/[-0-9A-Z]+$")))))
+(allow file-read-xattr
 	(subpath-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter"))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(subpath "/private/var/tmp/com.apple.wifianalyticsd")
 	(subpath-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-write}")
 	(require-any (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.wifianalyticsd")
@@ -289,7 +289,7 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))
-(allow file-write*
+(allow file-write-create
 	(require-all
 		(process-attribute is-apple-signed-executable)
 		(vnode-type DIRECTORY)
@@ -330,9 +330,6 @@
 								(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/.com.apple.")
 								(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))))
 					(require-all
-						(vnode-type BLOCK-DEVICE)
-						(vnode-type CHARACTER-DEVICE))
-					(require-all
 						(extension "b'com.apple.sandbox.system-group'")
 						(require-any
 							(require-all
@@ -342,8 +339,11 @@
 							(require-all
 								(entitlement-is-present "b'com.apple.security.system-group-containers'")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
-								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))))
-(allow file-write-acl
+								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
+					(require-all
+						(vnode-type BLOCK-DEVICE)
+						(vnode-type CHARACTER-DEVICE)))))))
+(allow file-write-data
 	(literal "/dev/aes_0")
 	(require-all
 		(require-not (literal "/dev/urandom"))
@@ -352,7 +352,7 @@
 			(literal "/dev/null")
 			(literal "/dev/dtracehelper")
 			(literal "/dev/zero"))))
-(allow file-write-setugid
+(allow file-write-unlink
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
@@ -402,7 +402,7 @@
 								(entitlement-is-present "b'com.apple.security.system-group-containers'")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 								(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))))
-(allow file-write-times
+(allow file-write-xattr
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
@@ -468,8 +468,6 @@
 										(entitlement-is-present "b'com.apple.security.system-group-containers'")
 										(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 										(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))))))
-(allow file-write-unlink)
-(allow file-write-xattr)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -477,18 +475,20 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control)
-(allow iokit-issue-extension
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties)
+(allow iokit-open-user-client
 	(iokit-user-client-class "IOReportUserClient")
 	(iokit-user-client-class "IO80211APIUserClient"))
-(allow iokit-open*)
-(allow ipc-sysv-shm)
+(allow iokit-open-service)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.securityd")
 	(global-name "com.apple.pluginkit.pkd")
 	(global-name "com.apple.wifivelocityd")
@@ -556,24 +556,24 @@
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow opendirectory-user-modify)
-(allow process-fork)
-(allow pseudo-tty)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow process-codesigning)
+(allow process-info-codesignature)
 (allow socket-ioctl)
-(allow socket-option*)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*)
 (allow syscall-unix)
-(allow system-automount)
-(allow system-mac*)
-(allow system-mac-label)
+(allow syscall-mach)
+(allow syscall-mig)
+(allow system-fcntl)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(preference-domain "com.apple.wifi.app")
 	(preference-domain "com.apple.logging")
 	(preference-domain "com.apple.GEO")
@@ -592,13 +592,13 @@
 	(require-all
 		(preference-domain "com.apple.security")
 		(process-attribute is-apple-signed-executable)))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(require-any (preference-domain "com.apple.wifi.analytics")
 (preference-domain "com.apple.wifianalyticsd"))
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-read
+(allow user-preference-write
 	(preference-domain "com.apple.wifi.app")
 	(require-any (preference-domain "com.apple.wifi.analytics")
 (preference-domain "com.apple.wifianalyticsd")))
-(allow user-preference-write)
+(allow process-exec-update-label)

@@ -1,7 +1,7 @@
 (version 1)
 (deny default)
-(allow file-issue-extension)
-(allow file-mount
+(allow file-lock)
+(allow file-read*
 	(require-any (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/")
 (subpath-prefix "${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-only}")
 (literal-prefix "NanoPreferencesSync/NanoDomains/${ENTITLEMENT:com.apple.security.exception.nano-preference.read-only}"))
@@ -202,7 +202,7 @@
 								(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 								(subpath "/private/var/OOPJit")
 								(extension "b'com.apple.sandbox.oopjit'")))))))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(extension "b'com.apple.sandbox.executable'")
 		(require-not (literal)))
@@ -213,7 +213,7 @@
 		(literal "/private/var/")
 		(require-all (require-not (subpath-prefix "${HOME}"))
 (require-not (subpath-prefix "${FRONT_USER_HOME}")))))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(literal-prefix "${HOME}")
 	(literal-prefix "${HOME}/Library/Caches/powerlog.launchd")
@@ -246,7 +246,7 @@
 		(require-any
 			(literal-prefix "${HOME}")
 			(literal-prefix "${HOME}/Library/Preferences"))))
-(allow hid-control
+(allow iokit-get-properties
 	(require-all
 		(require-any (iokit-property "model")
 (iokit-property "model-number"))
@@ -274,11 +274,11 @@
 (iokit-property "large-format-phone"))
 		(iokit-user-client-class "IOPlatformDevice"))
 	(require-all
-		(iokit-property "IOSurfaceAcceleratorCapabilitiesDict")
-		(iokit-user-client-class "IOService"))
-	(require-all
 		(iokit-property "product-id")
 		(iokit-user-client-class "IOPlatformDevice"))
+	(require-all
+		(iokit-property "IOSurfaceAcceleratorCapabilitiesDict")
+		(iokit-user-client-class "IOService"))
 	(require-all
 		(iokit-property "display-corner-radius")
 		(iokit-user-client-class "IOPlatformDevice"))
@@ -300,23 +300,23 @@
 	(require-all
 		(iokit-property "device-colors")
 		(iokit-user-client-class "IOPlatformDevice")))
-(allow iokit-issue-extension
+(allow iokit-open-user-client
 	(extension "b'com.apple.security.exception.iokit-user-client-class'")
 	(iokit-user-client-class "AGXDevice")
 	(iokit-user-client-class "AppleJPEGDriverUserClient")
 	(iokit-user-client-class "IOSurfaceAcceleratorClient")
 	(iokit-user-client-class "IOSurfaceRootUserClient")
 	(iokit-user-client-class "IOMobileFramebufferUserClient"))
-(allow iokit-open*
+(allow iokit-open-service
 	(iokit-user-client-class "AppleCLCD")
 	(iokit-user-client-class "AppleJPEGDriver")
 	(iokit-user-client-class "AGXAcceleratorG")
 	(iokit-user-client-class "IOSurfaceRoot")
 	(entitlement-is-bool-true "b'com.apple.security.exception.iokit-user-client-class'"))
-(allow ipc-sysv-shm)
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow lsopen)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.CARenderServer")
 	(global-name "com.apple.ManagedSettingsAgent")
 	(global-name "com.apple.frontboard.systemappservices")
@@ -380,23 +380,23 @@
 			(require-all
 				(global-name "com.apple.logd")
 				(entitlement-is-bool-true "b'get-task-allow'")))))
-(allow mach-task*)
 (allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow opendirectory-user-modify)
-(allow socket-option-set
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow process-codesigning)
+(allow syscall-unix
 	(c1 6020 5ddb 5dd6)
 	(syscall-number SYS_csrctl)
 	(require-not (syscall-number SYS_flock))
 	(entitlement-is-bool-true "b'com.apple.coreduetd.people'")
 	(syscall-number SYS_map_with_linking_np))
-(allow syscall*)
-(allow syscall-unix)
-(allow system-automount
+(allow syscall-mach)
+(allow syscall-mig)
+(allow system-fcntl
 	(ce 32f6 5dd4 f4bc))
-(allow system-mac*
+(allow system-mac-syscall
 	(mac-syscall-number 90)
 	(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'")
 	(require-all
@@ -411,7 +411,7 @@
 	(require-all
 		(mac-syscall-number 1)
 		(mac-policy-name-regex "b'Fvnguard\x0f\x00\x0f'")))
-(allow system-mac-label)
-(allow system-mac-syscall)
-(allow system-nfssvc)
-(allow user-preference-write)
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow process-exec-update-label)

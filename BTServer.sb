@@ -1,12 +1,12 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-chroot
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-ioctl
 	(literal "/dev/uart.log")
 	(literal "/dev/ptmx"))
-(allow file-clone
+(allow file-issue-extension
 	(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 	(require-all
 		(extension-class "com.apple.app-sandbox.read-write")
@@ -566,11 +566,6 @@
 								(extension-class "com.apple.aned.read-only")
 								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))))
 	(require-all
-		(extension "b'com.apple.fileprovider.read-write'")
-		(require-any
-			(extension-class "com.apple.app-sandbox.read-write")
-			(extension-class "com.apple.app-sandbox.read")))
-	(require-all
 		(extension-class "com.apple.app-sandbox.read")
 		(require-any
 			(subpath-prefix "${HOME}/Library/HTTPStorages/com.apple.bluetoothd")
@@ -595,6 +590,11 @@
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(subpath-prefix "${HOME}/Library/Caches/com.apple.bluetoothd"))))
+	(require-all
+		(extension "b'com.apple.fileprovider.read-write'")
+		(require-any
+			(extension-class "com.apple.app-sandbox.read-write")
+			(extension-class "com.apple.app-sandbox.read")))
 	(require-all
 		(debug-mode)
 		(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts"))
@@ -654,10 +654,10 @@
 				(require-any
 					(subpath "/private/preboot/Cryptexes")
 					(subpath "/System/Cryptexes"))))))
-(allow file-ioctl
+(allow file-link
 	(require-not (subpath-prefix "${HOME}/Library/AddressBook")))
-(allow file-issue-extension)
-(allow file-mount
+(allow file-lock)
+(allow file-read*
 	(literal "/private/var/preferences/com.apple.networkd.plist")
 	(subpath-prefix "${HOME}/Library/Fonts")
 	(subpath "/usr/sbin")
@@ -793,23 +793,6 @@
 				(entitlement-is-present "b'com.apple.security.system-groups'")
 				(entitlement-is-present "b'com.apple.security.system-group-containers'"))
 			(require-all
-				(extension "b'com.apple.sandbox.system-group'")
-				(require-any
-					(require-all
-						(entitlement-is-present "b'com.apple.security.system-groups'")
-						(require-any
-							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
-							(require-all
-								(literal "/private/var/containers/Shared/SystemGroup/")
-								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
-					(require-all
-						(entitlement-is-present "b'com.apple.security.system-group-containers'")
-						(require-any
-							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
-							(require-all
-								(literal "/private/var/containers/Shared/SystemGroup/")
-								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))))
-			(require-all
 				(entitlement-is-bool-true "b'com.apple.private.logging.diagnostic'")
 				(extension "b'com.apple.logd.read-only'")
 				(require-any
@@ -902,8 +885,25 @@
 					(require-all
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
-						(extension "b'com.apple.sandbox.oopjit'")))))))
-(allow file-mount-update
+						(extension "b'com.apple.sandbox.oopjit'"))))
+			(require-all
+				(extension "b'com.apple.sandbox.system-group'")
+				(require-any
+					(require-all
+						(entitlement-is-present "b'com.apple.security.system-groups'")
+						(require-any
+							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
+							(require-all
+								(literal "/private/var/containers/Shared/SystemGroup/")
+								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$"))))
+					(require-all
+						(entitlement-is-present "b'com.apple.security.system-group-containers'")
+						(require-any
+							(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")
+							(require-all
+								(literal "/private/var/containers/Shared/SystemGroup/")
+								(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))))
+(allow file-read-data
 	(literal "/private/var/preferences/SystemConfiguration/com.apple.radios.plist")
 	(literal "/usr/sbin")
 	(subpath "/private/var/containers/Bundle")
@@ -925,7 +925,7 @@
 	(require-all
 		(vnode-type SOCKET)
 		(literal-prefix "${FRONT_USER_HOME}/Library/ExternalAccessory/ea")))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(literal-prefix "${HOME}/Library/HTTPStorages")
 	(literal "/usr/sbin")
@@ -1014,18 +1014,12 @@
 					(literal-prefix "${HOME}")
 					(literal-prefix "${HOME}/Library/Preferences")))))
 	(require-all
-		(vnode-type DIRECTORY)
-		(process-attribute is-apple-signed-executable))
-	(require-all
 		(extension "b'com.apple.sandbox.system-container'")
 		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
 	(require-all
-		(process-attribute is-apple-signed-executable)
-		(require-any
-			(literal-prefix "${HOME}")
-			(literal-prefix "${HOME}/Library/Preferences")
-			(literal "/private/var/preferences/com.apple.networkextension.uuidcache.plist")))
+		(vnode-type DIRECTORY)
+		(process-attribute is-apple-signed-executable))
 	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
@@ -1035,6 +1029,12 @@
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
+	(require-all
+		(process-attribute is-apple-signed-executable)
+		(require-any
+			(literal-prefix "${HOME}")
+			(literal-prefix "${HOME}/Library/Preferences")
+			(literal "/private/var/preferences/com.apple.networkextension.uuidcache.plist")))
 	(require-all
 		(literal "/private/var/preferences/com.apple.networkextension.plist")
 		(entitlement-is-present "b'com.apple.private.networkextension.configuration'"))
@@ -1234,10 +1234,10 @@
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
 						(extension "b'com.apple.sandbox.oopjit'")))))))
-(allow file-read-data
+(allow file-read-xattr
 	(subpath-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter"))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(require-any (literal "/private/var/wireless/Library/CallHistory")
 (literal "/private/var/wireless/Library/CallHistory/call_history.db")
 (literal "/private/var/wireless/Library/CallHistory/call_history.db-wal")
@@ -1310,7 +1310,7 @@
 				(literal "/private/var/cores/")
 				(regex #"^/private/var/cores/.+[.]core$")
 				(process-attribute is-apple-signed-executable)))))
-(allow file-write*
+(allow file-write-create
 	(require-all
 		(process-attribute is-apple-signed-executable)
 		(vnode-type DIRECTORY)
@@ -1326,7 +1326,7 @@
 		(require-any
 			(literal-prefix "${HOME}/Library/HTTPStorages")
 			(literal-prefix "${HOME}/Library/Caches"))))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/uart.log")
 	(literal "/dev/ptmx")
 	(literal "/dev/aes_0")
@@ -1344,17 +1344,17 @@
 			(literal "/dev/zero")
 			(literal "/dev/null")
 			(literal "/dev/dtracehelper"))))
-(allow file-write-finderinfo
+(allow file-write-mode
 	(require-all
 		(literal "/dev/ttys")
 		(extension "b'com.apple.sandbox.pty'")
 		(regex #"^/dev/ttys[0-9]" #"^/dev/ttys[0-9]+")))
-(allow file-write-setugid
+(allow file-write-unlink
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
-(allow file-write-times
+(allow file-write-xattr
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
@@ -1375,8 +1375,6 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
-(allow file-write-unlink)
-(allow file-write-xattr)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -1384,8 +1382,10 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties
 	(iokit-property "IOSurfaceAcceleratorCapabilitiesDict")
 	(iokit-property "soc-generation")
 	(require-not (iokit-user-client-class "AppleJPEGDriver"))
@@ -1400,7 +1400,7 @@
 		(iokit-user-client-class "IOPlatformDevice")
 		(require-any (iokit-property "disable-globe-map")
 (iokit-property "multiuser-sessions"))))
-(allow iokit-issue-extension
+(allow iokit-open-user-client
 	(iokit-user-client-class "AppleSPUHIDDeviceUserClient")
 	(iokit-user-client-class "AppleJPEGDriverUserClient")
 	(iokit-user-client-class "AppleSPUHIDDriverUserClient")
@@ -1430,12 +1430,12 @@
 (iokit-user-client-class "IOAccelSubmitter2")
 (iokit-user-client-class "IOAccelSharedUserClient"))
 	(iokit-user-client-class "AGXSharedUserClient"))
-(allow iokit-open*)
-(allow iokit-open-user-client
+(allow iokit-open-service)
+(allow iokit-set-properties
 	(require-all
 		(iokit-property "IOPMUBootLPMFWOK")
 		(iokit-user-client-class "AppleDialogSPMIPMU")))
-(allow ipc-posix-sem-unlink
+(allow ipc-posix-shm*
 	(require-any (ipc-posix-name "com.apple.bluetooth.magnet.shm")
 (ipc-posix-name "shm_notif.tsco.R")
 (ipc-posix-name "shm_notif.tsco.W")
@@ -1444,21 +1444,21 @@
 (ipc-posix-name-regex #"[UNSUPPORTED][UNSUPPORTED]:[UNSUPPORTED][UNSUPPORTED]:[UNSUPPORTED][UNSUPPORTED]:[UNSUPPORTED][UNSUPPORTED]:[UNSUPPORTED][UNSUPPORTED]:[UNSUPPORTED][UNSUPPORTED]-tacl"))
 	(require-any (ipc-posix-name "shm_pcm_audio_sco_read")
 (ipc-posix-name "shm_pcm_audio_sco_write")))
-(allow ipc-posix-sem-wait
+(allow ipc-posix-shm-read-data
 	(ipc-posix-name "/com.apple.AppSSO.version")
 	(ipc-posix-name "apple.cfprefs.")
 	(ipc-posix-name)
 	(require-all
 		(ipc-posix-name "apple.shm.notification_center")
 		(require-not (entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))))
-(allow ipc-posix-shm-write*
+(allow ipc-posix-shm-write-data
 	(ipc-posix-name))
-(allow ipc-sysv-shm)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(require-any (global-name "com.apple.coremedia.samplebufferaudiorenderer.xpc")
 (global-name "com.apple.coremedia.mediaplaybackd.audioprocessingtap.xpc")
 (global-name "com.apple.coremedia.mediaplaybackd.samplebufferrendersynchronizer.xpc")
@@ -1703,20 +1703,18 @@
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
+(allow mach-task-special-port-set)
 (allow necp-client-open)
-(allow network*)
 (allow network-inbound)
 (allow network-bind)
 (allow network-outbound)
 (allow nvram*)
 (allow nvram-delete)
-(allow opendirectory-user-modify)
-(allow process-exec-interpreter)
-(allow process-fork)
+(allow nvram-get)
+(allow nvram-set)
+(allow process-codesigning)
 (allow process-info*)
 (allow process-info-codesignature)
 (allow process-info-dirtycontrol)
@@ -1725,14 +1723,16 @@
 (allow process-info-rusage)
 (allow process-info-pidinfo)
 (allow process-info-pidfdinfo)
-(allow process-legacy-codesigning-teamid-get)
+(allow process-info-pidfileportinfo)
+(allow process-info-setcontrol)
 (allow pseudo-tty)
 (allow socket-ioctl)
-(allow socket-option*)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*)
 (allow syscall-unix)
-(allow syscall-mig
+(allow syscall-mach)
+(allow syscall-mig)
+(allow sysctl-read
 	(sysctl-name "net.statistics")
 	(sysctl-name "kern.wakereason")
 	(sysctl-name "net.routetable.")
@@ -1836,15 +1836,15 @@
 					(require-any (sysctl-name "kern.willshutdown")
 (sysctl-name "kern.willuserspacereboot"))
 					(sysctl-name "kern.bootargs"))))))
-(allow system-automount)
-(allow system-debug
+(allow system-fcntl)
+(allow system-fsctl
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 3))
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 32)))
-(allow system-mac*)
-(allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(preference-domain "com.apple.assistant.support")
 	(preference-domain "com.apple.CoreMotion")
 	(preference-domain "com.apple.iokit.IOMobileGraphicsFamily")
@@ -1906,10 +1906,10 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-read
+(allow user-preference-write
 	(require-any (preference-domain "com.apple.bluetooth")
 (preference-domain "com.apple.CoreBluetooth.cloud")
 (preference-domain "com.apple.BTServer")
@@ -1920,4 +1920,4 @@
 (preference-domain "com.apple.MobileBluetooth.devices"))
 	(preference-domain "com.apple.springboard")
 	(extension "b'com.apple.security.exception.shared-preference.read-write'"))
-(allow user-preference-write)
+(allow process-exec-update-label)

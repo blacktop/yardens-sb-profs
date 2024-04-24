@@ -1,9 +1,9 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-clone
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-issue-extension
 	(require-any (subpath-prefix "${HOME}/Library/Caches/com.apple.airplay")
 (subpath-prefix "${HOME}/Library/Caches/com.apple.mediaserverd"))
 	(subpath-prefix "${HOME}")
@@ -1184,9 +1184,9 @@
 				(require-any
 					(subpath "/Library/RegionFeatures")
 					(subpath "/System/Library"))))))
-(allow file-ioctl)
-(allow file-issue-extension)
-(allow file-link
+(allow file-link)
+(allow file-lock)
+(allow file-map-executable
 	(subpath "/Library/Audio/Plug-Ins")
 	(subpath "/usr/lib")
 	(literal "/usr/local/lib/libAudioDiagnostics.dylib")
@@ -1219,7 +1219,7 @@
 		(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
-(allow file-mount
+(allow file-read*
 	(require-any (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/")
 (subpath-prefix "${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-only}")
 (literal-prefix "NanoPreferencesSync/NanoDomains/${ENTITLEMENT:com.apple.security.exception.nano-preference.read-only}"))
@@ -1543,14 +1543,14 @@
 								(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 								(subpath "/private/var/OOPJit")
 								(extension "b'com.apple.sandbox.oopjit'")))))))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'")))
 	(require-all
 		(vnode-type SOCKET)
 		(literal-prefix "${FRONT_USER_HOME}/Library/ExternalAccessory/ea")))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(literal-prefix "${HOME}/Library/HTTPStorages")
 	(require-any (subpath-prefix "${HOME}/Library/Caches/com.apple.airplay")
@@ -1615,8 +1615,8 @@
 		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/")
 		(extension "b'com.apple.sandbox.system-container'")))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(require-any (literal "/private/var/tmp/mediaserverd")
 (subpath "/private/var/logs/mediaserverd")
 (literal-prefix "${FRONT_USER_HOME}/tmp/mediaserverd")
@@ -1747,7 +1747,7 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/.com.apple.")
 						(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))))
-(allow file-write*
+(allow file-write-create
 	(require-all
 		(process-attribute is-apple-signed-executable)
 		(vnode-type DIRECTORY)
@@ -1770,7 +1770,7 @@
 			(literal-prefix "${HOME}/Library/Logs/CrashReporter/DiagnosticLogs")
 			(literal-prefix "${FRONT_USER_HOME}/Library/Logs/PersistentConnection")
 			(literal-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter/PersistentConnection"))))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/aes_0")
 	(require-all
 		(vnode-type SOCKET)
@@ -1782,12 +1782,12 @@
 			(literal "/dev/dtracehelper")
 			(literal "/dev/zero")
 			(literal "/dev/null"))))
-(allow file-write-setugid
+(allow file-write-unlink
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
-(allow file-write-times
+(allow file-write-xattr
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
@@ -1808,8 +1808,6 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
-(allow file-write-unlink)
-(allow file-write-xattr)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -1817,9 +1815,11 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control)
-(allow iokit-issue-extension
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties)
+(allow iokit-open-user-client
 	(iokit-user-client-class "AppleSPUHIDDeviceUserClient")
 	(require-any (iokit-user-client-class "H3H264VideoEncoderDriverUserClient")
 (iokit-user-client-class "com_apple_driver_PPMUserClient")
@@ -1891,8 +1891,8 @@
 	(iokit-user-client-class "AGXSharedUserClient")
 	(require-any (iokit-user-client-class "H11ANEInDirectPathClient")
 (iokit-user-client-class "AppleVirtIONeuralEngineDeviceUserClient")))
-(allow iokit-open*)
-(allow iokit-open-user-client
+(allow iokit-open-service)
+(allow iokit-set-properties
 	(iokit-property "exclusive access owner")
 	(require-all
 		(iokit-property "voice-trigger-configuration")
@@ -1911,7 +1911,7 @@
 	(require-all
 		(iokit-property "kPropertyConfiguration")
 		(iokit-user-client-class "AppleAOPVoiceTriggerUserClient")))
-(allow ipc-posix-sem-unlink
+(allow ipc-posix-shm*
 	(require-any (ipc-posix-name "com.apple.audio.abl.")
 (ipc-posix-name "shm_pcm_audio_acl")
 (ipc-posix-name-regex #"shm_notif.[UNSUPPORTED]+.[W-WR-R]"))
@@ -1927,21 +1927,21 @@
 	(require-all
 		(ipc-posix-name "AppleAudioQueue.")
 		(ipc-posix-name-regex #"^AppleAudioQueue[.]." #"^AppleAudioQueue[.].+")))
-(allow ipc-posix-sem-wait
+(allow ipc-posix-shm-read-data
 	(ipc-posix-name "/com.apple.AppSSO.version")
 	(ipc-posix-name "apple.cfprefs.")
 	(ipc-posix-name)
 	(require-all
 		(ipc-posix-name "apple.shm.notification_center")
 		(require-not (entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))))
-(allow ipc-posix-shm-write*
+(allow ipc-posix-shm-write-data
 	(ipc-posix-name))
-(allow ipc-sysv-shm)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.securityd")
 	(global-name "com.apple.SystemConfiguration.DNSConfiguration")
 	(global-name "com.apple.diagnosticd")
@@ -2213,6 +2213,9 @@
 		(global-name "com.apple.coreduetd.people")
 		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
+		(global-name "com.apple.system.notification_center")
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
+	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
 		(require-any
@@ -2225,22 +2228,19 @@
 					(global-name "com.apple.Honeybee.event-notify")
 					(global-name "com.apple.mobile.usermanagerd.xpc")))))
 	(require-all
-		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
-	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
-(allow mach-priv-host-port
+(allow mach-register
 	(global-name "com.apple.coremedia.")
 	(global-name "com.apple.midiserver.io"))
-(allow mach-task*)
 (allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow necp-client-open
-	(local tcp "*:*"))
+(allow mach-task-special-port-set)
+(allow necp-client-open)
 (allow network-inbound
+	(local tcp "*:*"))
+(allow network-outbound
 	(control-name "com.apple.netsrc")
 	(control-name "com.apple.flow-divert")
 	(control-name "com.apple.network.statistics")
@@ -2253,18 +2253,16 @@
 	(require-all
 		(vnode-type SOCKET)
 		(literal-prefix "${FRONT_USER_HOME}/Library/ExternalAccessory/ea")))
-(allow network-bind)
-(allow network-outbound)
 (allow nvram*)
 (allow nvram-delete)
-(allow opendirectory-user-modify)
-(allow process*
+(allow nvram-get)
+(allow nvram-set)
+(allow process-codesigning)
+(allow process-exec*
 	(require-all
 		(require-all (require-not (literal "/usr/bin/trace"))
 (require-not (literal "/usr/bin/syslog")))
 		(literal "/usr/sbin/mediaserverd")))
-(allow process-exec-interpreter)
-(allow process-fork)
 (allow process-info*)
 (allow process-info-codesignature)
 (allow process-info-dirtycontrol)
@@ -2273,17 +2271,19 @@
 (allow process-info-rusage)
 (allow process-info-pidinfo)
 (allow process-info-pidfdinfo)
-(allow pseudo-tty)
+(allow process-info-pidfileportinfo)
+(allow process-info-setcontrol)
 (allow socket-ioctl)
-(allow socket-option*)
-(allow socket-option-set
+(allow socket-option-get)
+(allow socket-option-set)
+(allow syscall-unix
 	(c1 649a 557d df7e))
-(allow syscall*)
-(allow syscall-unix)
-(allow syscall-mach
+(allow syscall-mach)
+(allow syscall-mig)
+(allow sysctl*
 	(require-any (sysctl-name "kern.min_audio_buffer_usec")
 (sysctl-name "security.mac.sandbox.audio_active")))
-(allow syscall-mig
+(allow sysctl-read
 	(require-any (sysctl-name "kern.min_audio_buffer_usec")
 (sysctl-name "security.mac.sandbox.audio_active"))
 	(sysctl-name "net.statistics")
@@ -2299,18 +2299,18 @@
 		(entitlement-is-bool-true "b'com.apple.security.exception.process-info'")
 		(require-any (sysctl-name "kern.proc.")
 (sysctl-name "kern.procargs2."))))
-(allow system-automount)
-(allow system-debug
+(allow system-fcntl)
+(allow system-fsctl
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 2))
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 32))
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 3))
 	(fsctl-command-regex [UNSUPPORTED](_IO "J" 68)))
-(allow system-mac*)
-(allow system-mac-label)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-set-time)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow system-suspend-resume)
+(allow user-preference-read
 	(preference-domain "com.apple.locationd")
 	(preference-domain "com.apple.assistant.logging")
 	(require-any (preference-domain "com.apple.quic")
@@ -2400,10 +2400,10 @@
 	(require-all
 		(preference-domain "com.apple.security")
 		(process-attribute is-apple-signed-executable)))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-read
+(allow user-preference-write
 	(require-any (preference-domain "com.apple.audio.puffin")
 (preference-domain "com.apple.facetime.controlcenter")
 (preference-domain "com.apple.voicetrigger.notbackedup")
@@ -2429,4 +2429,4 @@
 	(preference-domain "com.apple.coreimage")
 	(preference-domain "com.apple.conference")
 	(preference-domain "com.apple.audio.virtualaudio"))
-(allow user-preference-write)
+(allow process-exec-update-label)

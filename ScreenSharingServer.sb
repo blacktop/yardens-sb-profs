@@ -1,9 +1,9 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-clone
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-issue-extension
 	(require-all
 		(extension-class "com.apple.app-sandbox.read-write")
 		(require-any
@@ -20,16 +20,16 @@
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
-			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.app-sandbox.read-write'")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
@@ -91,16 +91,16 @@
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
-			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.app-sandbox.read-write'")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
@@ -162,16 +162,16 @@
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
-			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.app-sandbox.read-write'")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
@@ -233,16 +233,16 @@
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
-			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.app-sandbox.read-write'")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
@@ -304,16 +304,16 @@
 					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
 			(require-all
-				(extension-class "com.apple.mediaserverd.read")
-				(require-any
-					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
-					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
-			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
 					(extension "b'com.apple.security.exception.files.absolute-path.read-write'")
 					(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
 					(extension "b'com.apple.app-sandbox.read-write'")))
+			(require-all
+				(extension-class "com.apple.mediaserverd.read")
+				(require-any
+					(extension "b'com.apple.security.exception.files.absolute-path.read-only'")
+					(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))
 			(require-all
 				(extension-class "com.apple.mediaserverd.read")
 				(require-any
@@ -537,11 +537,9 @@
 						(require-any
 							(subpath "/private/preboot/Cryptexes")
 							(subpath "/System/Cryptexes"))))))))
-(allow file-ioctl)
-(allow file-issue-extension)
-(allow file-revoke)
-(allow file-write-unlink)
-(allow file-write-xattr)
+(allow file-link)
+(allow file-lock)
+(allow file-test-existence)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -549,20 +547,22 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control)
-(allow iokit-issue-extension
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties)
+(allow iokit-open-user-client
 	(iokit-user-client-class "RootDomainUserClient")
 	(extension "b'com.apple.security.exception.iokit-user-client-class'")
 	(iokit-user-client-class "AppleKeyStoreUserClient")
 	(iokit-user-client-class "IOMobileFramebufferUserClient"))
-(allow iokit-open*)
-(allow ipc-sysv-shm)
+(allow iokit-open-service)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(require-any (global-name "com.apple.coremedia.samplebufferaudiorenderer.xpc")
 (global-name "com.apple.coremedia.mediaplaybackd.audioprocessingtap.xpc")
 (global-name "com.apple.coremedia.mediaplaybackd.samplebufferrendersynchronizer.xpc")
@@ -734,6 +734,9 @@
 		(global-name "com.apple.system.notification_center")
 		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
 	(require-all
+		(global-name "com.apple.osanalytics.osanalyticshelper")
+		(process-attribute is-apple-signed-executable))
+	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
 		(require-any
@@ -744,22 +747,17 @@
 					(global-name "com.apple.SharedWebCredentials")
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
-					(global-name "com.apple.mobile.usermanagerd.xpc")))))
-	(require-all
-		(global-name "com.apple.osanalytics.osanalyticshelper")
-		(process-attribute is-apple-signed-executable)))
-(allow mach-task-name)
-(allow mach-task-read)
+					(global-name "com.apple.mobile.usermanagerd.xpc"))))))
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow network-inbound)
-(allow network-bind)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
 (allow network-outbound)
 (allow nvram*)
 (allow nvram-delete)
-(allow opendirectory-user-modify)
-(allow process-exec-interpreter)
-(allow process-fork)
+(allow nvram-get)
+(allow nvram-set)
+(allow process-codesigning)
 (allow process-info*)
 (allow process-info-codesignature)
 (allow process-info-dirtycontrol)
@@ -768,19 +766,21 @@
 (allow process-info-rusage)
 (allow process-info-pidinfo)
 (allow process-info-pidfdinfo)
-(allow process-legacy-codesigning-text-offset-get)
-(allow pseudo-tty)
+(allow process-info-pidfileportinfo)
+(allow process-info-setcontrol)
+(allow signal)
 (allow socket-ioctl)
-(allow socket-option*)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*)
 (allow syscall-unix)
-(allow system-automount)
-(allow system-mac*)
-(allow system-mac-label)
+(allow syscall-mach)
+(allow syscall-mig)
+(allow system-fcntl)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(preference-domain "com.apple.logging")
 	(preference-domain "com.apple.coremedia")
 	(preference-domain "com.apple.coreaudio")
@@ -806,7 +806,7 @@
 			(require-all
 				(preference-domain "com.apple.itunesstored")
 				(entitlement-is-bool-true "b'com.apple.itunesstored.private'")))))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-write)
+(allow process-exec-update-label)

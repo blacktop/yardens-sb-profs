@@ -1,11 +1,11 @@
 (version 1)
 (deny default)
-(allow device-camera)
 (allow darwin-notification-post)
-(allow file*)
-(allow file-ioctl)
-(allow file-issue-extension)
-(allow file-mount
+(allow dynamic-code-generation)
+(allow file-clone)
+(allow file-link)
+(allow file-lock)
+(allow file-read*
 	(require-any (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/")
 (subpath-prefix "${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-only}")
 (literal-prefix "NanoPreferencesSync/NanoDomains/${ENTITLEMENT:com.apple.security.exception.nano-preference.read-only}"))
@@ -163,11 +163,6 @@
 									(subpath "/AppleInternal")
 									(subpath "/usr/local/lib")))))
 					(require-all
-						(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
-						(require-any
-							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
-							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
-					(require-all
 						(subpath "/usr/appleinternal")
 						(require-any
 							(debug-mode)
@@ -177,14 +172,19 @@
 									(subpath "/AppleInternal")
 									(subpath "/usr/local/lib")))))
 					(require-all
+						(subpath-prefix "${FRONT_USER_HOME}/Library/NanoTimeKit/FaceSupport")
+						(require-any
+							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.Argon'")
+							(entitlement-is-bool-true "b'com.apple.private.security.storage.NanoTimeKit.FaceSupport'")))
+					(require-all
 						(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 						(subpath "/private/var/OOPJit")
 						(extension "b'com.apple.sandbox.oopjit'")))))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(literal-prefix "${HOME}")
 	(literal-prefix "${HOME}/Library/Caches/powerlog.launchd")
@@ -200,14 +200,6 @@
 	(extension "b'com.apple.sharing.airdrop.readonly'")
 	(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
 	(require-all
-		(vnode-type DIRECTORY)
-		(process-attribute is-apple-signed-executable))
-	(require-all
-		(process-attribute is-apple-signed-executable)
-		(require-any
-			(literal-prefix "${HOME}")
-			(literal-prefix "${HOME}/Library/Preferences")))
-	(require-all
 		(extension "b'com.apple.sandbox.system-container'")
 		(entitlement-is-bool-true "b'com.apple.security.system-container'")
 		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
@@ -219,10 +211,16 @@
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
-				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
-(allow file-revoke)
-(allow file-write-unlink)
-(allow file-write-xattr)
+				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/"))))
+	(require-all
+		(vnode-type DIRECTORY)
+		(process-attribute is-apple-signed-executable))
+	(require-all
+		(process-attribute is-apple-signed-executable)
+		(require-any
+			(literal-prefix "${HOME}")
+			(literal-prefix "${HOME}/Library/Preferences"))))
+(allow file-test-existence)
 (allow fs-quota*)
 (allow fs-quota-get)
 (allow fs-quota-on)
@@ -230,19 +228,21 @@
 (allow fs-quota-set*)
 (allow fs-quota-set-limits)
 (allow fs-quota-set-usage)
-(allow fs-snapshot-create)
-(allow hid-control)
-(allow iokit-issue-extension
+(allow fs-quota-stat)
+(allow fs-quota-sync)
+(allow fs-snapshot-mount)
+(allow iokit-get-properties)
+(allow iokit-open-user-client
 	(iokit-user-client-class "IOMobileFramebufferUserClient")
 	(iokit-user-client-class "IOSurfaceRootUserClient")
 	(extension "b'com.apple.security.exception.iokit-user-client-class'"))
-(allow iokit-open*)
-(allow ipc-sysv-shm)
+(allow iokit-open-service)
 (allow lsopen)
-(allow mach*)
 (allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(global-name "com.apple.pluginkit.pkd")
 	(global-name "com.apple.SystemConfiguration.configd")
 	(global-name "com.apple.backboard.display.services")
@@ -316,26 +316,26 @@
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
-(allow mach-priv-host-port
+(allow mach-register
 	(global-name "com.apple.PointerUI.pointeruid.gsEvents"))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow opendirectory-user-modify)
-(allow process-fork)
-(allow pseudo-tty)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow process-codesigning)
+(allow process-info-codesignature)
 (allow socket-ioctl)
-(allow socket-option*)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*)
 (allow syscall-unix)
-(allow system-automount)
-(allow system-mac*)
-(allow system-mac-label)
+(allow syscall-mach)
+(allow syscall-mig)
+(allow system-fcntl)
 (allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(require-any (preference-domain "com.apple.PrototypeTools")
 (preference-domain "com.apple.PointerUI.pointeruid"))
 	(preference-domain "com.apple.UIKit")
@@ -354,9 +354,9 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-read
+(allow user-preference-write
 	(preference-domain "com.apple.PointerUI.pointeruid"))
-(allow user-preference-write)
+(allow process-exec-update-label)

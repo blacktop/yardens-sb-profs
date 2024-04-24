@@ -1,9 +1,9 @@
 (version 1)
 (deny default)
-(allow (with message "b'version 1 compatibility'" device-camera)
 (allow (with message "b'version 1 compatibility'" darwin-notification-post)
-(allow file*)
-(allow file-clone
+(allow (with message "b'version 1 compatibility'" dynamic-code-generation)
+(allow file-clone)
+(allow file-issue-extension
 	(require-all
 		(extension-class "com.apple.app-sandbox.read-write")
 		(require-any
@@ -517,6 +517,9 @@
 (subpath-prefix "${HOME}/Media/PhotoData/Metadata"))
 							(extension "b'com.apple.security.exception.files.home-relative-path.read-only'")))))
 			(require-all
+				(extension "b'com.apple.sandbox.executable'")
+				(extension-class "com.apple.nsurlsessiond.readonly"))
+			(require-all
 				(entitlement-is-bool-true "b'com.apple.security.system-container'")
 				(require-any
 					(entitlement-is-bool-true "b'com.apple.private.amfi.can-execute-cdhash'")
@@ -546,9 +549,6 @@
 									(require-all
 										(extension-class "com.apple.mediaserverd.read")
 										(regex #"^/private/var/containers/Data/System/[^/]+/" #"^/private/var/containers/Data/System/[^/]+$"))))))))
-			(require-all
-				(extension "b'com.apple.sandbox.executable'")
-				(extension-class "com.apple.nsurlsessiond.readonly"))
 			(require-all
 				(extension "b'com.apple.sandbox.system-group'")
 				(require-any
@@ -630,10 +630,10 @@
 				(require-any
 					(subpath "/Library/RegionFeatures")
 					(subpath "/System/Library"))))))
-(allow file-ioctl
+(allow file-link
 	(require-not (subpath-prefix "${HOME}/Library/AddressBook")))
-(allow file-issue-extension)
-(allow file-mount
+(allow file-lock)
+(allow file-read*
 	(subpath-prefix "${HOME}/Library/Fonts")
 	(require-any (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/")
 (subpath-prefix "${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-only}")
@@ -851,11 +851,11 @@
 										(require-any
 											(subpath "/AppleInternal")
 											(subpath "/usr/local/lib"))))))))))))
-(allow file-mount-update
+(allow file-read-data
 	(require-all
 		(literal)
 		(require-not (extension "b'com.apple.sandbox.executable'"))))
-(allow file-read*
+(allow file-read-metadata
 	(vnode-type SYMLINK)
 	(literal-prefix "${HOME}")
 	(literal-prefix "${HOME}/Library/Preferences")
@@ -895,14 +895,14 @@
 		(vnode-type DIRECTORY)
 		(process-attribute is-apple-signed-executable))
 	(require-all
-		(extension "b'com.apple.sandbox.system-container'")
-		(entitlement-is-bool-true "b'com.apple.security.system-container'")
-		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
-	(require-all
 		(process-attribute is-apple-signed-executable)
 		(require-any
 			(literal-prefix "${HOME}")
 			(literal-prefix "${HOME}/Library/Preferences")))
+	(require-all
+		(extension "b'com.apple.sandbox.system-container'")
+		(entitlement-is-bool-true "b'com.apple.security.system-container'")
+		(regex #"/private/var/containers/Data/System/[UNSUPPORTED]+/"))
 	(require-all
 		(extension "b'com.apple.sandbox.system-group'")
 		(require-any
@@ -912,8 +912,8 @@
 			(require-all
 				(entitlement-is-present "b'com.apple.security.system-group-containers'")
 				(regex #"/private/var/containers/Shared/SystemGroup/[UNSUPPORTED]+/")))))
-(allow file-revoke)
-(allow file-test-existence
+(allow file-test-existence)
+(allow file-write*
 	(subpath-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry/${ANY_UUID}/${ENTITLEMENT:com.apple.security.exception.nano-paired-storage.subpath.read-write}")
 	(subpath-prefix "${HOME}/Media/MediaAnalysis")
 	(subpath-prefix "${HOME}/Media/PhotoData")
@@ -964,7 +964,7 @@
 			(require-all
 				(vnode-type BLOCK-DEVICE)
 				(vnode-type CHARACTER-DEVICE)))))
-(allow file-write*
+(allow file-write-create
 	(require-all
 		(process-attribute is-apple-signed-executable)
 		(vnode-type DIRECTORY)
@@ -978,7 +978,7 @@
 		(require-not (literal-prefix "${HOME}/Library/Logs/CrashReporter/CFNetwork_"))
 		(vnode-type DIRECTORY)
 		(literal-prefix "${HOME}/Library/Caches")))
-(allow file-write-acl
+(allow file-write-data
 	(literal "/dev/aes_0")
 	(require-all
 		(require-not (literal "/dev/urandom"))
@@ -987,12 +987,12 @@
 			(literal "/dev/dtracehelper")
 			(literal "/dev/zero")
 			(literal "/dev/null"))))
-(allow file-write-setugid
+(allow file-write-unlink
 	(entitlement-is-present "b'com.apple.private.oop-jit.loader'")
 	(require-all
 		(subpath "/private/var/OOPJit")
 		(extension "b'com.apple.sandbox.oopjit'")))
-(allow file-write-times
+(allow file-write-xattr
 	(require-all
 		(xattr "com.apple.metadata:com_apple_backup_excludeItem")
 		(require-any
@@ -1013,8 +1013,6 @@
 						(entitlement-is-present "b'com.apple.security.system-group-containers'")
 						(literal "/private/var/containers/Shared/SystemGroup/")
 						(regex #"^/private/var/containers/Shared/SystemGroup/[^/]+/" #"^/private/var/containers/Shared/SystemGroup/[^/]+$")))))))
-(allow (with message "b'version 1 compatibility'" file-write-unlink)
-(allow (with message "b'version 1 compatibility'" file-write-xattr)
 (allow (with message "b'version 1 compatibility'" fs-quota*)
 (allow (with message "b'version 1 compatibility'" fs-quota-get)
 (allow (with message "b'version 1 compatibility'" fs-quota-on)
@@ -1022,8 +1020,10 @@
 (allow (with message "b'version 1 compatibility'" fs-quota-set*)
 (allow (with message "b'version 1 compatibility'" fs-quota-set-limits)
 (allow (with message "b'version 1 compatibility'" fs-quota-set-usage)
-(allow (with message "b'version 1 compatibility'" fs-snapshot-create)
-(allow iokit-issue-extension
+(allow (with message "b'version 1 compatibility'" fs-quota-stat)
+(allow (with message "b'version 1 compatibility'" fs-quota-sync)
+(allow (with message "b'version 1 compatibility'" fs-snapshot-mount)
+(allow iokit-open-user-client
 	(iokit-user-client-class "AppleJPEGDriverUserClient")
 	(iokit-user-client-class "IOSurfaceAcceleratorClient")
 	(iokit-user-client-class "AGXDevice")
@@ -1048,7 +1048,7 @@
 	(iokit-user-client-class "AppleKeyStoreUserClient")
 	(require-any (iokit-user-client-class "H11ANEInDirectPathClient")
 (iokit-user-client-class "AppleVirtIONeuralEngineDeviceUserClient")))
-(allow iokit-open*
+(allow iokit-open-service
 	(iokit-user-client-class "AppleCLCD")
 	(iokit-user-client-class "AppleKeyStore")
 	(iokit-user-client-class "AppleJPEGDriver")
@@ -1059,12 +1059,12 @@
 	(iokit-user-client-class "AppleM2ScalerCSCDriver")
 	(entitlement-is-bool-true "b'com.apple.security.exception.iokit-user-client-class'")
 	(iokit-user-client-class "IOPMrootDomain"))
-(allow ipc-sysv-shm)
-(allow (with message "b'version 1 compatibility'" lsopen)
-(allow (with message "b'version 1 compatibility'" mach*)
-(allow mach-bootstrap)
-(allow mach-host-special-port-set)
-(allow mach-issue-extension
+(allow lsopen)
+(allow (with message "b'version 1 compatibility'" mach-bootstrap)
+(allow (with message "b'version 1 compatibility'" mach-cross-domain-lookup)
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
 	(require-any (global-name "com.apple.coremedia.samplebufferaudiorenderer.xpc")
 (global-name "com.apple.coremedia.mediaplaybackd.audioprocessingtap.xpc")
 (global-name "com.apple.coremedia.mediaplaybackd.samplebufferrendersynchronizer.xpc")
@@ -1269,6 +1269,9 @@
 		(global-name "com.apple.coreduetd.people")
 		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
 	(require-all
+		(global-name "com.apple.system.notification_center")
+		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
+	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
 		(require-any
@@ -1281,39 +1284,36 @@
 					(global-name "com.apple.Honeybee.event-notify")
 					(global-name "com.apple.mobile.usermanagerd.xpc")))))
 	(require-all
-		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
-	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
-(allow mach-task-name)
-(allow mach-task-read)
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
-(allow network-inbound)
-(allow (with message "b'version 1 compatibility'" network-bind)
-(allow (with message "b'version 1 compatibility'" network-outbound)
+(allow mach-task-special-port-set)
+(allow necp-client-open)
+(allow network-outbound)
+(allow (with message "b'version 1 compatibility'" nvram*)
 (allow (with message "b'version 1 compatibility'" nvram-delete)
-(allow opendirectory-user-modify)
-(allow (with message "b'version 1 compatibility'" process-exec-interpreter)
-(allow process-fork)
-(allow (with message "b'version 1 compatibility'" process-info-dirtycontrol)
-(allow process-info-listpids)
-(allow pseudo-tty)
-(allow (with message "b'version 1 compatibility'" signal)
+(allow (with message "b'version 1 compatibility'" nvram-set)
+(allow process-codesigning)
+(allow (with message "b'version 1 compatibility'" process-info*)
+(allow process-info-codesignature)
+(allow (with message "b'version 1 compatibility'" process-info-listpids)
+(allow process-info-pidinfo)
 (allow socket-ioctl)
-(allow socket-option*)
+(allow (with message "b'version 1 compatibility'" socket-option*)
+(allow socket-option-get)
 (allow socket-option-set)
-(allow syscall*
+(allow syscall-unix)
+(allow syscall-mach
 	(cb 6d33 410a df7e))
-(allow syscall-unix
+(allow syscall-mig
 	(cc 6d36 4108 4107)
 	(require-all
 		(kernel-mig-routine 196)
 		(debug-mode)))
-(allow system-automount
+(allow system-fcntl
 	(ce 6d3c 4105 f4bc))
-(allow system-mac*
+(allow system-mac-syscall
 	(mac-policy-name-regex "b'FSandbox\x82\x00\x0f\nFvnguard\x0f\x00\x0f'")
 	(require-all
 		(require-not (mac-syscall-number 7))
@@ -1322,10 +1322,10 @@
 		(require-not (mac-syscall-number 67))
 		(mac-syscall-number 90)
 		(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'")))
-(allow system-mac-label)
-(allow system-mac-syscall)
-(allow system-nfssvc)
-(allow system-swap
+(allow system-memorystatus-control)
+(allow system-necp-client-action)
+(allow system-privilege)
+(allow user-preference-read
 	(preference-domain "com.apple.UIKit")
 	(preference-domain "com.apple.iokit.IOMobileGraphicsFamily")
 	(preference-domain "com.apple.logging")
@@ -1369,9 +1369,9 @@
 		(require-any
 			(preference-domain "com.apple.demo-settings")
 			(preference-domain "com.apple.security"))))
-(allow user-preference*
+(allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
 	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
-(allow user-preference-read
+(allow user-preference-write
 	(preference-domain "com.apple.photoanalysisd"))
-(allow user-preference-write)
+(allow process-exec-update-label)
