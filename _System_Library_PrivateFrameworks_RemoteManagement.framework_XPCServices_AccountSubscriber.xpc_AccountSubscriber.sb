@@ -1,0 +1,6 @@
+(version 1)
+(allow default)
+(deny process-exec*)
+(deny process-exec-interpreter)
+(deny system-kas-info)
+(deny storage-class-map)

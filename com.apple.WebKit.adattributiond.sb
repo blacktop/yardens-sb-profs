@@ -22,19 +22,19 @@
 	(literal "/dev/urandom")
 	(require-any (subpath "/Library/Keychains")
 (literal "/Library/Preferences/com.apple.security.plist"))
-	(literal-prefix "${HOME}/Library/Preferences/com.apple.security.plist")
 	(subpath "/usr/lib")
+	(literal-prefix "${HOME}/Library/Preferences/com.apple.security.plist")
 	(subpath "/System/Library/Frameworks")
 	(subpath "/private/var/db/mds")
-	(literal "/")
 	(literal "/private/var/db/DarwinDirectory/local/recordStore.data")
+	(literal "/")
 	(subpath "/private/var/mobile/Library/com.apple.webkit.adattributiond")
 	(literal "/private/etc/master.passwd")
 	(require-all
 		(literal "/private/var/")
 		(require-any
-			(subpath "/private/var/preferences/Logging")
 			(literal "/private/var/preferences/com.apple.networkd.plist")
+			(subpath "/private/var/preferences/Logging")
 			(require-all
 				(subpath-prefix "${HOME}")
 				(regex #"^/private/var/mobile/Library/Preferences/ByHost/[.]GlobalPreferences[.]" #"^/private/var/euser[0-9]+/Library/Preferences/ByHost/[.]GlobalPreferences[.]" #"^/private/var/[-0-9A-F]+/Library/Preferences/ByHost/[.]GlobalPreferences[.]" #"^/private/var/Users/[^/]+/Library/Preferences/ByHost/[.]GlobalPreferences[.]"))))

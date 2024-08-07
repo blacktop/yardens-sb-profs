@@ -57,5 +57,5 @@
 	(preference-domain "com.apple.AppSupport"))
 (allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
-	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+	(extension com.apple.security.exception.managed-preference.read-only))
 (allow process-exec-update-label)

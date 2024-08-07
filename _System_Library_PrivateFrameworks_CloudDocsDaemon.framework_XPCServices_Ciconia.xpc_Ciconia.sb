@@ -1,0 +1,12 @@
+(version 1)
+(allow default)
+(deny process-exec*
+	(require-all
+		(literal "/usr/local/bin/dastool")
+		(debug-mode))
+	(require-all
+		(require-not (literal "/usr/bin/awk"))
+		(require-all (require-not (literal "/usr/bin/env"))
+(require-not (literal "/usr/bin/fileproviderctl")))))
+(deny system-kas-info)
+(deny storage-class-map)

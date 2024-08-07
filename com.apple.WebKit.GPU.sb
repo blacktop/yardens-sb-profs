@@ -1,9 +1,9 @@
 (version 1)
 (deny default)
 (allow device-camera
-	(extension "b'com.apple.webkit.camera'"))
+	(extension com.apple.webkit.camera))
 (allow device-microphone
-	(extension "b'com.apple.webkit.microphone'"))
+	(extension com.apple.webkit.microphone))
 (allow darwin-notification-post
 	(require-any (notification-name "org.WebKit.lowMemory")
 (notification-name "org.WebKit.lowMemory.end")
@@ -27,17 +27,23 @@
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
 	(require-all
 		(extension-class "com.apple.nsurlstorage.extension-cache")
-		(extension "b'com.apple.security.exception.files.home-relative-path.read-write'")
+		(extension com.apple.security.exception.files.home-relative-path.read-write)
 		(require-any (literal "/private/var/root/Library/Caches/")
 (literal-prefix "${FRONT_USER_HOME}/Library/Caches/")))
 	(require-all
 		(extension-class "com.apple.app-sandbox.read-write")
-		(extension "b'com.apple.app-sandbox.read-write'"))
+		(extension com.apple.app-sandbox.read-write))
 	(require-all
 		(extension-class "com.apple.mediaserverd.read-write")
-		(extension "b'com.apple.app-sandbox.read-write'"))
+		(extension com.apple.app-sandbox.read-write))
 	(require-all
-		(extension "b'com.apple.sandbox.executable'")
+		(extension-class "com.apple.app-sandbox.read")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.sharing.airdrop.readonly)))
+	(require-all
+		(extension com.apple.sandbox.executable)
 		(require-not (literal))
 		(extension-class "com.apple.app-sandbox.read"))
 	(require-all
@@ -51,48 +57,42 @@
 					(subpath "/private/preboot/Cryptexes/OS/System/Library")
 					(subpath "/System/Cryptexes/OS/System/Library")
 					(subpath "/System/Library")
-					(extension "b'com.apple.app-sandbox.read'")
+					(extension com.apple.app-sandbox.read)
 					(require-all
-						(extension "b'com.apple.assets.read'")
+						(extension com.apple.assets.read)
 						(require-any
-							(subpath-prefix "${HOME}/Library/Assets")
-							(subpath "/private/var/MobileAsset")))))
+							(subpath "/private/var/MobileAsset")
+							(subpath-prefix "${HOME}/Library/Assets")))))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read")
 				(require-any
-					(extension "b'com.apple.app-sandbox.read-write'")
-					(extension "b'com.apple.fileprovider.read-write'")
 					(subpath "/private/preboot/Cryptexes/OS/System/Library")
 					(subpath "/Library/RegionFeatures")
 					(subpath "/System/Cryptexes/OS/System/Library")
 					(subpath "/System/Library")
-					(extension "b'com.apple.app-sandbox.read'")))
+					(extension com.apple.app-sandbox.read)
+					(extension com.apple.app-sandbox.read-write)
+					(extension com.apple.fileprovider.read-write)))
 			(require-all
 				(extension-class "com.apple.nsurlstorage.extension-cache")
-				(extension "b'com.apple.app-sandbox.read-write'"))
+				(extension com.apple.app-sandbox.read-write))
 			(require-all
 				(extension-class "com.apple.app-sandbox.read-write")
 				(require-any
-					(extension "b'com.apple.app-sandbox.read-write'")
-					(extension "b'com.apple.fileprovider.read-write'")))))
-	(require-all
-		(extension-class "com.apple.app-sandbox.read")
-		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.app-sandbox.read-write'")
-			(extension "b'com.apple.sharing.airdrop.readonly'")))
+					(extension com.apple.app-sandbox.read-write)
+					(extension com.apple.fileprovider.read-write)))))
 	(require-all
 		(extension-class "com.apple.mediaserverd.read")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.app-sandbox.read-write'")
-			(extension "b'com.apple.sharing.airdrop.readonly'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.sharing.airdrop.readonly)))
 	(require-all
 		(extension-class "com.apple.sharing.airdrop.readonly")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.app-sandbox.read-write'")
-			(extension "b'com.apple.sharing.airdrop.readonly'"))))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.sharing.airdrop.readonly))))
 (allow file-lock)
 (allow file-map-executable
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
@@ -104,32 +104,25 @@
 (subpath "/private/preboot/Cryptexes/OS/System/Library/PrivateFrameworks"))
 	(subpath "/usr/lib")
 	(subpath "/System/Library")
-	(extension "b'com.apple.sandbox.executable'")
+	(extension com.apple.sandbox.executable)
 	(require-all
 		(literal)
-		(require-not (extension "b'com.apple.sandbox.executable'"))))
+		(require-not (extension com.apple.sandbox.executable))))
 (allow file-read*
 	(subpath "/private/var/preferences/Logging")
 	(literal "/private/var/Managed Preferences/mobile/.GlobalPreferences.plist")
 	(subpath-prefix "${FRONT_USER_HOME}/XcodeBuiltProducts")
 	(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/.GlobalPreferences.plist")
 	(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/.GlobalPreferences_m.plist")
-	(extension "b'com.apple.app-sandbox.read'")
-	(extension "b'com.apple.app-sandbox.read-write'")
-	(extension "b'com.apple.sandbox.executable'")
-	(extension "b'com.apple.sharing.airdrop.readonly'")
+	(extension com.apple.app-sandbox.read)
+	(extension com.apple.app-sandbox.read-write)
+	(extension com.apple.sandbox.executable)
+	(extension com.apple.sharing.airdrop.readonly)
 	(require-all
 		(require-all (require-not (literal "/System/Library/Caches/apticket.der"))
 (require-not (subpath "/System/Library/Caches/com.apple.factorydata"))
 (require-not (subpath "/System/Library/Caches/com.apple.kernelcaches")))
 		(require-any
-			(subpath-prefix "${HOME}/Library/Fonts")
-			(subpath "/private/preboot/Cryptexes/OS/System/Library")
-			(require-any (literal-prefix "${HOME}/Library/Preferences/com.apple.Metal.plist")
-(literal-prefix "${HOME}/Library/Preferences/com.apple.coreanimation.plist"))
-			(require-any (literal-prefix "${HOME}/Library/Preferences/com.apple.Accessibility.plist")
-(literal-prefix "${HOME}/Library/Preferences/com.apple.mediaaccessibility.plist")
-(literal-prefix "${HOME}/Library/Preferences/com.apple.avfoundation.videoperformancehud.plist"))
 			(subpath "/usr/lib")
 			(require-any (subpath "/System/Cryptexes/App")
 (subpath "/System/Cryptexes/OS")
@@ -139,9 +132,16 @@
 			(subpath "/Library/RegionFeatures")
 			(subpath "/usr/share")
 			(subpath "/System/Library")
+			(subpath-prefix "${HOME}/Library/Fonts")
+			(subpath "/private/preboot/Cryptexes/OS/System/Library")
+			(require-any (literal-prefix "${HOME}/Library/Preferences/com.apple.Metal.plist")
+(literal-prefix "${HOME}/Library/Preferences/com.apple.coreanimation.plist"))
+			(require-any (literal-prefix "${HOME}/Library/Preferences/com.apple.Accessibility.plist")
+(literal-prefix "${HOME}/Library/Preferences/com.apple.mediaaccessibility.plist")
+(literal-prefix "${HOME}/Library/Preferences/com.apple.avfoundation.videoperformancehud.plist"))
 			(require-all
 				(subpath "/Library/CoreMediaIO/Plug-Ins/DAL")
-				(extension "b'com.apple.webkit.camera'"))
+				(extension com.apple.webkit.camera))
 			(require-all
 				(require-not (literal-prefix "${HOME}/Library/Preferences/com.apple.mobilemail.plist"))
 				(require-any
@@ -169,13 +169,13 @@
 (allow file-read-data
 	(require-all
 		(literal)
-		(require-not (extension "b'com.apple.sandbox.executable'"))))
+		(require-not (extension com.apple.sandbox.executable))))
 (allow file-read-metadata)
 (allow file-read-xattr
 	(require-not (xattr "com.apple.security.private.")))
 (allow file-test-existence)
 (allow file-write*
-	(extension "b'com.apple.app-sandbox.read-write'")
+	(extension com.apple.app-sandbox.read-write)
 	(require-all
 		(require-not (literal-prefix "${HOME}/Library/Preferences/com.apple.springboard.plist"))
 		(literal-prefix "${HOME}/Library/Caches/DateFormats.plist")))
@@ -297,10 +297,10 @@
 			(global-name "com.apple.systemstatus.activityattribution")
 			(require-all
 				(global-name "com.apple.audio.PhaseXPCServer")
-				(extension "b'com.apple.webkit.microphone'"))
+				(extension com.apple.webkit.microphone))
 			(require-all
 				(global-name "com.apple.springboard.statusbarservices")
-				(extension "b'com.apple.webkit.microphone'"))
+				(extension com.apple.webkit.microphone))
 			(require-all
 				(require-not (global-name "com.apple.iconservices"))
 				(require-not (global-name "com.apple.PowerManagement.control"))
@@ -384,7 +384,7 @@
 							(global-name "com.apple.logd")
 							(require-all
 								(global-name "com.apple.mobilegestalt.xpc")
-								(extension "b'com.apple.webkit.extension.mach'")))))))))
+								(extension com.apple.webkit.extension.mach)))))))))
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
 (allow mach-task-special-port-set)
@@ -396,14 +396,14 @@
 	(target others))
 (allow process-info-pidinfo)
 (allow syscall-unix
-	(c1 3ab9 a9fb a9f9)
+	(c1 3ad0 aa14 aa12)
 	(require-all
 		(require-not (syscall-number SYS_faccessat))
 		(syscall-number 38)))
 (allow syscall-mach
-	(cb 3ac3 a9f7 f4bc))
+	(cb 3ada aa10 f4df))
 (allow syscall-mig
-	(cc 3ac6 a9f5 f4bc))
+	(cc 3add aa0e f4df))
 (allow sysctl-read
 	(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
@@ -429,32 +429,32 @@
 		(sysctl-name "hw.tbfrequency_compat")))
 (allow system-audit)
 (allow system-fcntl
-	(ce 3ad0 a9e3 f4bc))
+	(ce 3ae7 a9fc f4df))
 (allow system-mac-syscall
 	(require-all
 		(mac-syscall-number 5)
-		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
+		(mac-policy-name "Sandbox"))
 	(require-all
 		(mac-syscall-number 90)
-		(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'"))
+		(mac-policy-name "AMFI"))
 	(require-all
 		(mac-syscall-number 102)
-		(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'"))
+		(mac-policy-name "AMFI"))
 	(require-all
 		(mac-syscall-number 7)
-		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
+		(mac-policy-name "Sandbox"))
 	(require-all
 		(mac-syscall-number 2)
-		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
+		(mac-policy-name "Sandbox"))
 	(require-all
 		(mac-syscall-number 6)
-		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
+		(mac-policy-name "Sandbox"))
 	(require-all
 		(mac-syscall-number 4)
-		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
+		(mac-policy-name "Sandbox"))
 	(require-all
 		(mac-syscall-number 67)
-		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")))
+		(mac-policy-name "Sandbox")))
 (allow system-memorystatus-control)
 (allow user-preference-read
 	(preference-domain "com.apple.Metal")
@@ -469,8 +469,8 @@
 	(preference-domain "com.apple.avfoundation.videoperformancehud")
 	(preference-domain "com.apple.coreanimation")
 	(preference-domain "com.apple.corevideo")
-	(extension "b'com.apple.security.exception.shared-preference.read-only'"))
+	(extension com.apple.security.exception.shared-preference.read-only))
 (allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
-	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+	(extension com.apple.security.exception.managed-preference.read-only))
 (allow process-exec-update-label)

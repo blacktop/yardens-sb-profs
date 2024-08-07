@@ -30,9 +30,9 @@
 	(global-name "com.apple.nfcd.hwmanager")
 	(global-name "com.apple.frontboard.systemappservices")
 	(xpc-service-name "com.apple.extensionkitservice")
-	(extension "b'com.apple.pluginkit.plugin-service'")
-	(extension "b'com.apple.security.exception.mach-lookup.global-name'")
-	(extension "b'com.apple.security.exception.mach-lookup.local-name'")
+	(extension com.apple.pluginkit.plugin-service)
+	(extension com.apple.security.exception.mach-lookup.global-name)
+	(extension com.apple.security.exception.mach-lookup.local-name)
 	(global-name "com.apple.managedconfiguration.profiled.public")
 	(global-name "com.apple.system.logger")
 	(global-name "com.apple.mobilegestalt.xpc")
@@ -67,10 +67,7 @@
 	(global-name "com.apple.lsd.advertisingidentifiers")
 	(require-all
 		(global-name "com.apple.coreduetd.people")
-		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
-	(require-all
-		(global-name "com.apple.system.notification_center")
-		(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))
+		(entitlement-is-bool-true com.apple.coreduetd.people))
 	(require-all
 		(xpc-service-name "com.apple.WebKit.")
 		(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
@@ -79,10 +76,13 @@
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
-					(global-name "com.apple.SharedWebCredentials")
 					(global-name "com.apple.datamigrator")
 					(global-name "com.apple.Honeybee.event-notify")
-					(global-name "com.apple.mobile.usermanagerd.xpc")))))
+					(global-name "com.apple.mobile.usermanagerd.xpc")
+					(global-name "com.apple.SharedWebCredentials")))))
+	(require-all
+		(global-name "com.apple.system.notification_center")
+		(entitlement-is-bool-true com.apple.security.on-demand-install-capable))
 	(require-all
 		(global-name "com.apple.osanalytics.osanalyticshelper")
 		(process-attribute is-apple-signed-executable)))
@@ -110,8 +110,8 @@
 	(preference-domain "kCFPreferencesAnyApplication")
 	(preference-domain "com.apple.coreanimation")
 	(preference-domain "com.apple.ImageIO")
-	(extension "b'com.apple.security.exception.shared-preference.read-write'")
-	(extension "b'com.apple.security.exception.shared-preference.read-only'")
+	(extension com.apple.security.exception.shared-preference.read-write)
+	(extension com.apple.security.exception.shared-preference.read-only)
 	(preference-domain "com.apple.Accessibility")
 	(preference-domain "com.apple.da")
 	(preference-domain "com.apple.hangtracer")
@@ -122,7 +122,7 @@
 			(preference-domain "com.apple.security"))))
 (allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
-	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+	(extension com.apple.security.exception.managed-preference.read-only))
 (allow user-preference-write
 	(require-any (preference-domain "com.apple.devicedataresetd")
 (preference-domain "com.apple.devicedatareset.devicedataresetd")))

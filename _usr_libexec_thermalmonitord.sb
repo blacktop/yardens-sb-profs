@@ -1,0 +1,11 @@
+(version 1)
+(allow default)
+(deny process-exec*
+	(require-all
+		(literal "/usr/local/bin/smcif")
+		(debug-mode))
+	(require-all
+		(require-not (literal "/bin/bash"))
+		(require-not (literal "/usr/bin/killall"))))
+(deny system-kas-info)
+(deny storage-class-map)

@@ -6,7 +6,7 @@
 (subpath "/System/DriverKit/System/Library/dyld")
 (subpath "/System/DriverKit/System/Library/Frameworks")
 (subpath "/System/DriverKit/System/Library/PrivateFrameworks"))
-	(extension "b'com.apple.sandbox.executable'")
+	(extension com.apple.sandbox.executable)
 	(subpath "/System/Cryptexes")
 	(subpath "/private/preboot/Cryptexes")
 	(require-all
@@ -32,7 +32,7 @@
 	(subpath "/private/preboot/Cryptexes")
 	(literal "/dev/random")
 	(literal "/dev/console")
-	(extension "b'com.apple.sandbox.executable'")
+	(extension com.apple.sandbox.executable)
 	(require-all
 		(debug-mode)
 		(require-any
@@ -91,7 +91,7 @@
 	(subpath "/private/preboot/Cryptexes")
 	(literal "/tmp")
 	(literal "/dev/random")
-	(extension "b'com.apple.sandbox.executable'")
+	(extension com.apple.sandbox.executable)
 	(require-all
 		(debug-mode)
 		(require-any
@@ -132,7 +132,7 @@
 (allow necp-client-open)
 (allow process-codesigning)
 (allow syscall-unix
-	(c1 40f6 a093 a08a)
+	(c1 410d a0ac a0a3)
 	(require-all
 		(require-not (syscall-number SYS_shm_open))
 		(require-not (syscall-number SYS_fstatfs64))
@@ -145,21 +145,21 @@
 			(syscall-number SYS_sigaltstack)
 			(syscall-number SYS_setrlimit))))
 (allow syscall-mach
-	(cb 4100 a088 f4bc))
+	(cb 4117 a0a1 f4df))
 (allow syscall-mig)
 (allow sysctl-read)
 (allow system-fcntl
-	(ce 366e a086 f4bc))
+	(ce 3685 a09f f4df))
 (allow system-mac-syscall
 	(require-all
-		(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'")
+		(mac-policy-name "Sandbox")
 		(require-not (mac-syscall-number 4))
 		(require-any
 			(mac-syscall-number 2)
 			(mac-syscall-number 67)))
 	(require-all
 		(mac-syscall-number 90)
-		(mac-policy-name-regex "b'CAMFI\x0f\x00\x0f'")))
+		(mac-policy-name "AMFI")))
 (allow system-memorystatus-control)
 (allow system-necp-client-action)
 (allow system-privilege)

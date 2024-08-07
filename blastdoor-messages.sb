@@ -1,15 +1,16 @@
 (version 1)
 (deny default)
+(deny (with no-report) dynamic-code-generation)
 (allow file-clone
 	(require-all
-		(extension "b'com.apple.blastdoor.read-write'")
+		(extension com.apple.blastdoor.read-write)
 		(require-any
 			(require-any (subpath "/private/var/tmp/com.apple.messages/PassPreview")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 			(require-any (subpath "/private/var/tmp/com.apple.messages/Wallpapers")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/Wallpapers"))))
 	(require-all
-		(extension "b'com.apple.app-sandbox.read-write'")
+		(extension com.apple.app-sandbox.read-write)
 		(require-any
 			(require-any (subpath "/private/var/tmp/com.apple.messages/PassPreview")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
@@ -39,73 +40,73 @@
 		(require-any (subpath "/private/var/tmp/com.apple.messages/PassPreview")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read-write'")
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")
-			(extension "b'com.apple.blastdoor.read-write'")))
+			(extension com.apple.blastdoor.read-write)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.messages/Wallpapers")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/Wallpapers"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read-write'")
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")
-			(extension "b'com.apple.blastdoor.read-write'")))
+			(extension com.apple.blastdoor.read-write)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(subpath "/private/var/tmp/com.apple.TelephonyUtilities/SharePlayActivityImages")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.facetimemessagestored/IncomingVideoVoiceMail")
 (subpath-prefix "${HOME}/Library/Caches/com.apple.businessservicesd/temp")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.facetimemessagestored/IncomingVideoVoiceMail"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(subpath "/private/var/tmp/com.apple.messages")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.identityservicesd")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.identityservicesd"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(subpath "/private/var/tmp/com.apple.imtransferagent")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp/com[UNSUPPORTED]apple[UNSUPPORTED]MobileSMS/?")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(require-any (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.TelephonyUtilities/SharePlayActivityImages")
 (subpath-prefix "${HOME}/Media/PhotoData/UBF/scopes/syndication/originals")
 (subpath-prefix "${HOME}/Library/Photos/Libraries/Syndication.photoslibrary/scopes/syndication/originals"))
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(subpath-prefix "${HOME}/Library/SMS")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.imtransferagent")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'")))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
 	(require-all
 		(literal "/private/var/")
 		(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$")
@@ -114,8 +115,8 @@
 				(require-any (subpath-prefix "${HOME}")
 (subpath-prefix "${FRONT_USER_HOME}"))
 				(require-any
-					(extension "b'com.apple.app-sandbox.read'")
-					(extension "b'com.apple.blastdoor.read'")))
+					(extension com.apple.app-sandbox.read)
+					(extension com.apple.blastdoor.read)))
 			(require-all
 				(require-any (subpath "/AppleInternal/Library/VideoCodecs")
 (subpath "/usr/standalone/firmware")
@@ -125,11 +126,6 @@
 				(subpath "/private/var/MobileSoftwareUpdate")
 				(literal "/dev")
 				(require-any
-					(literal "/private/etc/passwd")
-					(literal "/private/etc/services")
-					(require-any (literal "/private/etc/group")
-(literal "/private/etc/protocols"))
-					(subpath "/System/Cryptexes")
 					(literal "/dev/zero")
 					(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
 					(literal "/System")
@@ -143,20 +139,25 @@
 					(literal "/private")
 					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
 					(literal "/dev/urandom")
+					(literal "/private/etc/passwd")
+					(literal "/private/etc/services")
+					(require-any (literal "/private/etc/group")
+(literal "/private/etc/protocols"))
+					(subpath "/System/Cryptexes")
 					(require-all
 						(file-mode #o0004)
 						(require-any
-							(subpath "/System")
-							(subpath "/usr/lib")
 							(subpath "/usr/share")
 							(subpath "/private/var/db/dyld")
-							(subpath "/private/var/db/timezone")))))))
+							(subpath "/private/var/db/timezone")
+							(subpath "/System")
+							(subpath "/usr/lib")))))))
 	(require-all
 		(debug-mode)
 		(subpath "/AppleInternal/Library/Messages/BlastDoorTestData")
 		(require-any
-			(extension "b'com.apple.app-sandbox.read'")
-			(extension "b'com.apple.blastdoor.read'"))))
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read))))
 (allow file-read-metadata
 	(require-any (literal-prefix "${FRONT_USER_HOME}")
 (literal-prefix "${FRONT_USER_HOME}/Library/Preferences"))
@@ -166,14 +167,14 @@
 (allow file-test-existence)
 (allow file-write*
 	(require-all
-		(extension "b'com.apple.blastdoor.read-write'")
+		(extension com.apple.blastdoor.read-write)
 		(require-any
 			(require-any (subpath "/private/var/tmp/com.apple.messages/PassPreview")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
 			(require-any (subpath "/private/var/tmp/com.apple.messages/Wallpapers")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/Wallpapers"))))
 	(require-all
-		(extension "b'com.apple.app-sandbox.read-write'")
+		(extension com.apple.app-sandbox.read-write)
 		(require-any
 			(require-any (subpath "/private/var/tmp/com.apple.messages/PassPreview")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
@@ -187,38 +188,48 @@
 	(require-all
 		(require-any (subpath "/private/var/tmp/com.apple.messages/PassPreview")
 (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages/PassPreview"))
-		(require-not (extension "b'com.apple.blastdoor.read-write'"))
-		(require-not (extension "b'com.apple.app-sandbox.read-write'"))))
+		(require-not (extension com.apple.blastdoor.read-write))
+		(require-not (extension com.apple.app-sandbox.read-write))))
+(deny (with no-report) iokit-open-user-client)
+(deny (with no-report) iokit-open-service)
 (allow mach-derive-port)
 (allow mach-kernel-endpoint)
 (allow process-codesigning)
+(deny (with no-report) process-info-codesignature)
 (allow process-legacy-codesigning-entitlements-blob-get)
 (allow process-legacy-codesigning-entitlements-der-blob-get)
 (allow process-legacy-codesigning-status-get)
 (allow syscall-unix
-	(c1 36be b321 b2c9)
+	(c1 36d5 b33a b2e2)
 	(require-all
 		(require-not (syscall-number SYS_necp_open))
 		(require-not (syscall-number SYS_necp_client_action))
 		(require-any
 			(require-all
 				(syscall-number SYS_dup2)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
-				(syscall-number SYS_psynch_rw_upgrade)
-				(state-flag "b''"))
-			(require-all
-				(syscall-number SYS_setattrlist)
-				(state-flag "b''"))
-			(require-all
-				(syscall-number SYS___pthread_chdir)
-				(state-flag "b''"))
-			(require-all
-				(syscall-number SYS_memorystatus_available_memory)
-				(state-flag "b''"))
-			(require-all
-				(require-not (state-flag "b''"))
+				(require-not (state-flag))
 				(require-any
+					(syscall-number SYS_shared_region_map_and_slide_2_np)
+					(syscall-number SYS_sigprocmask)
+					(syscall-number SYS_sigsuspend_nocancel)
+					(syscall-number SYS_psynch_cvwait)
+					(syscall-number SYS_map_with_linking_np)
+					(syscall-number SYS_sigaction)
+					(syscall-number SYS_psynch_cvbroad)
+					(syscall-number SYS_madvise)
+					(syscall-number SYS_kdebug_typefilter)
+					(syscall-number SYS_getpid)
+					(syscall-number SYS_workq_open)
+					(syscall-number SYS_psynch_cvsignal)
+					(syscall-number SYS_kdebug_trace_string)
+					(syscall-number SYS_workq_kernreturn)
+					(syscall-number SYS_gettimeofday)
+					(syscall-number SYS_getrlimit)
+					(syscall-number SYS_stat64_extended)
+					(syscall-number SYS_socket)
+					(syscall-number SYS_gettid)
 					(syscall-number SYS_pathconf)
 					(syscall-number SYS_psynch_mutexdrop)
 					(syscall-number SYS_objc_bp_assist_cfg_np)
@@ -249,25 +260,6 @@
 					(syscall-number SYS_read_nocancel)
 					(syscall-number SYS_mprotect)
 					(syscall-number SYS_kevent_qos)
-					(syscall-number SYS_shared_region_map_and_slide_2_np)
-					(syscall-number SYS_sigprocmask)
-					(syscall-number SYS_sigsuspend_nocancel)
-					(syscall-number SYS_psynch_cvwait)
-					(syscall-number SYS_map_with_linking_np)
-					(syscall-number SYS_sigaction)
-					(syscall-number SYS_psynch_cvbroad)
-					(syscall-number SYS_madvise)
-					(syscall-number SYS_kdebug_typefilter)
-					(syscall-number SYS_getpid)
-					(syscall-number SYS_workq_open)
-					(syscall-number SYS_psynch_cvsignal)
-					(syscall-number SYS_kdebug_trace_string)
-					(syscall-number SYS_workq_kernreturn)
-					(syscall-number SYS_gettimeofday)
-					(syscall-number SYS_getrlimit)
-					(syscall-number SYS_stat64_extended)
-					(syscall-number SYS_socket)
-					(syscall-number SYS_gettid)
 					(require-all
 						(require-not (syscall-number SYS_iopolicysys))
 						(require-any
@@ -279,93 +271,105 @@
 							(syscall-number SYS_memorystatus_control)
 							(syscall-number SYS_dup)))))
 			(require-all
+				(syscall-number SYS_psynch_rw_upgrade)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_setattrlist)
+				(state-flag))
+			(require-all
+				(syscall-number SYS___pthread_chdir)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_memorystatus_available_memory)
+				(state-flag))
+			(require-all
 				(syscall-number SYS_psynch_rw_yieldwrlock)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_setattrlistat)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_flistxattr)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_psynch_rw_unlock2)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS___channel_open)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_mkdir)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS___semwait_signal)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_fsetattrlist)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_ffsctl)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_faccessat)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_psynch_rw_longrdlock)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_statfs64)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_getrusage)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_rmdir)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_fstat64_extended)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_getattrlistbulk)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_umask)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS___pthread_fchdir)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_pipe)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_rename)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_mkdirat)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_lstat64_extended)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_change_fdguard_np)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_fpathconf)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_psynch_rw_downgrade)
-				(state-flag "b''"))
+				(state-flag))
 			(require-all
 				(syscall-number SYS_listxattr)
-				(state-flag "b''")))))
+				(state-flag)))))
 (allow syscall-mach
-	(cb 36cc b2c7 b407))
+	(cb 36e3 b2e0 b420))
 (allow syscall-mig
-	(cc 36ce b2c5 b2c2)
+	(cc 36e5 b2de b2db)
 	(require-all
 		(require-not (kernel-mig-routine 136))
 		(require-not (kernel-mig-routine 135))
 		(require-not (kernel-mig-routine 328))
 		(kernel-mig-routine 325)
-		(state-flag "b''")))
+		(state-flag)))
 (allow sysctl-read
 	(require-any (sysctl-name "hw.model")
 (sysctl-name "hw.logicalcpu_max")
@@ -396,6 +400,6 @@
 (sysctl-name "hw.machine"))
 	(sysctl-name "hw.cachelinesize"))
 (allow system-fcntl
-	(ce 36d7 b2b2 f4bc))
+	(ce 36ee b2cb f4df))
 (allow system-mac-syscall)
 (allow process-exec-update-label)

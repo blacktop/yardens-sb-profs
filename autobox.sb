@@ -29,11 +29,10 @@
 		(require-any (signing-identifier "com.apple.lockdownmoded")
 (signing-identifier "com.apple.audio.AudioConverterService"))
 		(require-any
-			(global-name "com.apple.pluginkit.pkd")
 			(require-any (global-name "com.apple.gputools.service")
 (global-name "com.apple.hangtracerd")
 (global-name "com.apple.hangtracermonitor"))
-			(extension "b'com.apple.pluginkit.plugin-service'")
+			(extension com.apple.pluginkit.plugin-service)
 			(global-name "com.apple.system.logger")
 			(global-name "com.apple.managedconfiguration.profiled.public")
 			(global-name "com.apple.mobilegestalt.xpc")
@@ -46,6 +45,7 @@
 			(local-name "com.apple.cfprefsd.agent")
 			(require-not (process-attribute is-apple-signed-executable))
 			(global-name "com.apple.mobile.usermanagerd.xpc")
+			(global-name "com.apple.pluginkit.pkd")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
@@ -55,18 +55,17 @@
 					(global-name "com.apple.datamigrator")))
 			(require-all
 				(global-name "com.apple.coreduetd.people")
-				(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
+				(entitlement-is-bool-true com.apple.coreduetd.people))
 			(require-all
 				(global-name "com.apple.system.notification_center")
-				(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))))
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable))))
 	(require-all
 		(signing-identifier "com.apple.CTParserService")
 		(require-any
-			(global-name "com.apple.pluginkit.pkd")
 			(require-any (global-name "com.apple.gputools.service")
 (global-name "com.apple.hangtracerd")
 (global-name "com.apple.hangtracermonitor"))
-			(extension "b'com.apple.pluginkit.plugin-service'")
+			(extension com.apple.pluginkit.plugin-service)
 			(global-name "com.apple.system.logger")
 			(global-name "com.apple.managedconfiguration.profiled.public")
 			(global-name "com.apple.mobilegestalt.xpc")
@@ -79,6 +78,7 @@
 			(local-name "com.apple.cfprefsd.agent")
 			(require-not (process-attribute is-apple-signed-executable))
 			(global-name "com.apple.mobile.usermanagerd.xpc")
+			(global-name "com.apple.pluginkit.pkd")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
@@ -88,18 +88,17 @@
 					(global-name "com.apple.datamigrator")))
 			(require-all
 				(global-name "com.apple.coreduetd.people")
-				(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
+				(entitlement-is-bool-true com.apple.coreduetd.people))
 			(require-all
 				(global-name "com.apple.system.notification_center")
-				(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))))
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable))))
 	(require-all
 		(signing-identifier "com.apple.ImageIOXPCService")
 		(require-any
-			(global-name "com.apple.pluginkit.pkd")
 			(require-any (global-name "com.apple.gputools.service")
 (global-name "com.apple.hangtracerd")
 (global-name "com.apple.hangtracermonitor"))
-			(extension "b'com.apple.pluginkit.plugin-service'")
+			(extension com.apple.pluginkit.plugin-service)
 			(global-name "com.apple.system.logger")
 			(global-name "com.apple.managedconfiguration.profiled.public")
 			(global-name "com.apple.mobilegestalt.xpc")
@@ -112,6 +111,7 @@
 			(local-name "com.apple.cfprefsd.agent")
 			(require-not (process-attribute is-apple-signed-executable))
 			(global-name "com.apple.mobile.usermanagerd.xpc")
+			(global-name "com.apple.pluginkit.pkd")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
@@ -121,18 +121,17 @@
 					(global-name "com.apple.datamigrator")))
 			(require-all
 				(global-name "com.apple.coreduetd.people")
-				(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
+				(entitlement-is-bool-true com.apple.coreduetd.people))
 			(require-all
 				(global-name "com.apple.system.notification_center")
-				(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'"))))
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable))))
 	(require-all
 		(signing-identifier "com.apple.CoreGraphics.CGPDFService")
 		(require-any
-			(global-name "com.apple.pluginkit.pkd")
 			(require-any (global-name "com.apple.gputools.service")
 (global-name "com.apple.hangtracerd")
 (global-name "com.apple.hangtracermonitor"))
-			(extension "b'com.apple.pluginkit.plugin-service'")
+			(extension com.apple.pluginkit.plugin-service)
 			(global-name "com.apple.system.logger")
 			(global-name "com.apple.managedconfiguration.profiled.public")
 			(global-name "com.apple.mobilegestalt.xpc")
@@ -145,6 +144,7 @@
 			(local-name "com.apple.cfprefsd.agent")
 			(require-not (process-attribute is-apple-signed-executable))
 			(global-name "com.apple.mobile.usermanagerd.xpc")
+			(global-name "com.apple.pluginkit.pkd")
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
@@ -154,10 +154,10 @@
 					(global-name "com.apple.datamigrator")))
 			(require-all
 				(global-name "com.apple.coreduetd.people")
-				(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
+				(entitlement-is-bool-true com.apple.coreduetd.people))
 			(require-all
 				(global-name "com.apple.system.notification_center")
-				(entitlement-is-bool-true "b'com.apple.security.on-demand-install-capable'")))))
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable)))))
 (allow mach-task-special-port*)
 (allow mach-task-special-port-get)
 (allow mach-task-special-port-set)
@@ -175,69 +175,40 @@
 (allow process-codesigning)
 (allow socket-ioctl)
 (allow syscall-unix
-	(c1 32ec b995 b98e)
+	(c1 32f9 b9b0 b9a9)
 	(syscall-number SYS_map_with_linking_np)
 	(require-all
 		(syscall-number SYS_csrctl)
-		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
+		(entitlement-is-bool-true com.apple.coreduetd.people))
 	(require-all
 		(syscall-number SYS_flock)
-		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
+		(entitlement-is-bool-true com.apple.coreduetd.people))
 	(require-all
 		(syscall-number SYS_ftruncate)
-		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
+		(entitlement-is-bool-true com.apple.coreduetd.people))
 	(require-all
 		(syscall-number SYS_fsync)
-		(entitlement-is-bool-true "b'com.apple.coreduetd.people'"))
+		(entitlement-is-bool-true com.apple.coreduetd.people))
 	(require-all
 		(syscall-number SYS_guarded_open_dprotected_np)
-		(entitlement-is-bool-true "b'com.apple.coreduetd.people'")))
+		(entitlement-is-bool-true com.apple.coreduetd.people)))
 (allow syscall-mach)
 (allow syscall-mig
 	(require-not (kernel-mig-routine 196))
 	(debug-mode))
 (allow sysctl*
 	(sysctl-name "kern.wq_limit_cooperative_threads")
-	(extension "b'com.apple.security.exception.sysctl.read-write'"))
+	(extension com.apple.security.exception.sysctl.read-write))
 (allow sysctl-read
-	(extension "b'com.apple.security.exception.sysctl.read-write'")
-	(extension "b'com.apple.security.exception.sysctl.read-only'")
+	(extension com.apple.security.exception.sysctl.read-write)
+	(extension com.apple.security.exception.sysctl.read-only)
 	(require-all
-		(entitlement-is-bool-true "b'com.apple.security.exception.process-info'")
+		(entitlement-is-bool-true com.apple.security.exception.process-info)
 		(require-any (sysctl-name "kern.proc.")
 (sysctl-name "kern.procargs2.")))
 	(require-all
 		(require-not (sysctl-name "sysctl.proc_native"))
 		(require-any
-			(require-any (sysctl-name "kern.waketime")
-(sysctl-name "machdep.ptrauth_enabled")
-(sysctl-name "machdep.virtual_address_size")
-(sysctl-name "security.mac.sandbox.sentinel"))
-			(sysctl-name "hw.l2cachesize")
-			(sysctl-name "kern.hostname")
-			(sysctl-name "sysctl.name2oid")
-			(sysctl-name "hw.ncpu")
-			(sysctl-name "hw.product")
-			(require-any (sysctl-name "hw.memsize")
-(sysctl-name "hw.machine"))
-			(sysctl-name "hw.tbfrequency_compat")
-			(sysctl-name "kern.memorystatus_level")
-			(extension "b'com.apple.security.exception.sysctl.read-write'")
-			(require-any (sysctl-name "hw.model")
-(sysctl-name "hw.logicalcpu_max")
-(sysctl-name "hw.physicalcpu_max"))
-			(require-any (sysctl-name "hw.optional.")
-(sysctl-name "hw.byteorder")
-(sysctl-name "hw.physmem")
-(sysctl-name "hw.pagesize")
-(sysctl-name "hw.l3cachesize")
-(sysctl-name "hw.l1dcachesize")
-(sysctl-name "hw.l1icachesize")
-(sysctl-name "hw.cputype")
-(sysctl-name "hw.cpusubfamily")
-(sysctl-name "hw.cachesize")
-(sysctl-name "hw.cacheconfig")
-(sysctl-name "hw.cachelinesize_compat"))
 			(sysctl-name "hw.vectorunit")
 			(require-any (sysctl-name "security.mac.amfi.developer_mode_status")
 (sysctl-name "kern.maxproc")
@@ -291,6 +262,35 @@
 (sysctl-name "kern.osproductversion"))
 			(require-any (sysctl-name "hw.perflevel")
 (sysctl-name "kern.hv_vmm_present"))
+			(require-any (sysctl-name "kern.waketime")
+(sysctl-name "machdep.ptrauth_enabled")
+(sysctl-name "machdep.virtual_address_size")
+(sysctl-name "security.mac.sandbox.sentinel"))
+			(sysctl-name "hw.l2cachesize")
+			(sysctl-name "kern.hostname")
+			(sysctl-name "sysctl.name2oid")
+			(sysctl-name "hw.ncpu")
+			(sysctl-name "hw.product")
+			(require-any (sysctl-name "hw.memsize")
+(sysctl-name "hw.machine"))
+			(sysctl-name "hw.tbfrequency_compat")
+			(sysctl-name "kern.memorystatus_level")
+			(extension com.apple.security.exception.sysctl.read-write)
+			(require-any (sysctl-name "hw.model")
+(sysctl-name "hw.logicalcpu_max")
+(sysctl-name "hw.physicalcpu_max"))
+			(require-any (sysctl-name "hw.optional.")
+(sysctl-name "hw.byteorder")
+(sysctl-name "hw.physmem")
+(sysctl-name "hw.pagesize")
+(sysctl-name "hw.l3cachesize")
+(sysctl-name "hw.l1dcachesize")
+(sysctl-name "hw.l1icachesize")
+(sysctl-name "hw.cputype")
+(sysctl-name "hw.cpusubfamily")
+(sysctl-name "hw.cachesize")
+(sysctl-name "hw.cacheconfig")
+(sysctl-name "hw.cachelinesize_compat"))
 			(require-all
 				(process-attribute is-apple-signed-executable)
 				(require-any
@@ -300,13 +300,13 @@
 					(sysctl-name "kern.bootargs")
 					(sysctl-name "kern.argmax"))))))
 (allow system-fcntl
-	(ce 32f6 b95d b9c1))
+	(ce 3303 b978 b9dc))
 (allow system-fsctl
 	(fsctl-command-regex [UNSUPPORTED](_IO "A" 20)))
 (allow system-mac-syscall
 	(mac-syscall-number 2)
 	(require-not (mac-syscall-number 5))
-	(mac-policy-name-regex "b'FSandbox\x0f\x00\x0f'"))
+	(mac-policy-name "Sandbox"))
 (allow system-memorystatus-control)
 (allow system-necp-client-action)
 (allow system-privilege)
@@ -318,7 +318,7 @@
 	(signing-identifier "com.apple.CoreGraphics.CGPDFService"))
 (allow managed-preference-read
 	(preference-domain "kCFPreferencesAnyApplication")
-	(extension "b'com.apple.security.exception.managed-preference.read-only'"))
+	(extension com.apple.security.exception.managed-preference.read-only))
 (allow user-preference-write
 	(require-any (signing-identifier "com.apple.lockdownmoded")
 (signing-identifier "com.apple.audio.AudioConverterService"))
